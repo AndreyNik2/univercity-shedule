@@ -3,16 +3,6 @@ import { StyleSheet, Text, View } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 import { getGroups } from "../servises/api/apiTimetable";
 
-// const group = [
-//   { label: "Item 1", value: "1" },
-//   { label: "Item 2", value: "2" },
-//   { label: "Item 3", value: "3" },
-//   { label: "Item 4", value: "4" },
-//   { label: "Item 5", value: "5" },
-//   { label: "Item 6", value: "6" },
-//   { label: "Item 7", value: "7" },
-//   { label: "Item 8", value: "8" },
-// ];
 
 interface IGroup {
     code: string,
@@ -49,33 +39,41 @@ const SelectGrous: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      {renderLabel()}
-      <Dropdown
-        style={[styles.dropdown, isFocus && { borderColor: "blue" }]}
-        placeholderStyle={styles.placeholderStyle}
-        selectedTextStyle={styles.selectedTextStyle}
-        inputSearchStyle={styles.inputSearchStyle}
-        iconStyle={styles.iconStyle}
-        data={groups}
-        search
-        maxHeight={300}
-        labelField="name"
-        valueField="code"
-        placeholder={!isFocus ? "Оберіть групу" : "..."}
-        searchPlaceholder="пошук..."
-        value={value}
-        onFocus={() => setIsFocus(true)}
-        onBlur={() => setIsFocus(false)}
-        onChange={(item) => {
-          setValue(item.name);
-        }}
-      />
+      <View style={styles.containerDrop}>
+        {renderLabel()}
+        <Dropdown
+          style={[styles.dropdown, isFocus && { borderColor: "blue" }]}
+          placeholderStyle={styles.placeholderStyle}
+          selectedTextStyle={styles.selectedTextStyle}
+          inputSearchStyle={styles.inputSearchStyle}
+          iconStyle={styles.iconStyle}
+          data={groups}
+          search
+          maxHeight={300}
+          labelField="name"
+          valueField="code"
+          placeholder={!isFocus ? "Оберіть групу" : "..."}
+          searchPlaceholder="пошук..."
+          value={value}
+          onFocus={() => setIsFocus(true)}
+          onBlur={() => setIsFocus(false)}
+          onChange={(item) => {
+            setValue(item.name);
+          }}
+        />
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: "white",
+    padding: 20,
+    width: "100%",
+    alignItems: "center",
+  },
+  containerDrop: {
     backgroundColor: "white",
     padding: 16,
   },
@@ -90,7 +88,7 @@ const styles = StyleSheet.create({
   label: {
     position: "absolute",
     backgroundColor: "white",
-    left: 22,
+    left: 50,
     top: 8,
     zIndex: 999,
     paddingHorizontal: 8,
