@@ -9,22 +9,25 @@ interface IGroup {
     name: string,
 }
 
-const SelectGrous: React.FC = () => {
-  const [value, setValue] = useState("");
-    const [isFocus, setIsFocus] = useState(false);
-    const [groups, setGroups] = useState<IGroup[]>([]);
+type Props = {
+  selectDropdownValue: (value: string) => void;
+};
 
-    useEffect(() => {
-        async function getData() {
-            try {
-              const result: { data: [] } = await getGroups();
-              const data: [] = result.data;
-              setGroups(data);
-            } catch (error) {}
-        };
-        getData();
-        
-  }, [])
+const SelectGrous: React.FC<Props> = ({ selectDropdownValue }) => {
+  const [value, setValue] = useState("");
+  const [isFocus, setIsFocus] = useState(false);
+  const [groups, setGroups] = useState<IGroup[]>([]);
+
+  useEffect(() => {
+    async function getData() {
+      try {
+        const result: { data: [] } = await getGroups();
+        const data: [] = result.data;
+        setGroups(data);
+      } catch (error) {}
+    }
+    getData();
+  }, []);
 
   const renderLabel = () => {
     if (value || isFocus) {
@@ -58,7 +61,7 @@ const SelectGrous: React.FC = () => {
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           onChange={(item) => {
-            setValue(item.name);
+            selectDropdownValue(item.name);
           }}
         />
       </View>

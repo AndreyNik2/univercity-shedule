@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 
 type Props = {
-  date: Date;
+  selectedGroup: string
 };
 
 interface WeekDay {
@@ -10,11 +10,11 @@ interface WeekDay {
   name: string;
 }
 
-const WeekShedule: React.FC = () => {
+const WeekShedule: React.FC<Props> = ({ selectedGroup }) => {
   const [week, setWeek] = useState<string>("");
-  const [selectedDay, setSelectedDay] = useState<number>(0);
+  const [selectedDay, setSelectedDay] = useState<number>(3);
 
-  const weekDays = [
+  const weekDays: any = [
     { day: 1, name: "ПН" },
     { day: 2, name: "ВТ" },
     { day: 3, name: "СР" },
@@ -24,17 +24,29 @@ const WeekShedule: React.FC = () => {
     ,
   ];
 
-  useEffect(() => {}, []);
+  const onChange = (value: number) => {
+    setSelectedDay(value);
+  };
+
+  useEffect(() => {}, [selectedDay]);
 
   return (
     <View style={styles.flexConteiner}>
       <View style={styles.container}>
-        {weekDays.map((day) => {
-          const textStyles = {};
+        {weekDays.map((day: any) => {
+          const textStyles = [styles.label];
+          const touchable = [styles.touchable];
+          if (day.day === selectedDay) {
+            textStyles.push(styles.selectedLabel);
+            touchable.push(styles.selectedTouchable);
+          }
           return (
             <View key={day?.day} style={styles.dayContainer}>
-              <TouchableOpacity>
-                <Text style={styles.weekDayText}>{day?.name}</Text>
+              <TouchableOpacity
+                onPress={() => onChange(day.day)}
+                style={touchable}
+              >
+                <Text style={textStyles}>{day?.name}</Text>
               </TouchableOpacity>
             </View>
           );
@@ -45,17 +57,40 @@ const WeekShedule: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
-  flexConteiner: { flex: 1, color: "grey", paddingHorizontal: 5, paddingVertical: 20 },
+  flexConteiner: { flex: 1, color: "grey" },
   container: {
-    backgroundColor: "white",
-    width: "100%",
+    marginHorizontal: 20,
+    marginTop: 20,
+    borderRadius: 20,
+    backgroundColor: "#f0ffff",
     flexDirection: "row",
     justifyContent: "space-around",
-    paddingVertical: 15,
+    paddingVertical: 5,
   },
-  dayContainer: { backgroundColor: "grey", borderRadius: 20 },
+  dayContainer: {},
   dayButton: {},
-  weekDayText: { color: "rgb(20, 21, 24)" , paddingHorizontal: 15, paddingVertical:10 },
+  touchable: {
+    backgroundColor: "#fa8987",
+    borderRadius: 20,
+  },
+  selectedTouchable: {
+    backgroundColor: "green",
+  },
+  weekDayText: {
+    color: "rgb(20, 21, 24)",
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+  },
+  label: {
+    color: "green",
+    fontSize: 14,
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+  },
+
+  selectedLabel: {
+    color: "blue",
+  },
 });
 
 export default WeekShedule;

@@ -18,7 +18,7 @@ const App: React.FC = () => {
             options={{
               headerTitle: () => (
                 <Image
-                  style={{  width: 70, height: 70,  }}
+                  style={{  width: 70, height: 70, marginHorizontal:140 }}
                   source={require("./assets/logo.png")}
                 />
               ),
