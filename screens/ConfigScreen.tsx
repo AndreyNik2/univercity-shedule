@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 
-const ForTeacherScreen = () => {
+const ConfigScreen = () => {
   return (
     <View style={styles.container}>
       <Text>Для викладачів</Text>
@@ -17,4 +17,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ForTeacherScreen;
+export default ConfigScreen;

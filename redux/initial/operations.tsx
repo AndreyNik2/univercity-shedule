@@ -1,62 +1,54 @@
 import axios from "axios";
 import { AppDispatch } from "../store";
 import { initialSlice } from "./initialSlice";
-// import { createAsyncThunk } from "@reduxjs/toolkit";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 import { IGroups } from "../../models/IGroups";
+import { IWeeks } from "../../models/IWeeks";
+import { ICurrent } from "../../models/ICurrent";
 
 
 axios.defaults.baseURL = "https://schedule.polytech.cv.ua/api";
 
-export const fetchGroups = () => async (dispatch: AppDispatch) => {
+export const fetchGroups = createAsyncThunk(
+  "initial/fetchGroups",
+  async (_, thunkAPI) => {
     try {
-        dispatch(initialSlice.actions.fetchingGroups());
-        const { data } = await axios.get<IGroups[]>("/schedule/groups");
-        dispatch(initialSlice.actions.fetchGroupFulfilled(data))
+      const { data } = await axios.get<IGroups[]>("/schedule/groups");
+    return data;
     } catch (e) {
-        dispatch(initialSlice.actions.fetchingGroupError(e.message))
+      return thunkAPI.rejectWithValue("Sorry something went wrong. Failed to load groups");
     }
-
-}
-
-// export const getGroup = async () => {
-//   try {
-//     const { data } = await axios.get<IGroups>("/schedule/groups");
-//     return data;
-//   } catch (error: unknown) {
-//     return;
-//   }
-// };
-
-// export const getGroups = createAsyncThunk(
-//   "init/getGroups",
-//   async (_, thunkAPI) => {
-//     try {
-//       const { data } = await axios.get<IGroups[]>("/schedule/groups");
-//     return data;
-//     } catch (e) {
-//       return thunkAPI.rejectWithValue(e);
-//     }
-//   }
-// );
-
-
-export const getWeeks = async () => {
-  try {
-    const { data } = await axios.get("/schedule/weeks");
-    return data;
-  } catch (error: unknown) {
-    return;
   }
-};
+);
 
-export const getCurrentDay = async () => {
-  try {
-    const { data } = await axios.get("/schedule/time/current");
-    return data;
-  } catch (error: unknown) {
-    return;
+export const fetchWeeks = createAsyncThunk(
+  "initial/fetchWeeks",
+  async (_, thunkAPI) => {
+    try {
+      const { data } = await axios.get<IWeeks[]>("/schedule/weeks");
+      return data;
+    } catch (e) {
+      return thunkAPI.rejectWithValue(
+        "Sorry something went wrong. Failed to load weeks"
+      );
+    }
   }
-};
+);
+
+export const getCurrentDay = createAsyncThunk(
+  "initial/getCurrentDay",
+  async (_, thunkAPI) => {
+    try {
+      const { data } = await axios.get<ICurrent>("/schedule/time/current");
+      return data;
+    } catch (e) {
+      return thunkAPI.rejectWithValue(
+        "Sorry something went wrong. Failed to load weeks"
+      );
+    }
+  }
+);
+
 
 export const getShedule = async (group: string, week: string) => {
   try {
