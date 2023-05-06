@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IGroups } from "../../models/IGroups";
-import { IWeeks } from "../../models/IWeeks";
-import { ICurrent } from "../../models/ICurrent";
+import { IDataGroups } from "../../models/IGroups";
+import { IDataWeeks } from "../../models/IWeeks";
+import { IDataCurrent, ICurrent } from "../../models/ICurrent";
 import { fetchGroups, fetchWeeks, getCurrentDay } from "./operations";
 
 
@@ -9,8 +9,8 @@ import { fetchGroups, fetchWeeks, getCurrentDay } from "./operations";
 
 interface IInitialState {
   selectedGroup: string;
-  allGroups: IGroups[];
-  weeks: IWeeks[];
+  allGroups: IDataGroups[];
+  weeks: IDataWeeks[];
   currentDay: ICurrent;
   isLoading: boolean;
   error: string;
@@ -30,7 +30,7 @@ export const initialSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
-    [fetchGroups.fulfilled.type](state, action: PayloadAction<IGroups[]>) {
+    [fetchGroups.fulfilled.type](state, action: PayloadAction<IDataGroups[]>) {
       state.isLoading = false;
       state.error = "";
       state.allGroups = action.payload;
@@ -42,7 +42,7 @@ export const initialSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
-    [fetchWeeks.fulfilled.type](state, action: PayloadAction<IWeeks[]>) {
+    [fetchWeeks.fulfilled.type](state, action: PayloadAction<IDataWeeks[]>) {
       state.isLoading = false;
       state.error = "";
       state.weeks = action.payload;
@@ -54,10 +54,10 @@ export const initialSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
-    [getCurrentDay.fulfilled.type](state, action: PayloadAction<ICurrent>) {
+    [getCurrentDay.fulfilled.type](state, action: PayloadAction<IDataCurrent>) {
       state.isLoading = false;
       state.error = "";
-      state.currentDay = action.payload;
+      state.currentDay = action.payload.data;
     },
     [getCurrentDay.pending.type](state) {
       state.isLoading = true;
