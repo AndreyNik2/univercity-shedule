@@ -3,6 +3,3 @@ export interface ICurrent {
     currentDay: number
 }
 
-export interface IDataCurrent {
-    data: ICurrent
-}

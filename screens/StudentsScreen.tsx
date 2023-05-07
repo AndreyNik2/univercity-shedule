@@ -18,7 +18,6 @@ export const StudentsScreen: React.FC<IStackScreenProp> = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "blue",
   },
   logo: {
     width: 157,

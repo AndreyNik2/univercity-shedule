@@ -6,7 +6,7 @@ import { TeachersScreen } from "../screens/TeachersScreen";
 export const routes: IRouteProp[] = [
     {
         name: 'Home',
-        component: HomeScreen
+        component: HomeScreen,
     },
     {
         name: 'StudentsScreen',

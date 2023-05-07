@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IDataGroups } from "../../models/IGroups";
 import { IDataWeeks } from "../../models/IWeeks";
-import { IDataCurrent, ICurrent } from "../../models/ICurrent";
+import { ICurrent } from "../../models/ICurrent";
 import { fetchGroups, fetchWeeks, getCurrentDay } from "./operations";
 
 
@@ -54,10 +54,10 @@ export const initialSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
-    [getCurrentDay.fulfilled.type](state, action: PayloadAction<IDataCurrent>) {
+    [getCurrentDay.fulfilled.type](state, action: PayloadAction<ICurrent>) {
       state.isLoading = false;
       state.error = "";
-      state.currentDay = action.payload.data;
+      state.currentDay = action.payload;
     },
     [getCurrentDay.pending.type](state) {
       state.isLoading = true;

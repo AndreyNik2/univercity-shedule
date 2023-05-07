@@ -4,7 +4,7 @@ import { initialSlice } from "./initialSlice";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { IDataGroups } from "../../models/IGroups";
 import { IDataWeeks } from "../../models/IWeeks";
-import { IDataCurrent } from "../../models/ICurrent";
+import { ICurrent } from "../../models/ICurrent";
 
 
 axios.defaults.baseURL = "https://schedule.polytech.cv.ua/api";
@@ -39,8 +39,8 @@ export const getCurrentDay = createAsyncThunk(
   "initial/getCurrentDay",
   async (_, thunkAPI) => {
     try {
-      const { data } = await axios.get<IDataCurrent>("/schedule/time/current");
-      return data.data;
+      const { data } = await axios.get<ICurrent>("/schedule/time/current");
+      return data;
     } catch (e) {
       return thunkAPI.rejectWithValue(
         "Sorry something went wrong. Failed to load weeks"
