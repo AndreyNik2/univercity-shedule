@@ -11,6 +11,8 @@ export const HomeScreen: React.FC<IStackScreenProp> = ({
   return (
     <LinearGradient
       colors={["#FEEFF2", "#DDE9FD"]}
+      // colors={["#FEEFF2", "#000"]}
+      start={[0, 1]}
       style={styles.linearGradient}
     >
       <View style={styles.buttonsContainer}>

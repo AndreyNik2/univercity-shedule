@@ -9,9 +9,21 @@ const Tab = createBottomTabNavigator();
 const StudentsNavigator = () => {
   return (
     <Tab.Navigator>
-      <Tab.Screen name="Розклад" component={SheduleScreen} />
-      <Tab.Screen name="Сесії" component={SessionsScreen} />
-      <Tab.Screen name="Налаштування" component={ConfigScreen} />
+      <Tab.Screen
+        name="Розклад"
+        component={SheduleScreen}
+        options={{ headerShown: false }}
+      />
+      <Tab.Screen
+        name="Сесії"
+        component={SessionsScreen}
+        options={{ headerShown: false }}
+      />
+      <Tab.Screen
+        name="Налаштування"
+        component={ConfigScreen}
+        options={{ headerShown: false }}
+      />
     </Tab.Navigator>
   );
 };

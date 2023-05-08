@@ -1,6 +1,6 @@
 import { IRouteProp } from "../models/RouteProp";
+import StudentsNavigator from "../navigations/StudentsNavigations";
 import { HomeScreen } from "../screens/HomeScreen";
-import { StudentsScreen } from "../screens/StudentsScreen";
 import { TeachersScreen } from "../screens/TeachersScreen";
 
 export const routes: IRouteProp[] = [
@@ -10,7 +10,7 @@ export const routes: IRouteProp[] = [
     },
     {
         name: 'StudentsScreen',
-        component: StudentsScreen
+        component: StudentsNavigator
     },
     {
         name: 'TeachersScreen',

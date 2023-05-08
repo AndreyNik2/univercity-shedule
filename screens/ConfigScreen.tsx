@@ -4,7 +4,7 @@ import { View, Text, StyleSheet } from "react-native";
 const ConfigScreen = () => {
   return (
     <View style={styles.container}>
-      <Text>Для викладачів</Text>
+      <Text>Налаштування</Text>
     </View>
   );
 };

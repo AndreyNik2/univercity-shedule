@@ -3,10 +3,9 @@ import { StyleSheet, Text, View } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 import { getGroups } from "../servises/api/apiTimetable";
 
-
 interface IGroup {
-    code: string,
-    name: string,
+  code: string;
+  name: string;
 }
 
 type Props = {
@@ -42,28 +41,31 @@ const SelectGrous: React.FC<Props> = ({ selectDropdownValue }) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.containerDrop}>
-        {renderLabel()}
-        <Dropdown
-          style={[styles.dropdown, isFocus && { borderColor: "blue" }]}
-          placeholderStyle={styles.placeholderStyle}
-          selectedTextStyle={styles.selectedTextStyle}
-          inputSearchStyle={styles.inputSearchStyle}
-          iconStyle={styles.iconStyle}
-          data={groups}
-          search
-          maxHeight={300}
-          labelField="name"
-          valueField="code"
-          placeholder={!isFocus ? "Оберіть групу" : "..."}
-          searchPlaceholder="пошук..."
-          value={value}
-          onFocus={() => setIsFocus(true)}
-          onBlur={() => setIsFocus(false)}
-          onChange={(item) => {
-            selectDropdownValue(item.name);
-          }}
-        />
+      <View style={styles.elementsContainer}>
+        <Text>Розклад занять для</Text>
+        <View style={styles.containerDrop}>
+          {renderLabel()}
+          <Dropdown
+            style={[styles.dropdown, isFocus && { borderColor: "blue" }]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
+            data={groups}
+            search
+            maxHeight={300}
+            labelField="name"
+            valueField="code"
+            placeholder={!isFocus ? "Оберіть групу" : "..."}
+            searchPlaceholder="пошук..."
+            value={value}
+            onFocus={() => setIsFocus(true)}
+            onBlur={() => setIsFocus(false)}
+            onChange={(item) => {
+              selectDropdownValue(item.name);
+            }}
+          />
+        </View>
       </View>
     </View>
   );
@@ -71,14 +73,22 @@ const SelectGrous: React.FC<Props> = ({ selectDropdownValue }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "white",
-    padding: 20,
-    width: "100%",
+    marginTop: 93,
+    marginHorizontal: 21,
+    borderRadius: 20,
     alignItems: "center",
+    backgroundColor: "#F2F5FD",
+  },
+  elementsContainer: {
+    paddingVertical: 20,
+  },
+  selectTitle: {
+    fontFamily: "Exo2-Medium",
+    fontSize: 16,
+    color: "#535252",
   },
   containerDrop: {
-    backgroundColor: "white",
-    padding: 16,
+    paddingTop: 16,
   },
   dropdown: {
     height: 50,
@@ -87,10 +97,14 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderRadius: 8,
     paddingHorizontal: 8,
+    backgroundColor: "#E2E5F6",
   },
   label: {
     position: "absolute",
-    backgroundColor: "white",
+    backgroundColor: "#E2E5F6",
+    borderWidth: 0.5,
+    borderRadius: 5,
+    borderColor: 'blue',
     left: 50,
     top: 8,
     zIndex: 999,
