@@ -7,7 +7,7 @@ import { fetchGroups, fetchWeeks, getCurrentDay } from "./operations";
 interface IInitialState {
   selectedGroup: string;
   allGroups: IDataGroups[];
-  weeks: IDataWeeks[];
+  weeks: IDataWeeks;
   currentDay: ICurrent;
   isLoading: boolean;
   error: string;
@@ -16,7 +16,16 @@ interface IInitialState {
 export const initialState: IInitialState = {
   selectedGroup: "",
   allGroups: [],
-  weeks: [],
+  weeks: {
+    data: [
+      {
+        id: "",
+        number: 0,
+        start: "",
+        end: "",
+      },
+    ],
+  },
   currentDay: { currentWeek: "", currentDay: 0 },
   isLoading: false,
   error: "",
@@ -25,7 +34,11 @@ export const initialState: IInitialState = {
 export const initialSlice = createSlice({
   name: "initial",
   initialState,
-  reducers: {},
+  reducers: {
+    selectGroup: (state, action) => {
+      state.selectedGroup = action.payload;
+    },
+  },
   extraReducers: (builder) =>
     builder
       .addCase(
@@ -36,12 +49,9 @@ export const initialSlice = createSlice({
           state.allGroups = action.payload;
         }
       )
-      .addCase(
-        fetchGroups.pending.type,
-        (state) => {
-          state.isLoading = true;
-        }
-      )
+      .addCase(fetchGroups.pending.type, (state) => {
+        state.isLoading = true;
+      })
       .addCase(
         fetchGroups.rejected.type,
         (state, action: PayloadAction<string>) => {
@@ -51,7 +61,7 @@ export const initialSlice = createSlice({
       )
       .addCase(
         fetchWeeks.fulfilled.type,
-        (state, action: PayloadAction<IDataWeeks[]>) => {
+        (state, action: PayloadAction<IDataWeeks>) => {
           state.isLoading = false;
           state.error = "";
           state.weeks = action.payload;
@@ -78,10 +88,13 @@ export const initialSlice = createSlice({
       .addCase(getCurrentDay.pending.type, (state) => {
         state.isLoading = true;
       })
-      .addCase(getCurrentDay.rejected.type, (state, action: PayloadAction<string>) => {
-      state.isLoading = false;
-      state.error = action.payload;
-    })
+      .addCase(
+        getCurrentDay.rejected.type,
+        (state, action: PayloadAction<string>) => {
+          state.isLoading = false;
+          state.error = action.payload;
+        }
+      ),
 
   // {
   //   [fetchGroups.fulfilled.type](state, action: PayloadAction<IDataGroups[]>) {
@@ -116,10 +129,10 @@ export const initialSlice = createSlice({
   // [getCurrentDay.pending.type](state) {
   //   state.isLoading = true;
   // },
-    // [getCurrentDay.rejected.type](state, action: PayloadAction<string>) {
-    //   state.isLoading = false;
-    //   state.error = action.payload;
-    // },
+  // [getCurrentDay.rejected.type](state, action: PayloadAction<string>) {
+  //   state.isLoading = false;
+  //   state.error = action.payload;
+  // },
   // },
 });
 

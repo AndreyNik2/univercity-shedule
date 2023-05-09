@@ -2,31 +2,23 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 import { getGroups } from "../servises/api/apiTimetable";
+import { useAppDispatch, useAppSelector } from "../hooks/redux";
 
-interface IGroup {
-  code: string;
-  name: string;
-}
 
 type Props = {
   selectDropdownValue: (value: string) => void;
 };
 
 const SelectGrous: React.FC<Props> = ({ selectDropdownValue }) => {
+   const dispatch = useAppDispatch();
+   const { allGroups, weeks, currentDay } = useAppSelector(
+     (state) => state.initialReduser
+   );
   const [value, setValue] = useState("");
   const [isFocus, setIsFocus] = useState(false);
   const [groups, setGroups] = useState<IGroup[]>([]);
 
-  useEffect(() => {
-    async function getData() {
-      try {
-        const result: { data: [] } = await getGroups();
-        const data: [] = result.data;
-        setGroups(data);
-      } catch (error) {}
-    }
-    getData();
-  }, []);
+
 
   const renderLabel = () => {
     if (value || isFocus) {
@@ -51,7 +43,7 @@ const SelectGrous: React.FC<Props> = ({ selectDropdownValue }) => {
             selectedTextStyle={styles.selectedTextStyle}
             inputSearchStyle={styles.inputSearchStyle}
             iconStyle={styles.iconStyle}
-            data={groups}
+            data={allGroups.data}
             search
             maxHeight={300}
             labelField="name"

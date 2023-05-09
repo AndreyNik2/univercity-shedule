@@ -24,6 +24,7 @@ const App: React.FC = () => {
       await SplashScreen.preventAutoHideAsync();
     }
     prepare();
+    
   }, [])
 
    if (!fontsLoaded) {

@@ -26,7 +26,7 @@ export const fetchWeeks = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const { data } = await axios.get<IDataWeeks>("/schedule/weeks");
-      return data.data;
+      return data;
     } catch (e) {
       return thunkAPI.rejectWithValue(
         "Sorry something went wrong. Failed to load weeks"

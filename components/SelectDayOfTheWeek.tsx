@@ -1,32 +1,35 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
+import { useAppDispatch } from "../hooks/redux";
 
 type Props = {
-  selectedGroup: string;
+  selectDayOfTheWeek: (value: number) => void;
+  selectedDay: number;
 };
 
 interface WeekDay {
-  day: number;
-  name: string;
+  day: number,
+  name: string,
+  fullName: string
 }
 
-const WeekShedule: React.FC<Props> = ({ selectedGroup }) => {
-  const [week, setWeek] = useState<string>("");
-  const [selectedDay, setSelectedDay] = useState<number>(3);
-
-  const weekDays: any = [
-    { day: 1, name: "ПН" },
-    { day: 2, name: "ВТ" },
-    { day: 3, name: "СР" },
-    { day: 4, name: "ЧТ" },
-    { day: 5, name: "ПТ" },
-    { day: 6, name: "СБ" },
+export const weekDays: any =
+  // : Array<{ day: number; name: string; fullName: string } | undefined>
+  [
+    { day: 0, name: "ПН", fullName: "Понеділок" },
+    { day: 1, name: "ВТ", fullName: "Вівторок" },
+    { day: 2, name: "СР", fullName: "Середа" },
+    { day: 3, name: "ЧТ", fullName: "Четвер" },
+    { day: 4, name: "ПТ", fullName: "П'ятниця" },
+    { day: 5, name: "СБ", fullName: "Субота" },
     ,
   ];
 
-  const onChange = (value: number) => {
-    setSelectedDay(value);
-  };
+const SelectDayOfTheWeek: React.FC<Props> = ({
+  selectDayOfTheWeek,
+  selectedDay,
+}) => {
+
 
   useEffect(() => {}, [selectedDay]);
 
@@ -36,14 +39,13 @@ const WeekShedule: React.FC<Props> = ({ selectedGroup }) => {
         const textStyles = [styles.label];
         const touchable = [styles.touchable];
         if (day.day === selectedDay) {
-          textStyles;
           textStyles.push(styles.selectedLabel);
           touchable.push(styles.selectedTouchable);
         }
         return (
           <View key={day?.day} style={styles.dayContainer}>
             <TouchableOpacity
-              onPress={() => onChange(day.day)}
+              onPress={() => selectDayOfTheWeek(day.day)}
               style={touchable}
             >
               <Text style={textStyles}>{day?.name}</Text>
@@ -97,4 +99,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default WeekShedule;
+export default SelectDayOfTheWeek;
