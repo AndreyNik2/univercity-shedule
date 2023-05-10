@@ -4,5 +4,5 @@ interface IGroups {
 }
 
 export interface IDataGroups {
-    data: IGroups
+    data: IGroups[]
 }

@@ -5,27 +5,20 @@ import { ICurrent } from "../../models/ICurrent";
 import { fetchGroups, fetchWeeks, getCurrentDay } from "./operations";
 
 interface IInitialState {
-  selectedGroup: string;
-  allGroups: IDataGroups[];
-  weeks: IDataWeeks;
+  selectedGroup: { name: string; code: string };
+  allGroups: IDataGroups;
+  weeks: null | IDataWeeks;
   currentDay: ICurrent;
   isLoading: boolean;
   error: string;
 }
 
 export const initialState: IInitialState = {
-  selectedGroup: "",
-  allGroups: [],
-  weeks: {
-    data: [
-      {
-        id: "",
-        number: 0,
-        start: "",
-        end: "",
-      },
-    ],
+  selectedGroup: { name: "", code: "" },
+  allGroups: {
+    data: [{ name: "", code: "" }],
   },
+  weeks: null,
   currentDay: { currentWeek: "", currentDay: 0 },
   isLoading: false,
   error: "",
@@ -37,13 +30,15 @@ export const initialSlice = createSlice({
   reducers: {
     selectGroup: (state, action) => {
       state.selectedGroup = action.payload;
+      console.log(action.payload);
+      console.log(state.selectedGroup)
     },
   },
   extraReducers: (builder) =>
     builder
       .addCase(
         fetchGroups.fulfilled.type,
-        (state, action: PayloadAction<IDataGroups[]>) => {
+        (state, action: PayloadAction<IDataGroups>) => {
           state.isLoading = false;
           state.error = "";
           state.allGroups = action.payload;
@@ -136,4 +131,6 @@ export const initialSlice = createSlice({
   // },
 });
 
-export default initialSlice.reducer;
+
+export const { selectGroup } = initialSlice.actions
+export const initialReduser = initialSlice.reducer;

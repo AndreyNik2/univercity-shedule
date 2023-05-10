@@ -14,7 +14,7 @@ export const fetchGroups = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const { data } = await axios.get<IDataGroups>("/schedule/groups");
-    return data.data;
+    return data;
     } catch (e) {
       return thunkAPI.rejectWithValue("Sorry something went wrong. Failed to load groups");
     }

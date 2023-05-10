@@ -3,33 +3,18 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { AntDesign } from "@expo/vector-icons";
 import { useAppSelector } from "../hooks/redux";
-import { IDataWeeks } from "../models/IWeeks";
+import { IDataWeeks, IWeeks } from "../models/IWeeks";
 
 type Props = {
-  selectLastWeek: (value: string) => void;
-  selectNextWeek: (value: string) => void;
-  selectedWeek: string;
+  selectLastWeek: (value: IWeeks[]) => void;
+  selectNextWeek: (value: IWeeks[]) => void;
+  selectedWeek: IWeeks[];
 };
 
 const SelectWeeks: React.FC<Props> = ({selectLastWeek, selectNextWeek, selectedWeek}) => {
-  const {  weeks } = useAppSelector(
-    (state) => state.initialReduser
-  );
+ 
 
-  const currentWeekPeriod = (weeks:IDataWeeks, selectedWeek:string) => {
-    const week=  weeks.data.filter((week) => week.id === selectedWeek);
-    return `${week[0].start} - ${week[0].end}`
-  };
-
-  useEffect(() => {
-    if(!selectedWeek) {
-      return
-    }
-  },[selectedWeek])
-
-  
-     
-
+ 
   return (
     <View style={styles.selectWeeksContainer}>
       <TouchableOpacity
@@ -38,7 +23,10 @@ const SelectWeeks: React.FC<Props> = ({selectLastWeek, selectNextWeek, selectedW
       >
         <AntDesign name="left" size={12} color="black" />
       </TouchableOpacity>
-      <Text>{currentWeekPeriod(weeks, selectedWeek)}</Text>
+      <Text>
+        {selectedWeek.length > 0 &&
+          `${selectedWeek[0].start} - ${selectedWeek[0].end}`}
+      </Text>
       <TouchableOpacity
         style={styles.selectRightBtn}
         onPress={() => selectNextWeek(selectedWeek)}

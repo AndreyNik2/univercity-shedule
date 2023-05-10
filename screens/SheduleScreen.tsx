@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
-import SelectGrous from "../components/SelectGroup";
+import SelectGroups from "../components/SelectGroup";
 import SelectDayOfTheWeek from "../components/SelectDayOfTheWeek";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
 import {
@@ -15,34 +15,39 @@ import { SheduleList } from "../components/ShaduleList";
 
 const SheduleScreen = () => {
   const dispatch = useAppDispatch();
-  const { allGroups, weeks, currentDay } = useAppSelector(
+  const { allGroups, weeks, currentDay, selectedGroup } = useAppSelector(
     (state) => state.initialReduser
   );
-  const [dropdownValue, setDropdownValue] = useState("");
   const [shedule, setShedule] = useState([]);
-  const [selectedWeek, setSelectedWeek] = useState<string>("");
+  const [selectedWeek, setSelectedWeek] = useState<IWeeks[]|[]>([]);
   const [selectedDay, setSelectedDay] = useState(0);
 
-  const selectLastWeek = (selectedWeek: string) => {
-    const index = weeks.data.findIndex((week) => (week.id = selectedWeek));
-    if (index > 0) {
-      setSelectedWeek(weeks.data[index - 1].id);
+  
+
+  const selectLastWeek = (selectedWeek: IWeeks[]) => {
+    if (weeks) {
+      const index = weeks.data.findIndex((week) => (week.id = selectedWeek[0].id));
+      if (index > 0) {
+        setSelectedWeek([weeks.data[index - 1]]);
+      }
     }
+    return;
   };
 
-  const selectNextWeek = (selectedWeek: string) => {
-    const index = weeks.data.findIndex((week) => (week.id = selectedWeek));
-    if (index < weeks.data.length) {
-      setSelectedWeek(weeks.data[index + 1].id);
+  const selectNextWeek = (selectedWeek: IWeeks[]) => {
+    if (weeks) {
+      const index = weeks.data.findIndex(
+        (week) => (week.id = selectedWeek[0].id)
+      );
+      if (index < weeks.data.length) {
+        setSelectedWeek([weeks.data[index + 1]]);
+      }
+      return;
     }
   };
 
   const selectDayOfTheWeek = (value: number) => {
     setSelectedDay(value);
-  };
-
-  const selectDropdownValue = (value: string) => {
-    setDropdownValue(value);
   };
 
   const selectCurrentWeek = (
@@ -52,8 +57,9 @@ const SheduleScreen = () => {
       currentDay: number;
     }
   ) => {
-    return weeks.data.filter((week) => week.id === currentDay.currentWeek);
+    weeks.data.filter((week) => week.id === currentDay.currentWeek);
   };
+
 
   useEffect(() => {
     dispatch(getCurrentDay());
@@ -61,34 +67,41 @@ const SheduleScreen = () => {
     dispatch(fetchWeeks());
   }, []);
 
+  useEffect(() => {
+    if (weeks) {
+      selectCurrentWeek(weeks, currentDay);
+    }
+   
+  }, [weeks, currentDay, selectCurrentWeek]);
+
   return (
     <LinearGradient
       colors={["#FEEFF2", "#DDE9FD"]}
       start={[0, 1]}
       style={styles.linearGradient}
     >
-      {allGroups.length > 0 && (
-        <SelectGrous selectDropdownValue={selectDropdownValue} />
-      )}
-      <View style={styles.sheduleContainer}>
-        {selectedWeek.length > 0 && weeks.data.length > 0 && (
-          <SelectWeeks
-            selectLastWeek={selectLastWeek}
-            selectNextWeek={selectNextWeek}
-            selectedWeek={selectedWeek}
+      {allGroups.data.length && <SelectGroups />}
+      {selectedGroup.name.length && (
+        <View style={styles.sheduleContainer}>
+          {weeks && currentDay && selectedWeek.length > 0 && (
+            <SelectWeeks
+              selectLastWeek={selectLastWeek}
+              selectNextWeek={selectNextWeek}
+              selectedWeek={selectedWeek}
+            />
+          )}
+          <SelectDayOfTheWeek
+            selectDayOfTheWeek={selectDayOfTheWeek}
+            selectedDay={selectedDay}
           />
-        )}
-        <SelectDayOfTheWeek
-          selectDayOfTheWeek={selectDayOfTheWeek}
-          selectedDay={selectedDay}
-        />
-        <View style={styles.selectedDayContainer}>
-          <Text style={styles.dateTextHiden}>Вибрана дата</Text>
-          <Text style={styles.dateText}>День тиждня</Text>
-          <Text style={styles.dateText}>Вибрана дата</Text>
+          <View style={styles.selectedDayContainer}>
+            <Text style={styles.dateTextHiden}>Вибрана дата</Text>
+            <Text style={styles.dateText}>День тиждня</Text>
+            <Text style={styles.dateText}>Вибрана дата</Text>
+          </View>
+          <SheduleList />
         </View>
-        <SheduleList />
-      </View>
+      )}
     </LinearGradient>
   );
 };

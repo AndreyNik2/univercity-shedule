@@ -3,25 +3,22 @@ import { StyleSheet, Text, View } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 import { getGroups } from "../servises/api/apiTimetable";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
+import { selectGroup } from "../redux/initial/initialSlice";
 
+const SelectGroups: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const { allGroups, weeks, currentDay, selectedGroup } = useAppSelector(
+    (state) => state.initialReduser
+  );
 
-type Props = {
-  selectDropdownValue: (value: string) => void;
-};
-
-const SelectGrous: React.FC<Props> = ({ selectDropdownValue }) => {
-   const dispatch = useAppDispatch();
-   const { allGroups, weeks, currentDay } = useAppSelector(
-     (state) => state.initialReduser
-   );
-  const [value, setValue] = useState("");
   const [isFocus, setIsFocus] = useState(false);
-  const [groups, setGroups] = useState<IGroup[]>([]);
 
-
+  const onChangeDropdown = (event: { name: string; code: string }) => {
+    dispatch(selectGroup(event));
+  };
 
   const renderLabel = () => {
-    if (value || isFocus) {
+    if (selectedGroup.name || isFocus) {
       return (
         <Text style={[styles.label, isFocus && { color: "blue" }]}>
           Обрана група
@@ -30,6 +27,12 @@ const SelectGrous: React.FC<Props> = ({ selectDropdownValue }) => {
     }
     return null;
   };
+
+  useEffect(() => {
+    if (selectedGroup.name.length === 0) {
+      console.log('go///go//')
+    }
+  }, [dispatch]);
 
   return (
     <View style={styles.container}>
@@ -50,12 +53,10 @@ const SelectGrous: React.FC<Props> = ({ selectDropdownValue }) => {
             valueField="code"
             placeholder={!isFocus ? "Оберіть групу" : "..."}
             searchPlaceholder="пошук..."
-            value={value}
+            value={selectedGroup.name}
             onFocus={() => setIsFocus(true)}
             onBlur={() => setIsFocus(false)}
-            onChange={(item) => {
-              selectDropdownValue(item.name);
-            }}
+            onChange={item => onChangeDropdown(item)}
           />
         </View>
       </View>
@@ -96,7 +97,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#E2E5F6",
     borderWidth: 0.5,
     borderRadius: 5,
-    borderColor: 'blue',
+    borderColor: "blue",
     left: 50,
     top: 8,
     zIndex: 999,
@@ -119,4 +120,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SelectGrous;
+export default SelectGroups;
