@@ -28,11 +28,6 @@ const SelectGroups: React.FC = () => {
     return null;
   };
 
-  useEffect(() => {
-    if (selectedGroup.name.length === 0) {
-      console.log('go///go//')
-    }
-  }, [dispatch]);
 
   return (
     <View style={styles.container}>
@@ -56,10 +51,14 @@ const SelectGroups: React.FC = () => {
             value={selectedGroup.name}
             onFocus={() => setIsFocus(true)}
             onBlur={() => setIsFocus(false)}
-            onChange={item => onChangeDropdown(item)}
+            onChange={(item) => {
+              onChangeDropdown(item);
+              setIsFocus(false);
+            }}
           />
         </View>
       </View>
+      <Text>{selectedGroup.name}</Text>
     </View>
   );
 };

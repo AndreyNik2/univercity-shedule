@@ -68,11 +68,10 @@ const SheduleScreen = () => {
   }, []);
 
   useEffect(() => {
-    if (weeks) {
-      selectCurrentWeek(weeks, currentDay);
-    }
-   
-  }, [weeks, currentDay, selectCurrentWeek]);
+    
+  },[dispatch])
+
+
 
   return (
     <LinearGradient
@@ -80,8 +79,8 @@ const SheduleScreen = () => {
       start={[0, 1]}
       style={styles.linearGradient}
     >
-      {allGroups.data.length && <SelectGroups />}
-      {selectedGroup.name.length && (
+      {allGroups.data.length > 0 && <SelectGroups />}
+      {selectedGroup.name.length > 0 && (
         <View style={styles.sheduleContainer}>
           {weeks && currentDay && selectedWeek.length > 0 && (
             <SelectWeeks
