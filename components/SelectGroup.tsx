@@ -48,7 +48,7 @@ const SelectGroups: React.FC = () => {
             valueField="code"
             placeholder={!isFocus ? "Оберіть групу" : "..."}
             searchPlaceholder="пошук..."
-            value={selectedGroup.name}
+            value={selectedGroup}
             onFocus={() => setIsFocus(true)}
             onBlur={() => setIsFocus(false)}
             onChange={(item) => {
@@ -58,7 +58,6 @@ const SelectGroups: React.FC = () => {
           />
         </View>
       </View>
-      <Text>{selectedGroup.name}</Text>
     </View>
   );
 };

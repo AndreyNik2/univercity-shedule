@@ -6,20 +6,27 @@ import { useAppSelector } from "../hooks/redux";
 import { IDataWeeks, IWeeks } from "../models/IWeeks";
 
 type Props = {
-  selectLastWeek: (value: IWeeks[]) => void;
-  selectNextWeek: (value: IWeeks[]) => void;
+  selectLastWeek: (weeks: IDataWeeks, selectedWeek: IWeeks[]) => void;
+  selectNextWeek: (weeks: IDataWeeks, selectedWeek: IWeeks[]) => void;
   selectedWeek: IWeeks[];
 };
 
 const SelectWeeks: React.FC<Props> = ({selectLastWeek, selectNextWeek, selectedWeek}) => {
  
+  const { allGroups, weeks, currentDay, selectedGroup } = useAppSelector(
+    (state) => state.initialReduser
+  );
 
  
   return (
     <View style={styles.selectWeeksContainer}>
       <TouchableOpacity
         style={styles.selectLeftBtn}
-        onPress={() => selectLastWeek(selectedWeek)}
+        onPress={() => {
+          if (weeks) {
+            selectLastWeek(weeks, selectedWeek);
+          }
+        }}
       >
         <AntDesign name="left" size={12} color="black" />
       </TouchableOpacity>
@@ -29,7 +36,11 @@ const SelectWeeks: React.FC<Props> = ({selectLastWeek, selectNextWeek, selectedW
       </Text>
       <TouchableOpacity
         style={styles.selectRightBtn}
-        onPress={() => selectNextWeek(selectedWeek)}
+        onPress={() => {
+          if (weeks) {
+            selectNextWeek(weeks, selectedWeek);
+          }
+        }}
       >
         <AntDesign name="right" size={12} color="black" />
       </TouchableOpacity>

@@ -12,6 +12,9 @@ import SelectWeeks from "../components/SelectWeeks";
 import { LinearGradient } from "expo-linear-gradient";
 import { IDataWeeks, IWeeks } from "../models/IWeeks";
 import { SheduleList } from "../components/ShaduleList";
+import { format } from "date-fns";
+import { weekDays } from "../components/SelectDayOfTheWeek";
+import { UnselectGroup } from "../components/unselectGroup";
 
 const SheduleScreen = () => {
   const dispatch = useAppDispatch();
@@ -19,14 +22,14 @@ const SheduleScreen = () => {
     (state) => state.initialReduser
   );
   const [shedule, setShedule] = useState([]);
-  const [selectedWeek, setSelectedWeek] = useState<IWeeks[]|[]>([]);
+  const [selectedWeek, setSelectedWeek] = useState<IWeeks[] | []>([]);
   const [selectedDay, setSelectedDay] = useState(0);
 
-  
-
-  const selectLastWeek = (selectedWeek: IWeeks[]) => {
+  const selectLastWeek = (weeks: IDataWeeks, selectedWeek: IWeeks[]) => {
     if (weeks) {
-      const index = weeks.data.findIndex((week) => (week.id = selectedWeek[0].id));
+      const index = weeks.data.findIndex(
+        (week) => week.id === selectedWeek[0].id
+      );
       if (index > 0) {
         setSelectedWeek([weeks.data[index - 1]]);
       }
@@ -34,20 +37,26 @@ const SheduleScreen = () => {
     return;
   };
 
-  const selectNextWeek = (selectedWeek: IWeeks[]) => {
+  const selectNextWeek = (weeks: IDataWeeks, selectedWeek: IWeeks[]) => {
     if (weeks) {
       const index = weeks.data.findIndex(
-        (week) => (week.id = selectedWeek[0].id)
+        (week) => week.id === selectedWeek[0].id
       );
-      if (index < weeks.data.length) {
+      if (index + 1 < weeks.data.length) {
         setSelectedWeek([weeks.data[index + 1]]);
       }
       return;
     }
   };
 
-  const selectDayOfTheWeek = (value: number) => {
+  const selectDayOfTheWeek = (selectedDay: number, value: number) => {
     setSelectedDay(value);
+    console.log(selectedDay);
+  };
+
+  const getFullName = (selectedDay: number, weekDays: any) => {
+    return weekDays.find((weekDay: any) => weekDay.day === selectedDay)
+      .fullName;
   };
 
   const selectCurrentWeek = (
@@ -57,21 +66,47 @@ const SheduleScreen = () => {
       currentDay: number;
     }
   ) => {
-    weeks.data.filter((week) => week.id === currentDay.currentWeek);
+    setSelectedWeek(
+      weeks.data.filter((week) => week.id === currentDay.currentWeek)
+    );
+    console.log(selectedWeek);
   };
 
+  const getSelectedDate = (selectedWeek: IWeeks[], selectedDay: number) => {
+    const add = require("date-fns/add");
+    const calendarFormat = 'dd.MM.yyyy'
+    const formatedStartDate = `${selectedWeek[0].start.slice(6)}-${selectedWeek[0].start.slice(3,5)}-${selectedWeek[0].start.slice(0,2)}`
+    const startDate = new Date(formatedStartDate);
+    return format(add(startDate, {days: selectedDay}), calendarFormat)
+  };
 
   useEffect(() => {
     dispatch(getCurrentDay());
     dispatch(fetchGroups());
     dispatch(fetchWeeks());
+    if (weeks && currentDay.currentWeek.length > 0) {
+      selectCurrentWeek(weeks, currentDay);
+    }
+    console.log(selectedWeek);
   }, []);
 
   useEffect(() => {
-    
-  },[dispatch])
-
-
+    const selectCurrentWeek = (
+      weeks: IDataWeeks,
+      currentDay: {
+        currentWeek: string;
+        currentDay: number;
+      }
+    ) => {
+      setSelectedWeek(
+        weeks.data.filter((week) => week.id === currentDay.currentWeek)
+      );
+      console.log(selectedWeek);
+    };
+    if (weeks && currentDay.currentWeek.length > 0) {
+      selectCurrentWeek(weeks, currentDay);
+    }
+  }, [dispatch, weeks, currentDay]);
 
   return (
     <LinearGradient
@@ -80,9 +115,10 @@ const SheduleScreen = () => {
       style={styles.linearGradient}
     >
       {allGroups.data.length > 0 && <SelectGroups />}
+      {selectedGroup.name.length === 0 && <UnselectGroup/>}
       {selectedGroup.name.length > 0 && (
         <View style={styles.sheduleContainer}>
-          {weeks && currentDay && selectedWeek.length > 0 && (
+          {selectedWeek && (
             <SelectWeeks
               selectLastWeek={selectLastWeek}
               selectNextWeek={selectNextWeek}
@@ -94,9 +130,11 @@ const SheduleScreen = () => {
             selectedDay={selectedDay}
           />
           <View style={styles.selectedDayContainer}>
-            <Text style={styles.dateTextHiden}>Вибрана дата</Text>
-            <Text style={styles.dateText}>День тиждня</Text>
-            <Text style={styles.dateText}>Вибрана дата</Text>
+            <Text style={styles.dateTextHiden}>{getSelectedDate(selectedWeek, selectedDay)}</Text>
+            <Text style={styles.dateText}>
+              {getFullName(selectedDay, weekDays)}
+            </Text>
+            <Text style={styles.dateText}>{getSelectedDate(selectedWeek, selectedDay)}</Text>
           </View>
           <SheduleList />
         </View>

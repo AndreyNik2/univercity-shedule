@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import { useAppDispatch } from "../hooks/redux";
 
 type Props = {
-  selectDayOfTheWeek: (value: number) => void;
+  selectDayOfTheWeek: (selectedDay: number, value: number) => void;
   selectedDay: number;
 };
 
@@ -31,6 +31,11 @@ const SelectDayOfTheWeek: React.FC<Props> = ({
 }) => {
 
 
+  const getFullName = (selectedDay: number, weekDays: any) => {
+    return weekDays.find((weekDay: any) => weekDay.day === selectedDay).fullName
+
+  }
+
   useEffect(() => {}, [selectedDay]);
 
   return (
@@ -45,7 +50,9 @@ const SelectDayOfTheWeek: React.FC<Props> = ({
         return (
           <View key={day?.day} style={styles.dayContainer}>
             <TouchableOpacity
-              onPress={() => selectDayOfTheWeek(day.day)}
+              onPress={() => {
+                selectDayOfTheWeek(selectedDay, day.day);
+              }}
               style={touchable}
             >
               <Text style={textStyles}>{day?.name}</Text>
@@ -53,6 +60,13 @@ const SelectDayOfTheWeek: React.FC<Props> = ({
           </View>
         );
       })}
+      {/* <View style={styles.selectedDayContainer}>
+        <Text style={styles.dateTextHiden}>Вибрана дата</Text>
+        <Text style={styles.dateText}>
+          {getFullName(selectedDay, weekDays)}
+        </Text>
+        <Text style={styles.dateText}>Вибрана дата</Text>
+      </View> */}
     </View>
   );
 };
@@ -97,6 +111,22 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingVertical: 10,
   },
+  // selectedDayContainer: {
+  //   marginTop: 48,
+  //   paddingHorizontal: 20,
+  //   flexDirection: "row",
+  //   justifyContent: "space-around",
+  // },
+  // dateText: {
+  //   fontFamily: "Exo2-Regular",
+  //   fontSize: 14,
+  //   color: "#000000",
+  // },
+  // dateTextHiden: {
+  //   fontFamily: "Exo2-Regular",
+  //   fontSize: 14,
+  //   color: "transparent",
+  // },
 });
 
 export default SelectDayOfTheWeek;
