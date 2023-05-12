@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
-import { getGroups } from "../servises/api/apiTimetable";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
 import { selectGroup } from "../redux/initial/initialSlice";
 

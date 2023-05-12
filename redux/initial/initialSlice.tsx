@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IDataGroups } from "../../models/IGroups";
+import { IDataGroups, IGroups } from "../../models/IGroups";
 import { IDataWeeks } from "../../models/IWeeks";
 import { ICurrent } from "../../models/ICurrent";
 import { fetchGroups, fetchWeeks, getCurrentDay } from "./operations";
 
 interface IInitialState {
-  selectedGroup: { name: string; code: string };
+  selectedGroup: IGroups;
   allGroups: IDataGroups;
   weeks: null | IDataWeeks;
   currentDay: ICurrent;
@@ -30,8 +30,6 @@ export const initialSlice = createSlice({
   reducers: {
     selectGroup: (state, action) => {
       state.selectedGroup = action.payload;
-      console.log(action.payload);
-      console.log(state.selectedGroup)
     },
   },
   extraReducers: (builder) =>
@@ -90,45 +88,6 @@ export const initialSlice = createSlice({
           state.error = action.payload;
         }
       ),
-
-  // {
-  //   [fetchGroups.fulfilled.type](state, action: PayloadAction<IDataGroups[]>) {
-  //     state.isLoading = false;
-  //     state.error = "";
-  //     state.allGroups = action.payload;
-  //   },
-  //   [fetchGroups.pending.type](state) {
-  //     state.isLoading = true;
-  //   },
-  // [fetchGroups.rejected.type](state, action: PayloadAction<string>) {
-  //   state.isLoading = false;
-  //   state.error = action.payload;
-  // },
-  // [fetchWeeks.fulfilled.type](state, action: PayloadAction<IDataWeeks[]>) {
-  //   state.isLoading = false;
-  //   state.error = "";
-  //   state.weeks = action.payload;
-  // },
-  //   [fetchWeeks.pending.type](state) {
-  //     state.isLoading = true;
-  //   },
-  // [fetchWeeks.rejected.type](state, action: PayloadAction<string>) {
-  //   state.isLoading = false;
-  //   state.error = action.payload;
-  // },
-  //   [getCurrentDay.fulfilled.type](state, action: PayloadAction<ICurrent>) {
-  //     state.isLoading = false;
-  //     state.error = "";
-  //     state.currentDay = action.payload;
-  //   },
-  // [getCurrentDay.pending.type](state) {
-  //   state.isLoading = true;
-  // },
-  // [getCurrentDay.rejected.type](state, action: PayloadAction<string>) {
-  //   state.isLoading = false;
-  //   state.error = action.payload;
-  // },
-  // },
 });
 
 

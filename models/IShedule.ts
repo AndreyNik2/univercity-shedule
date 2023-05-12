@@ -10,3 +10,7 @@ end_time: string,
 tagId: number,
 tag: string
 }
+
+export interface IDataShedule {
+    data: IShedule[]
+}
