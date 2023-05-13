@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { IShedule } from "../models/IShedule";
+import { LessonContainerComponent } from "./LessonContainer";
 
 type Props = {
   shedule: IShedule[] | [];
@@ -23,11 +24,13 @@ export const SheduleList: React.FunctionComponent<Props> = ({
     (lesson) => lesson.number === 2
   );
 
-  const thirdLesson =  selectLessonsOfTheDay.filter((lesson) => lesson.number === 3)
-  
+  const thirdLesson = selectLessonsOfTheDay.filter(
+    (lesson) => lesson.number === 3
+  );
 
-  const fourthLesson = selectLessonsOfTheDay.filter((lesson) => lesson.number === 4);
-  
+  const fourthLesson = selectLessonsOfTheDay.filter(
+    (lesson) => lesson.number === 4
+  );
 
   return (
     <View style={styles.container}>
@@ -36,100 +39,28 @@ export const SheduleList: React.FunctionComponent<Props> = ({
         <View style={styles.borderSolid}></View>
       </View>
       {firstLesson.length > 0 && (
-        <View style={styles.lessonsContainer}>
-          <View style={styles.tagContainer}>
-            <Text style={styles.tagText}>{firstLesson[0].tag}</Text>
-          </View>
-          <View>
-            <Text>{firstLesson[0].subject}</Text>
-          </View>
-          <View>
-            <Text>{firstLesson[0].teacher}</Text>
-          </View>
-          <View>
-            <Text>{firstLesson[0].class}</Text>
-          </View>
-          <View>
-            <Text>{`${firstLesson[0].start_time.slice(
-              10
-            )}-${firstLesson[0].end_time.slice(10)}`}</Text>
-          </View>
-        </View>
+        <LessonContainerComponent lesson={firstLesson} />
       )}
       <View style={styles.secondLessonContainer}>
         <Text style={styles.text}>2 Пара</Text>
         <View style={styles.borderSolid}></View>
       </View>
       {secondLesson.length > 0 && (
-        <View style={styles.lessonsContainer}>
-          <View style={styles.tagContainer}>
-            <Text style={styles.tagText}>{secondLesson[0].tag}</Text>
-          </View>
-          <View>
-            <Text>{secondLesson[0].subject}</Text>
-          </View>
-          <View>
-            <Text>{secondLesson[0].teacher}</Text>
-          </View>
-          <View>
-            <Text>{secondLesson[0].class}</Text>
-          </View>
-          <View>
-            <Text>{`${secondLesson[0].start_time.slice(
-              10
-            )}-${secondLesson[0].end_time.slice(10)}`}</Text>
-          </View>
-        </View>
+        <LessonContainerComponent lesson={secondLesson} />
       )}
       <View style={styles.thirdLessonContainer}>
         <Text style={styles.text}>3 Пара</Text>
         <View style={styles.borderSolid}></View>
       </View>
       {thirdLesson.length > 0 && (
-        <View style={styles.lessonsContainer}>
-          <View style={styles.tagContainer}>
-            <Text style={styles.tagText}>{thirdLesson[0].tag}</Text>
-          </View>
-          <View>
-            <Text>{thirdLesson[0].subject}</Text>
-          </View>
-          <View>
-            <Text>{thirdLesson[0].teacher}</Text>
-          </View>
-          <View>
-            <Text>{thirdLesson[0].class}</Text>
-          </View>
-          <View>
-            <Text>{`${thirdLesson[0].start_time.slice(
-              10
-            )}-${thirdLesson[0].end_time.slice(10)}`}</Text>
-          </View>
-        </View>
+        <LessonContainerComponent lesson={thirdLesson} />
       )}
       <View style={styles.fourthLessonContainer}>
         <Text style={styles.text}>4 Пара</Text>
         <View style={styles.borderSolid}></View>
       </View>
       {fourthLesson.length > 0 && (
-        <View style={styles.lessonsContainer}>
-          <View style={styles.tagContainer}>
-            <Text style={styles.tagText}>{fourthLesson[0].tag}</Text>
-          </View>
-          <View>
-            <Text>{fourthLesson[0].subject}</Text>
-          </View>
-          <View>
-            <Text>{fourthLesson[0].teacher}</Text>
-          </View>
-          <View>
-            <Text>{fourthLesson[0].class}</Text>
-          </View>
-          <View>
-            <Text>{`${fourthLesson[0].start_time.slice(
-              10
-            )}-${fourthLesson[0].end_time.slice(10)}`}</Text>
-          </View>
-        </View>
+        <LessonContainerComponent lesson={fourthLesson} />
       )}
     </View>
   );
@@ -182,13 +113,13 @@ const styles = StyleSheet.create({
     height: 183,
     marginHorizontal: 22,
     borderRadius: 20,
+    padding: 20,
     backgroundColor: "#E2E4F6",
   },
   lessonsOption: {},
   tagContainer: {
-    paddingTop: 20,
-    paddingLeft: 20,
-    backgroundColor: "#B189ED",    
+    alignSelf: "flex-start",
+    borderRadius: 10,
   },
   tagText: {
     paddingVertical: 8.5,
@@ -196,5 +127,19 @@ const styles = StyleSheet.create({
     fontFamily: "Exo2-SemiBold",
     fontSize: 16,
     color: "#ffffff",
+    borderRadius: 10,
   },
+  subjectContainer: {
+    marginTop: 15,
+  },
+  subject: {
+    fontFamily: "Exo2-Medium",
+    fontSize: 16,
+  },
+  teacherContainer: {},
+  teacher: {},
+  classContainer: {},
+  class: {},
+  timeContainer: {},
+  time: {},
 });

@@ -10,21 +10,12 @@ const SelectGroups: React.FC = () => {
     (state) => state.initialReduser
   );
 
+  const formatedAllGroup = allGroups.data.map(group => ({ name: `${group.name} групи`, code: group.code }))
+
   const [isFocus, setIsFocus] = useState(false);
 
   const onChangeDropdown = (event: { name: string; code: string }) => {
     dispatch(selectGroup(event));
-  };
-
-  const renderLabel = () => {
-    if (selectedGroup.name || isFocus) {
-      return (
-        <Text style={[styles.label, isFocus && { color: "blue" }]}>
-          Обрана група
-        </Text>
-      );
-    }
-    return null;
   };
 
 
@@ -33,14 +24,13 @@ const SelectGroups: React.FC = () => {
       <View style={styles.elementsContainer}>
         <Text>Розклад занять для</Text>
         <View style={styles.containerDrop}>
-          {renderLabel()}
           <Dropdown
             style={[styles.dropdown, isFocus && { borderColor: "blue" }]}
             placeholderStyle={styles.placeholderStyle}
             selectedTextStyle={styles.selectedTextStyle}
             inputSearchStyle={styles.inputSearchStyle}
             iconStyle={styles.iconStyle}
-            data={allGroups.data}
+            data={formatedAllGroup}
             search
             maxHeight={300}
             labelField="name"

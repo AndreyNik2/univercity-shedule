@@ -49,7 +49,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "linearGradient(90deg, #FEEFF2 0%, #DDE9FD 50.45%)",
   },
   linearGradient: {
     flex: 1,
