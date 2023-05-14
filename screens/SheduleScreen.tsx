@@ -133,11 +133,10 @@ const SheduleScreen = () => {
   }, [selectedGroup, selectedWeek]);
 
   return (
-    
-      <LinearGradient
-        colors={["#FEEFF2", "#DDE9FD"]}
-        start={[0, 1]}
-        style={styles.linearGradient}
+    <LinearGradient
+      colors={["#FEEFF2", "#DDE9FD"]}
+      start={[0, 1]}
+      style={styles.linearGradient}
     >
       <ScrollView style={styles.scroll}>
         {allGroups.data.length > 0 && <SelectGroups />}
@@ -169,15 +168,14 @@ const SheduleScreen = () => {
             <SheduleList shedule={shedule} selectedDay={selectedDay} />
           </View>
         )}
-        </ScrollView>
-      </LinearGradient>
-    
+      </ScrollView>
+    </LinearGradient>
   );
 };
 
 const styles = StyleSheet.create({
   scroll: {
-    flex: 1
+    flex: 1,
   },
   linearGradient: {
     flex: 1,

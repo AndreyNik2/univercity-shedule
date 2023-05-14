@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Provider } from "react-redux";
 import "react-native-gesture-handler";
 import { StatusBar } from "expo-status-bar";
@@ -9,10 +9,12 @@ import { setupStore } from "./redux/store";
 import { routes } from "./config/routes";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
+import { EventRegister } from "react-native-event-listeners";
 
 const store = setupStore();
 
 const App: React.FC = () => {
+  const [mode, setMode] = useState<Boolean>(false);
   const [fontsLoaded] = useFonts({
     "Exo2-Medium": require("./fonts/Exo2-Medium.ttf"),
     "Exo2-Regular": require("./fonts/Exo2-Regular.ttf"),
@@ -26,6 +28,15 @@ const App: React.FC = () => {
     prepare();
     
   }, [])
+
+  useEffect(() => {
+    let eventListner = EventRegister.addEventListener('changeTheme', (data) => {
+      setMode(data)
+    });
+    return () => {
+        EventRegister.removeEventListener(eventListner)
+    }
+  })
 
    if (!fontsLoaded) {
      return null;

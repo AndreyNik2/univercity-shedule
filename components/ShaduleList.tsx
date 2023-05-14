@@ -109,37 +109,4 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: "#000000",
   },
-  lessonsContainer: {
-    height: 183,
-    marginHorizontal: 22,
-    borderRadius: 20,
-    padding: 20,
-    backgroundColor: "#E2E4F6",
-  },
-  lessonsOption: {},
-  tagContainer: {
-    alignSelf: "flex-start",
-    borderRadius: 10,
-  },
-  tagText: {
-    paddingVertical: 8.5,
-    paddingHorizontal: 28.5,
-    fontFamily: "Exo2-SemiBold",
-    fontSize: 16,
-    color: "#ffffff",
-    borderRadius: 10,
-  },
-  subjectContainer: {
-    marginTop: 15,
-  },
-  subject: {
-    fontFamily: "Exo2-Medium",
-    fontSize: 16,
-  },
-  teacherContainer: {},
-  teacher: {},
-  classContainer: {},
-  class: {},
-  timeContainer: {},
-  time: {},
 });
