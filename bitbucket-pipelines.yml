@@ -4,35 +4,25 @@ definitions:
   caches:
     npm: ~/.npm
 pipelines:
-  # default:
-    # - parallel:
-    #     - step:
-    #         name: Run tests
-    #         script:
-    #           - npm install  --frozen-lockfile
-    #           - npm ci
-    #           - npm run ci-test
-    #     - step:
-    #         name: Analyse code
-    #         script:
-    #           - npm install  --frozen-lockfile
-    #           - npm ci
-    #           - npm run ci-lint
+  default:
+    - step:
+        name: Validate code
+        caches:
+          - npm
+        script:
+          - npm install  --frozen-lockfile
+          - npm ci
+          - npx jest --ci
   branches:
     develop:
-      # - parallel:
-      #     - step:
-      #         name: Run tests
-      #         script:
-      #           - npm install  --frozen-lockfile
-      #           - npm ci
-      #           - npm run ci-test
-      #     - step:
-      #         name: Analyse code
-      #         script:
-      #           - npm install  --frozen-lockfile
-      #           - npm ci
-      #           - npm run ci-lint
+      - step:
+          name: Validate code
+          caches:
+            - npm
+          script:
+            - npm install  --frozen-lockfile
+            - npm ci
+            - npx jest --ci
       - step:
           name: Create new release
           trigger: manual
@@ -44,19 +34,14 @@ pipelines:
             - npm ci
             - npx semantic-release
     master:
-      # - parallel:
-      #     - step:
-      #         name: Run tests
-      #         script:
-      #           - npm install  --frozen-lockfile
-      #           - npm ci
-      #           - npm run ci-test
-      #     - step:
-      #         name: Analyse code
-      #         script:
-      #           - npm install  --frozen-lockfile
-      #           - npm ci
-      #           - npm run ci-lint
+      - step:
+          name: Validate code
+          caches:
+            - npm
+          script:
+            - npm install  --frozen-lockfile
+            - npm ci
+            - npx jest --ci
       - step:
           name: Deploy to Expo
           trigger: manual
@@ -71,19 +56,14 @@ pipelines:
             - npx expo login --username $EXPO_USERNAME --password $EXPO_PASSWORD
             - npx expo publish
     staging:
-      # - parallel:
-      #     - step:
-      #         name: Run tests
-      #         script:
-      #           - npm install  --frozen-lockfile
-      #           - npm ci
-      #           - npm run ci-test
-      #     - step:
-      #         name: Analyse code
-      #         script:
-      #           - npm install  --frozen-lockfile
-      #           - npm ci
-      #           - npm run ci-lint
+      - step:
+          name: Validate code
+          caches:
+            - npm
+          script:
+            - npm install  --frozen-lockfile
+            - npm ci
+            - npx jest --ci
       - step:
           name: Deploy to Expo
           trigger: manual
