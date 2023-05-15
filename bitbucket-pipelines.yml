@@ -7,9 +7,9 @@ pipelines:
   default:
     - parallel:
         - step:
-            name: Test Build
+            name: Install Dependencies
             script:
-              - if [ -e yarn.lock ]; then yarn install --frozen-lockfile elif [ -e package-lock.json ]; then npm ci else npm i fi
+              - npm install
         - step:
             name: Run tests
             script:
@@ -24,9 +24,9 @@ pipelines:
     develop:
       - parallel:
           - step:
-              name: Test Build
+              name: Install Dependencies
               script:
-                - if [ -e yarn.lock ]; then yarn install --frozen-lockfile elif [ -e package-lock.json ]; then npm ci else npm i fi
+                - npm install
           - step:
               name: Run tests
               script:
@@ -49,9 +49,9 @@ pipelines:
     master:
       - parallel:
           - step:
-              name: Test Build
+              name: Install Dependencies
               script:
-                - if [ -e yarn.lock ]; then yarn install --frozen-lockfile elif [ -e package-lock.json ]; then npm ci else npm i fi
+                - npm install
           - step:
               name: Run tests
               script:
@@ -77,9 +77,9 @@ pipelines:
     staging:
       - parallel:
           - step:
-              name: Test Build
+              name: Install Dependencies
               script:
-                - if [ -e yarn.lock ]; then yarn install --frozen-lockfile elif [ -e package-lock.json ]; then npm ci else npm i fi
+                - npm install
           - step:
               name: Run tests
               script:
