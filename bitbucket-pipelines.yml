@@ -1,0 +1,88 @@
+---
+image: node:alpine
+definitions:
+  caches:
+    npm: ~/.npm
+pipelines:
+  default:
+    - parallel:
+        - step:
+            name: Run tests
+            script:
+              - npm ci
+              - npm run ci-test
+        - step:
+            name: Analyse code
+            script:
+              - npm ci
+              - npm run ci-lint
+  branches:
+    develop:
+      - parallel:
+          - step:
+              name: Run tests
+              script:
+                - npm ci
+                - npm run ci-test
+          - step:
+              name: Analyse code
+              script:
+                - npm ci
+                - npm run ci-lint
+      - step:
+          name: Create new release
+          trigger: manual
+          caches:
+            - npm
+          script:
+            - apk add --no-cache git openssh-client
+            - npm ci
+            - npx semantic-release
+    master:
+      - parallel:
+          - step:
+              name: Run tests
+              script:
+                - npm ci
+                - npm run ci-test
+          - step:
+              name: Analyse code
+              script:
+                - npm ci
+                - npm run ci-lint
+      - step:
+          name: Deploy to Expo
+          trigger: manual
+          deployment: production
+          caches:
+            - npm
+          script:
+            - cp app.production.json app.json
+            - apk add --no-cache bash
+            - npm ci
+            - npx expo login --username $EXPO_USERNAME --password $EXPO_PASSWORD
+            - npx expo publish
+    staging:
+      - parallel:
+          - step:
+              name: Run tests
+              script:
+                - npm ci
+                - npm run ci-test
+          - step:
+              name: Analyse code
+              script:
+                - npm ci
+                - npm run ci-lint
+      - step:
+          name: Deploy to Expo
+          trigger: manual
+          deployment: staging
+          caches:
+            - npm
+          script:
+            - cp app.staging.json app.json
+            - apk add --no-cache bash
+            - npm ci
+            - npx expo login --username $EXPO_USERNAME --password $EXPO_PASSWORD
+            - npx expo publish

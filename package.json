@@ -41,6 +41,8 @@
   "devDependencies": {
     "@babel/core": "^7.20.0",
     "@types/react": "~18.0.14",
+    "semantic-release-expo": "^2.2.3",
+    "semantic-release-git-branches": "^1.2.1",
     "typescript": "^4.9.4"
   },
   "private": true
