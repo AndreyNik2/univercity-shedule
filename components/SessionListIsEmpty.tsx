@@ -1,15 +1,22 @@
-import React from "react";
+import React, {useContext} from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { useAppSelector } from "../hooks/redux";
+import { themeContext } from "../config/themeContext";
 
 export const SessionListIsEmpty: React.FunctionComponent = () => {
   const { allGroups, weeks, currentDay, selectedGroup } = useAppSelector(
     (state) => state.initialReduser
   );
+  const theme = useContext(themeContext);
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>
+    <View
+      style={[
+        styles.container,
+        { backgroundColor: theme.middleContainerBackground },
+      ]}
+    >
+      <Text style={[styles.text, { color: theme.textColor }]}>
         Розклад сессії для <Text>{selectedGroup.name}</Text>
       </Text>
     </View>

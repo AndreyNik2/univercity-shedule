@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import SelectGroups from "../components/SelectGroup";
 import SelectDayOfTheWeek from "../components/SelectDayOfTheWeek";
@@ -19,6 +19,7 @@ import { getShedule } from "../servises/api/apiShadule";
 import { IGroups } from "../models/IGroups";
 import { IShedule } from "../models/IShedule";
 import { ScrollView } from "react-native-gesture-handler";
+import { themeContext } from "../config/themeContext"; 
 
 const SheduleScreen = () => {
   const dispatch = useAppDispatch();
@@ -28,6 +29,7 @@ const SheduleScreen = () => {
   const [shedule, setShedule] = useState<IShedule[] | []>([]);
   const [selectedWeek, setSelectedWeek] = useState<IWeeks[] | []>([]);
   const [selectedDay, setSelectedDay] = useState(0);
+  const theme = useContext(themeContext);
 
   const selectLastWeek = (weeks: IDataWeeks, selectedWeek: IWeeks[]) => {
     if (weeks) {
@@ -134,7 +136,7 @@ const SheduleScreen = () => {
 
   return (
     <LinearGradient
-      colors={["#FEEFF2", "#DDE9FD"]}
+      colors={theme.gradient}
       start={[0, 1]}
       style={styles.linearGradient}
     >
