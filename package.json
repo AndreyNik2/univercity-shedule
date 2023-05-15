@@ -6,7 +6,9 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "ci-test": "jest --ci",
+    "ci-lint": "eslint App.js components constants navigation screens -f ./node_modules/eslint-junit/index.js"
   },
   "dependencies": {
     "@expo/webpack-config": "^18.0.1",
@@ -43,7 +45,40 @@
     "@types/react": "~18.0.14",
     "semantic-release-expo": "^2.2.3",
     "semantic-release-git-branches": "^1.2.1",
-    "typescript": "^4.9.4"
+    "typescript": "^4.9.4",
+    "jest-expo": "^28.0.0",
+    "jest-junit": "^5.1.0",
+    "react-test-renderer": "16.3.1",
+    "babel-eslint": "^8.2.5",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb": "^17.0.0",
+    "eslint-junit": "^1.0.1",
+    "eslint-plugin-import": "^2.13.0",
+    "eslint-plugin-jest": "^21.17.0",
+    "eslint-plugin-jsx-a11y": "^6.1.0",
+    "eslint-plugin-react": "^7.10.0"
+  },
+  "jest": {
+    "preset": "jest-expo",
+    "coverageDirectory": "test-reports/coverage",
+    "reporters": [
+      "default",
+      "jest-junit"
+    ]
+  },
+  "jest-junit": {
+    "suiteName": "jest tests",
+    "output": "./test-reports/jest.xml",
+    "classNameTemplate": "{classname}-{title}",
+    "titleTemplate": "{classname}-{title}",
+    "ancestorSeparator": " › ",
+    "usePathForSuiteName": "true"
+  },
+  "eslint-junit": {
+    "suiteName": "eslint tests",
+    "output": "./test-reports/eslint.xml",
+    "classNameTemplate": "{ruleId}",
+    "titleTemplate": "{line} : {source}"
   },
   "private": true
 }
