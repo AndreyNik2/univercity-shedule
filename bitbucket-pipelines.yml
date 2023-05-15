@@ -7,34 +7,30 @@ pipelines:
   default:
     - parallel:
         - step:
-            name: Install Dependencies
-            script:
-              - npm install  --frozen-lockfile
-        - step:
             name: Run tests
             script:
+              - npm install  --frozen-lockfile
               - npm ci
               - npm run ci-test
         - step:
             name: Analyse code
             script:
+              - npm install  --frozen-lockfile
               - npm ci
               - npm run ci-lint
   branches:
     develop:
       - parallel:
           - step:
-              name: Install Dependencies
-              script:
-                - npm install  --frozen-lockfile
-          - step:
               name: Run tests
               script:
+                - npm install  --frozen-lockfile
                 - npm ci
                 - npm run ci-test
           - step:
               name: Analyse code
               script:
+                - npm install  --frozen-lockfile
                 - npm ci
                 - npm run ci-lint
       - step:
@@ -43,23 +39,22 @@ pipelines:
           caches:
             - npm
           script:
+            - npm install  --frozen-lockfile
             - apk add --no-cache git openssh-client
             - npm ci
             - npx semantic-release
     master:
       - parallel:
           - step:
-              name: Install Dependencies
-              script:
-                - npm install  --frozen-lockfile
-          - step:
               name: Run tests
               script:
+                - npm install  --frozen-lockfile
                 - npm ci
                 - npm run ci-test
           - step:
               name: Analyse code
               script:
+                - npm install  --frozen-lockfile
                 - npm ci
                 - npm run ci-lint
       - step:
@@ -69,6 +64,7 @@ pipelines:
           caches:
             - npm
           script:
+            - npm install  --frozen-lockfile
             - cp app.production.json app.json
             - apk add --no-cache bash
             - npm ci
@@ -77,17 +73,15 @@ pipelines:
     staging:
       - parallel:
           - step:
-              name: Install Dependencies
-              script:
-                - npm install --frozen-lockfile
-          - step:
               name: Run tests
               script:
+                - npm install  --frozen-lockfile
                 - npm ci
                 - npm run ci-test
           - step:
               name: Analyse code
               script:
+                - npm install  --frozen-lockfile
                 - npm ci
                 - npm run ci-lint
       - step:
@@ -97,6 +91,7 @@ pipelines:
           caches:
             - npm
           script:
+            - npm install  --frozen-lockfile
             - cp app.staging.json app.json
             - apk add --no-cache bash
             - npm ci
