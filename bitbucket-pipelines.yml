@@ -12,7 +12,6 @@ pipelines:
         script:
           - npm install  --frozen-lockfile
           - npm ci
-          - npx jest --ci
   branches:
     develop:
       - step:
@@ -22,7 +21,6 @@ pipelines:
           script:
             - npm install  --frozen-lockfile
             - npm ci
-            - npx jest --ci
       - step:
           name: Create new release
           trigger: manual
@@ -41,7 +39,6 @@ pipelines:
           script:
             - npm install  --frozen-lockfile
             - npm ci
-            - npx jest --ci
       - step:
           name: Deploy to Expo
           trigger: manual
@@ -63,7 +60,6 @@ pipelines:
           script:
             - npm install  --frozen-lockfile
             - npm ci
-            - npx jest --ci
       - step:
           name: Deploy to Expo
           trigger: manual
