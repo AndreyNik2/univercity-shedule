@@ -9,13 +9,7 @@ pipelines:
         - step:
             name: Test Build
             script:
-              - if [ -e yarn.lock ]; then
-          yarn install --frozen-lockfile
-          elif [ -e package-lock.json ]; then
-          npm ci
-          else
-          npm i
-          fi
+              - if [ -e yarn.lock ]; then yarn install --frozen-lockfile elif [ -e package-lock.json ]; then npm ci else npm i fi
         - step:
             name: Run tests
             script:
