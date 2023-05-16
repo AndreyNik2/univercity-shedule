@@ -1,5 +1,12 @@
 import React, { useCallback, useState, useContext } from "react";
-import { View, Text, StyleSheet, Linking, StatusBar } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Linking,
+  StatusBar,
+  Platform,
+} from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Switch, TouchableOpacity } from "react-native-gesture-handler";
 import { EventRegister } from "react-native-event-listeners";
@@ -124,11 +131,16 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     marginHorizontal: 20,
-    paddingTop: 12,
-    paddingBottom: 10,
     borderBottomWidth: 1,
-    borderStyle: "dashed",
-    borderColor: "#000000",
+    ...Platform.select({
+      android: {
+        borderStyle: "dashed",
+        paddingTop: 10,
+        paddingBottom: 10,
+      },
+      ios: { borderStyle: "solid", paddingTop: 12, paddingBottom: 12 },
+      default: { borderStyle: "solid" },
+    }),
   },
   socialsText: {
     fontFamily: "Exo2-Regular",
@@ -144,7 +156,11 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     marginHorizontal: 20,
-    paddingBottom: 8,
+    ...Platform.select({
+      android: {},
+      ios: { paddingTop: 12, paddingBottom: 12 },
+      default: {},
+    }),
   },
   themeText: {
     fontFamily: "Exo2-Regular",
@@ -162,7 +178,13 @@ const styles = StyleSheet.create({
     paddingTop: 14,
     paddingBottom: 14,
     borderBottomWidth: 1,
-    borderStyle: "dashed",
+    ...Platform.select({
+      android: {
+        borderStyle: "dashed",
+      },
+      ios: { borderStyle: "solid" },
+      default: { borderStyle: "solid" },
+    }),
   },
   itemContainerLast: {
     flexDirection: "row",

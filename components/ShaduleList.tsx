@@ -1,5 +1,5 @@
-import React, {useContext} from "react";
-import { View, Text, StyleSheet } from "react-native";
+import React, { useContext } from "react";
+import { View, Text, StyleSheet, Platform } from "react-native";
 import { IShedule } from "../models/IShedule";
 import { LessonContainerComponent } from "./LessonContainer";
 import { themeContext } from "../config/themeContext";
@@ -38,28 +38,36 @@ export const SheduleList: React.FunctionComponent<Props> = ({
     <View style={styles.container}>
       <View style={styles.firstLessonContainer}>
         <Text style={[styles.text, { color: theme.textColor }]}>1 Пара</Text>
-        <View style={[styles.borderSolid, { borderColor: theme.textColor }]}></View>
+        <View
+          style={[styles.borderSolid, { borderColor: theme.textColor }]}
+        ></View>
       </View>
       {firstLesson.length > 0 && (
         <LessonContainerComponent lesson={firstLesson} />
       )}
       <View style={styles.secondLessonContainer}>
         <Text style={[styles.text, { color: theme.textColor }]}>2 Пара</Text>
-        <View style={[styles.borderSolid, { borderColor: theme.textColor }]}></View>
+        <View
+          style={[styles.borderSolid, { borderColor: theme.textColor }]}
+        ></View>
       </View>
       {secondLesson.length > 0 && (
         <LessonContainerComponent lesson={secondLesson} />
       )}
       <View style={styles.thirdLessonContainer}>
         <Text style={[styles.text, , { color: theme.textColor }]}>3 Пара</Text>
-        <View style={[styles.borderSolid,  { borderColor: theme.textColor }]}></View>
+        <View
+          style={[styles.borderSolid, { borderColor: theme.textColor }]}
+        ></View>
       </View>
       {thirdLesson.length > 0 && (
         <LessonContainerComponent lesson={thirdLesson} />
       )}
       <View style={styles.fourthLessonContainer}>
         <Text style={[styles.text, , { color: theme.textColor }]}>4 Пара</Text>
-        <View style={[styles.borderSolid,  { borderColor: theme.textColor }]}></View>
+        <View
+          style={[styles.borderSolid, { borderColor: theme.textColor }]}
+        ></View>
       </View>
       {fourthLesson.length > 0 && (
         <LessonContainerComponent lesson={fourthLesson} />
@@ -110,8 +118,14 @@ const styles = StyleSheet.create({
     flex: 1,
     marginLeft: 2,
     height: 10,
-    borderStyle: "dashed",
     borderBottomWidth: 1,
     borderColor: "#000000",
+    ...Platform.select({
+      android: {
+        borderStyle: "dashed",
+      },
+      ios: { borderStyle: "solid" },
+      default: { borderStyle: "solid" },
+    }),
   },
 });

@@ -5,7 +5,7 @@ export const theme = {
         gradient: ["#FEEFF2", "#DDE9FD"],
         middleContainerBackground: '#F2F5FD',
         innerContainerBackground: '#E2E5F6',
-        dashedBorderColor: "#00000",
+        dashedBorderColor: "#000000",
         iconColor: '#848484',
         statusBarColor: 'dark-content',
         statusBarBG: '#F2F5FD',

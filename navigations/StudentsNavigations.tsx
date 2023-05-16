@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { MaterialIcons } from "@expo/vector-icons";
+import { Platform } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import SheduleScreen from "../screens/SheduleScreen";
 import SessionsScreen from "../screens/SessionsScreen";
@@ -18,14 +18,30 @@ const StudentsNavigator = () => {
       screenOptions={{
         tabBarActiveTintColor: "#1976D2",
         tabBarStyle: {
-          minHeight: 80,
+          ...Platform.select({
+            android: {
+              height: 80,
+            },
+            ios: {
+              height: 90,
+            },
+            default: {
+              minHeight: 70,
+            },
+          }),
+
           backgroundColor: theme.innerContainerBackground,
         },
         tabBarLabelStyle: {
           fontFamily: "Exo2-Regular",
           fontSize: 14,
-          marginBottom: 10,
-          marginTop: 0,
+          ...Platform.select({
+            android: {
+              marginBottom: 15,
+            },
+            ios: {},
+            default: {},
+          }),
         },
         tabBarIconStyle: { marginBottom: 8 },
       }}
