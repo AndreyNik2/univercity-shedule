@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useContext } from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
-import { useAppDispatch } from "../hooks/redux";
+import { themeContext } from "../config/themeContext";
 
 type Props = {
   selectDayOfTheWeek: (selectedDay: number, value: number) => void;
@@ -29,17 +29,17 @@ const SelectDayOfTheWeek: React.FC<Props> = ({
   selectDayOfTheWeek,
   selectedDay,
 }) => {
-
-
-  const getFullName = (selectedDay: number, weekDays: any) => {
-    return weekDays.find((weekDay: any) => weekDay.day === selectedDay).fullName
-
-  }
+ const theme = useContext(themeContext);
 
   useEffect(() => {}, [selectedDay]);
 
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        { backgroundColor: theme.innerContainerBackground },
+      ]}
+    >
       {weekDays.map((day: any) => {
         const textStyles = [styles.label];
         const touchable = [styles.touchable];
@@ -55,18 +55,11 @@ const SelectDayOfTheWeek: React.FC<Props> = ({
               }}
               style={touchable}
             >
-              <Text style={textStyles}>{day?.name}</Text>
+              <Text style={[{color: theme.textColor}, textStyles]}>{day?.name}</Text>
             </TouchableOpacity>
           </View>
         );
       })}
-      {/* <View style={styles.selectedDayContainer}>
-        <Text style={styles.dateTextHiden}>Вибрана дата</Text>
-        <Text style={styles.dateText}>
-          {getFullName(selectedDay, weekDays)}
-        </Text>
-        <Text style={styles.dateText}>Вибрана дата</Text>
-      </View> */}
     </View>
   );
 };
@@ -76,7 +69,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     marginTop: 20,
     borderRadius: 14,
-    backgroundColor: "#E2E5F6",
     flexDirection: "row",
     justifyContent: "space-around",
     paddingVertical: 5,
@@ -99,7 +91,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   label: {
-    color: "#535252",
+    // color: "#535252",
     fontSize: 14,
     paddingHorizontal: 15,
     paddingVertical: 10,
@@ -110,6 +102,9 @@ const styles = StyleSheet.create({
     fontSize: 14,
     paddingHorizontal: 15,
     paddingVertical: 10,
+  },
+  textStyles: {
+    
   },
   // selectedDayContainer: {
   //   marginTop: 48,

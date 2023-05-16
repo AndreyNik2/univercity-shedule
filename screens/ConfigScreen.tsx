@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useContext } from "react";
-import { View, Text, StyleSheet, Linking } from "react-native";
+import { View, Text, StyleSheet, Linking, StatusBar } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Switch, TouchableOpacity } from "react-native-gesture-handler";
 import { EventRegister } from "react-native-event-listeners";
@@ -32,6 +32,11 @@ const ConfigScreen = () => {
       start={[0, 1]}
       style={styles.linearGradient}
     >
+      <StatusBar
+        animated={false}
+        backgroundColor={theme.statusBarBG}
+        barStyle={theme.statusBarColor}
+      />
       <View
         style={[
           styles.container,

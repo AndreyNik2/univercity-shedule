@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, StatusBar } from "react-native";
 import SelectGroups from "../components/SelectGroup";
 import SelectDayOfTheWeek from "../components/SelectDayOfTheWeek";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
@@ -140,11 +140,21 @@ const SheduleScreen = () => {
       start={[0, 1]}
       style={styles.linearGradient}
     >
+      <StatusBar
+        animated={false}
+        backgroundColor={theme.statusBarBG}
+        barStyle={theme.statusBarColor}
+      />
       <ScrollView style={styles.scroll}>
         {allGroups.data.length > 0 && <SelectGroups />}
         {selectedGroup.name.length === 0 && <UnselectGroup />}
         {selectedGroup.name.length > 0 && (
-          <View style={styles.sheduleContainer}>
+          <View
+            style={[
+              styles.sheduleContainer,
+              { backgroundColor: theme.middleContainerBackground },
+            ]}
+          >
             {selectedWeek && (
               <SelectWeeks
                 selectLastWeek={selectLastWeek}
@@ -188,7 +198,6 @@ const styles = StyleSheet.create({
     marginTop: 33,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    backgroundColor: "#F2F5FD",
   },
   selectedDayContainer: {
     marginTop: 48,

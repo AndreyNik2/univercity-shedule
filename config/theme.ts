@@ -6,7 +6,10 @@ export const theme = {
         middleContainerBackground: '#F2F5FD',
         innerContainerBackground: '#E2E5F6',
         dashedBorderColor: "#00000",
-        iconColor:  '#848484'
+        iconColor: '#848484',
+        statusBarColor: 'dark-content',
+        statusBarBG: '#F2F5FD',
+        logoContainerBG: 'transparent'
     },
     dark: {
         theme: 'dark',
@@ -15,6 +18,9 @@ export const theme = {
         middleContainerBackground: '#1C1D23',
         innerContainerBackground: '#363637',
         dashedBorderColor: "#ffffff",
-        iconColor:  '#ffffff'
+        iconColor: '#ffffff',
+        statusBarColor: 'light-content',
+        statusBarBG: '#0E0F12',
+        logoContainerBG: '#ffffff'
     },
 }

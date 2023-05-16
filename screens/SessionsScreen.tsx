@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, StatusBar } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useAppSelector } from "../hooks/redux";
 import SelectGroups from "../components/SelectGroup";
@@ -20,6 +20,11 @@ const SessionsScreen = () => {
       start={[0, 1]}
       style={styles.linearGradient}
     >
+      <StatusBar
+        animated={false}
+        backgroundColor={theme.statusBarBG}
+        barStyle={theme.statusBarColor}
+      />
       {allGroups.data.length > 0 && <SelectGroups />}
       {selectedGroup.name.length === 0 && <UnselectGroup />}
       {selectedGroup.name.length > 0 && sessionList.length === 0 && (
