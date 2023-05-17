@@ -1,7 +1,9 @@
+import React, { useContext } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { IShedule } from "../models/IShedule";
 import { FontAwesome } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
+import { themeContext } from "../config/themeContext";
 
 type Props = {
   lesson: IShedule[];
@@ -10,8 +12,15 @@ type Props = {
 export const LessonContainerComponent: React.FunctionComponent<Props> = ({
   lesson,
 }) => {
+  const theme = useContext(themeContext);
+
   return (
-    <View style={styles.lessonsContainer}>
+    <View
+      style={[
+        styles.lessonsContainer,
+        { backgroundColor: theme.innerContainerBackground },
+      ]}
+    >
       {lesson[0].tag === "Прак" && (
         <View style={styles.tagContainer}>
           <Text style={[styles.tagText, { backgroundColor: "#B189ED" }]}>
@@ -35,21 +44,29 @@ export const LessonContainerComponent: React.FunctionComponent<Props> = ({
       )}
 
       <View style={styles.subjectContainer}>
-        <Text style={styles.subject}>{lesson[0].subject}</Text>
+        <Text style={[styles.subject, { color: theme.textColor }]}>
+          {lesson[0].subject}
+        </Text>
       </View>
       <View style={styles.teacherContainer}>
-        <FontAwesome name="graduation-cap" size={14} color="black" />
-        <Text style={styles.teacher}>{lesson[0].teacher}</Text>
+        <FontAwesome name="graduation-cap" size={14} color={theme.textColor} />
+        <Text style={[styles.teacher, { color: theme.textColor }]}>
+          {lesson[0].teacher}
+        </Text>
       </View>
       <View style={styles.classContainer}>
-        <MaterialIcons name="place" size={14} color="black" />
-        <Text style={styles.class}>{lesson[0].class}</Text>
+        <MaterialIcons name="place" size={14} color={theme.textColor} />
+        <Text style={[styles.class, { color: theme.textColor }]}>
+          {lesson[0].class}
+        </Text>
       </View>
       <View style={styles.timeContainer}>
-        <MaterialIcons name="access-time" size={14} color="black" />
-        <Text style={styles.time}>{`${lesson[0].start_time.slice(
+        <MaterialIcons name="access-time" size={14} color={theme.textColor} />
+        <Text
+          style={[styles.time, { color: theme.textColor }]}
+        >{`${lesson[0].start_time.slice(10)}-${lesson[0].end_time.slice(
           10
-        )}-${lesson[0].end_time.slice(10)}`}</Text>
+        )}`}</Text>
       </View>
     </View>
   );
@@ -61,12 +78,11 @@ const styles = StyleSheet.create({
     marginHorizontal: 22,
     borderRadius: 20,
     padding: 20,
-    backgroundColor: "#E2E4F6",
   },
-  lessonsOption: {},
   tagContainer: {
     alignSelf: "flex-start",
     borderRadius: 10,
+    overflow: "hidden",
   },
   tagText: {
     paddingVertical: 8.5,

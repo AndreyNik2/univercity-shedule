@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import React, { useEffect, useState, useContext } from "react";
+import { View, Text, StyleSheet, StatusBar } from "react-native";
 import SelectGroups from "../components/SelectGroup";
 import SelectDayOfTheWeek from "../components/SelectDayOfTheWeek";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
@@ -19,6 +19,7 @@ import { getShedule } from "../servises/api/apiShadule";
 import { IGroups } from "../models/IGroups";
 import { IShedule } from "../models/IShedule";
 import { ScrollView } from "react-native-gesture-handler";
+import { themeContext } from "../config/themeContext"; 
 
 const SheduleScreen = () => {
   const dispatch = useAppDispatch();
@@ -28,6 +29,7 @@ const SheduleScreen = () => {
   const [shedule, setShedule] = useState<IShedule[] | []>([]);
   const [selectedWeek, setSelectedWeek] = useState<IWeeks[] | []>([]);
   const [selectedDay, setSelectedDay] = useState(0);
+  const theme = useContext(themeContext);
 
   const selectLastWeek = (weeks: IDataWeeks, selectedWeek: IWeeks[]) => {
     if (weeks) {
@@ -134,15 +136,25 @@ const SheduleScreen = () => {
 
   return (
     <LinearGradient
-      colors={["#FEEFF2", "#DDE9FD"]}
+      colors={theme.gradient}
       start={[0, 1]}
       style={styles.linearGradient}
     >
+      <StatusBar
+        animated={false}
+        backgroundColor={theme.statusBarBG}
+        barStyle={theme.statusBarColor}
+      />
       <ScrollView style={styles.scroll}>
         {allGroups.data.length > 0 && <SelectGroups />}
         {selectedGroup.name.length === 0 && <UnselectGroup />}
         {selectedGroup.name.length > 0 && (
-          <View style={styles.sheduleContainer}>
+          <View
+            style={[
+              styles.sheduleContainer,
+              { backgroundColor: theme.middleContainerBackground },
+            ]}
+          >
             {selectedWeek && (
               <SelectWeeks
                 selectLastWeek={selectLastWeek}
@@ -186,7 +198,6 @@ const styles = StyleSheet.create({
     marginTop: 33,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    backgroundColor: "#F2F5FD",
   },
   selectedDayContainer: {
     marginTop: 48,
