@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Provider } from "react-redux";
 import "react-native-gesture-handler";
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, Image } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { setupStore } from "./redux/store";
@@ -10,6 +8,8 @@ import { routes } from "./config/routes";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { EventRegister } from "react-native-event-listeners";
+import { themeContext } from "./config/themeContext";
+import { theme } from "./config/theme";
 
 const store = setupStore();
 
@@ -30,11 +30,13 @@ const App: React.FC = () => {
   }, [])
 
   useEffect(() => {
-    let eventListner = EventRegister.addEventListener('changeTheme', (data) => {
-      setMode(data)
+    const eventListner = EventRegister.addEventListener('changeTheme', (data) => {
+      setMode(data);
+      console.log(data)
     });
     return () => {
-        EventRegister.removeEventListener(eventListner)
+      EventRegister.removeAllListeners()
+      
     }
   })
 
@@ -47,20 +49,22 @@ const App: React.FC = () => {
   const Stack = createStackNavigator();
   return (
     <Provider store={store}>
-      <NavigationContainer>
-        <Stack.Navigator
-          initialRouteName={"Home"}
-          screenOptions={{
-            headerShown: false,
-          }}
-        >
-          {routes.map((r, i) => (
-            <Stack.Screen key={i} name={r.name}>
-              {(props) => <r.component nameProp={r.name} {...props} />}
-            </Stack.Screen>
-          ))}
-        </Stack.Navigator>
-      </NavigationContainer>
+      <themeContext.Provider value={mode === true? theme.dark : theme.light}>
+        <NavigationContainer>
+          <Stack.Navigator
+            initialRouteName={"Home"}
+            screenOptions={{
+              headerShown: false,
+            }}
+          >
+            {routes.map((r, i) => (
+              <Stack.Screen key={i} name={r.name}>
+                {(props) => <r.component nameProp={r.name} {...props} />}
+              </Stack.Screen>
+            ))}
+          </Stack.Navigator>
+        </NavigationContainer>
+      </themeContext.Provider>
     </Provider>
   );
 };

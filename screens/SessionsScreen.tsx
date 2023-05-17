@@ -1,21 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useAppSelector } from "../hooks/redux";
 import SelectGroups from "../components/SelectGroup";
 import { UnselectGroup } from "../components/unselectGroup";
 import { SessionListIsEmpty } from "../components/SessionListIsEmpty";
+import { themeContext } from "../config/themeContext";
 
 const SessionsScreen = () => {
   const { allGroups, weeks, currentDay, selectedGroup } = useAppSelector(
     (state) => state.initialReduser
   );
-
+  const theme = useContext(themeContext);
   const [sessionList, setSessionList] = useState<[]>([]);
 
   return (
     <LinearGradient
-      colors={["#FEEFF2", "#DDE9FD"]}
+      colors={theme.gradient}
       start={[0, 1]}
       style={styles.linearGradient}
     >
