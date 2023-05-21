@@ -1,6 +1,4 @@
 import axios from "axios";
-import { AppDispatch } from "../store";
-import { initialSlice } from "./initialSlice";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { IDataGroups } from "../../models/IGroups";
 import { IDataWeeks } from "../../models/IWeeks";
@@ -8,6 +6,7 @@ import { ICurrent } from "../../models/ICurrent";
 
 
 axios.defaults.baseURL = "https://schedule.polytech.cv.ua/api";
+
 
 export const fetchGroups = createAsyncThunk(
   "initial/fetchGroups",

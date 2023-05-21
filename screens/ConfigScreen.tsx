@@ -11,11 +11,15 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Switch, TouchableOpacity } from "react-native-gesture-handler";
 import { EventRegister } from "react-native-event-listeners";
 import { FontAwesome } from "@expo/vector-icons";
-import { themeContext } from "../config/themeContext";
+import { ThemeContext } from "../context/ThemeContext";
+import { useAppDispatch, useAppSelector } from "../hooks/redux";
+import { setUser } from "../redux/initial/initialSlice";
 
 const ConfigScreen = () => {
   const [mode, setMode] = useState(false);
-  const theme = useContext(themeContext);
+  const theme = useContext(ThemeContext);
+  const dispatch = useAppDispatch();
+  const userType = useAppSelector((state) => state.initial.userType);
 
   const telegramBotURL = "https://t.me/schedule_polytech_bot";
 
@@ -64,6 +68,25 @@ const ConfigScreen = () => {
             onPress={() => onPress()}
           >
             <FontAwesome name="telegram" size={28} color="#229ED9" />
+          </TouchableOpacity>
+        </View>
+        <View
+          style={[
+            styles.socialContainer,
+            { borderColor: theme.dashedBorderColor },
+          ]}
+        >
+          <Text style={[styles.socialsText, { color: theme.textColor }]}>
+            Перейти до сторінки викладачів
+          </Text>
+          <TouchableOpacity
+            style={styles.telegramContainer}
+            onPress={() => {
+              console.log(userType)
+              dispatch(setUser("teacher"))
+            }}
+          >
+            <FontAwesome name="telegram" size={28} color="#37a500" />
           </TouchableOpacity>
         </View>
         <View style={styles.themeContainer}>

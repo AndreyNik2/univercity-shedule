@@ -1,13 +1,11 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { useAppSelector } from "../hooks/redux";
-import { themeContext } from "../config/themeContext";
+import { ThemeContext } from "../context/ThemeContext";
 
 export const SessionListIsEmpty: React.FunctionComponent = () => {
-  const { allGroups, weeks, currentDay, selectedGroup } = useAppSelector(
-    (state) => state.initialReduser
-  );
-  const theme = useContext(themeContext);
+  const selectedGroup = useAppSelector((state) => state.initial.selectedGroup);
+  const theme = useContext(ThemeContext);
 
   return (
     <View

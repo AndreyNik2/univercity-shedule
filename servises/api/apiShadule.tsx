@@ -8,8 +8,8 @@ export const getShedule = async (group:string, week:string) => {
       "/schedule/lessons", {params: {group: group, week: week}}
     );
     return data;
-  } catch (error: unknown) {
-    return;
+  } catch (error) {
+    return (`loading shedule with error ${error}`);
   }
 };
 

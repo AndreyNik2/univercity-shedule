@@ -5,13 +5,14 @@ import { useAppSelector } from "../hooks/redux";
 import SelectGroups from "../components/SelectGroup";
 import { UnselectGroup } from "../components/unselectGroup";
 import { SessionListIsEmpty } from "../components/SessionListIsEmpty";
-import { themeContext } from "../config/themeContext";
+import { ThemeContext } from "../context/ThemeContext";
 
 const SessionsScreen = () => {
-  const { allGroups, weeks, currentDay, selectedGroup } = useAppSelector(
-    (state) => state.initialReduser
+  const allGroups = useAppSelector((state) => state.initial.allGroups);
+  const selectedGroup = useAppSelector(
+    (state) => state.initial.selectedGroup
   );
-  const theme = useContext(themeContext);
+  const theme = useContext(ThemeContext);
   const [sessionList, setSessionList] = useState<[]>([]);
 
   return (

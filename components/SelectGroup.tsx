@@ -3,19 +3,23 @@ import { StyleSheet, Text, View } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
 import { selectGroup } from "../redux/initial/initialSlice";
-import { themeContext } from "../config/themeContext"; 
+import { ThemeContext } from "../context/ThemeContext";
+import { IGroups } from "../models/IGroups";
 
 const SelectGroups: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { allGroups, weeks, currentDay, selectedGroup } = useAppSelector(
-    (state) => state.initialReduser
+  const allGroups = useAppSelector(
+    (state) => state.initial.allGroups
+  );
+  const selectedGroup = useAppSelector(
+    (state) => state.initial.selectedGroup
   );
 
-  const formatedAllGroup = allGroups.data.map((group) => ({
+  const formatedAllGroup = allGroups.data.map((group:IGroups) => ({
     name: `${group.name} групи`,
     code: group.code,
   }));
-  const theme = useContext(themeContext);
+  const theme = useContext(ThemeContext);
   const [isFocus, setIsFocus] = useState(false);
 
   const onChangeDropdown = (event: { name: string; code: string }) => {
@@ -40,8 +44,14 @@ const SelectGroups: React.FC = () => {
               { backgroundColor: theme.innerContainerBackground },
               isFocus && { borderColor: "blue" },
             ]}
-            placeholderStyle={[styles.placeholderStyle, {color: theme.textColor}]}
-            selectedTextStyle={[styles.selectedTextStyle, {color: theme.textColor}]}
+            placeholderStyle={[
+              styles.placeholderStyle,
+              { color: theme.textColor },
+            ]}
+            selectedTextStyle={[
+              styles.selectedTextStyle,
+              { color: theme.textColor },
+            ]}
             inputSearchStyle={styles.inputSearchStyle}
             iconStyle={styles.iconStyle}
             data={formatedAllGroup}

@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from "react-native";
 import { IShedule } from "../models/IShedule";
 import { FontAwesome } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
-import { themeContext } from "../config/themeContext";
+import { ThemeContext } from "../context/ThemeContext";
 
 type Props = {
   lesson: IShedule[];
@@ -12,7 +12,7 @@ type Props = {
 export const LessonContainerComponent: React.FunctionComponent<Props> = ({
   lesson,
 }) => {
-  const theme = useContext(themeContext);
+  const theme = useContext(ThemeContext);
 
   return (
     <View

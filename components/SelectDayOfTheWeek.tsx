@@ -1,6 +1,6 @@
 import React, { useEffect, useContext } from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
-import { themeContext } from "../config/themeContext";
+import { ThemeContext } from "../context/ThemeContext";
 
 type Props = {
   selectDayOfTheWeek: (selectedDay: number, value: number) => void;
@@ -8,9 +8,9 @@ type Props = {
 };
 
 interface WeekDay {
-  day: number,
-  name: string,
-  fullName: string
+  day: number;
+  name: string;
+  fullName: string;
 }
 
 export const weekDays: any =
@@ -29,7 +29,7 @@ const SelectDayOfTheWeek: React.FC<Props> = ({
   selectDayOfTheWeek,
   selectedDay,
 }) => {
- const theme = useContext(themeContext);
+  const theme = useContext(ThemeContext);
 
   useEffect(() => {}, [selectedDay]);
 
@@ -55,7 +55,9 @@ const SelectDayOfTheWeek: React.FC<Props> = ({
               }}
               style={touchable}
             >
-              <Text style={[{color: theme.textColor}, textStyles]}>{day?.name}</Text>
+              <Text style={[{ color: theme.textColor }, textStyles]}>
+                {day?.name}
+              </Text>
             </TouchableOpacity>
           </View>
         );
@@ -103,9 +105,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingVertical: 10,
   },
-  textStyles: {
-    
-  },
+  textStyles: {},
   // selectedDayContainer: {
   //   marginTop: 48,
   //   paddingHorizontal: 20,

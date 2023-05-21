@@ -19,17 +19,26 @@ import { getShedule } from "../servises/api/apiShadule";
 import { IGroups } from "../models/IGroups";
 import { IShedule } from "../models/IShedule";
 import { ScrollView } from "react-native-gesture-handler";
-import { themeContext } from "../config/themeContext"; 
+import { ThemeContext } from "../context/ThemeContext";
 
 const SheduleScreen = () => {
   const dispatch = useAppDispatch();
-  const { allGroups, weeks, currentDay, selectedGroup } = useAppSelector(
-    (state) => state.initialReduser
+  const  allGroups  = useAppSelector(
+    (state) => state.initial.allGroups
+  );
+  const weeks = useAppSelector(
+    (state) => state.initial.weeks
+  );
+  const currentDay = useAppSelector(
+    (state) => state.initial.currentDay
+  );
+  const selectedGroup = useAppSelector(
+    (state) => state.initial.selectedGroup
   );
   const [shedule, setShedule] = useState<IShedule[] | []>([]);
   const [selectedWeek, setSelectedWeek] = useState<IWeeks[] | []>([]);
   const [selectedDay, setSelectedDay] = useState(0);
-  const theme = useContext(themeContext);
+  const theme = useContext(ThemeContext);
 
   const selectLastWeek = (weeks: IDataWeeks, selectedWeek: IWeeks[]) => {
     if (weeks) {
@@ -77,16 +86,18 @@ const SheduleScreen = () => {
   };
 
   const getSelectedDate = (selectedWeek: IWeeks[], selectedDay: number) => {
-    const calendarFormat = "dd.MM.yyyy";
-    const formatedStartDate = `${selectedWeek[0].start.slice(
-      6
-    )}-${selectedWeek[0].start.slice(3, 5)}-${selectedWeek[0].start.slice(
-      0,
-      2
-    )}`;
-    const startDate: Date = new Date(formatedStartDate);
-    const currentDate = startDate.setDate(startDate.getDate() + selectedDay);
-    return format(currentDate, calendarFormat);
+    if (selectedWeek.length > 0) {
+      const calendarFormat = "dd.MM.yyyy";
+      const formatedStartDate = `${selectedWeek[0].start.slice(
+        6
+      )}-${selectedWeek[0].start.slice(3, 5)}-${selectedWeek[0].start.slice(
+        0,
+        2
+      )}`;
+      const startDate: Date = new Date(formatedStartDate);
+      const currentDate = startDate.setDate(startDate.getDate() + selectedDay);
+      return format(currentDate, calendarFormat);
+    }
   };
 
   useEffect(() => {

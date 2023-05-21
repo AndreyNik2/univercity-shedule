@@ -11,6 +11,7 @@ interface IInitialState {
   currentDay: ICurrent;
   isLoading: boolean;
   error: string;
+  userType: string;
 }
 
 export const initialState: IInitialState = {
@@ -22,6 +23,8 @@ export const initialState: IInitialState = {
   currentDay: { currentWeek: "", currentDay: 0 },
   isLoading: false,
   error: "",
+  userType: ''
+
 };
 
 export const initialSlice = createSlice({
@@ -31,6 +34,9 @@ export const initialSlice = createSlice({
     selectGroup: (state, action) => {
       state.selectedGroup = action.payload;
     },
+    setUser: (state, action) => {
+      state.userType = action.payload;
+    }
   },
   extraReducers: (builder) =>
     builder
@@ -91,5 +97,5 @@ export const initialSlice = createSlice({
 });
 
 
-export const { selectGroup } = initialSlice.actions
+export const { selectGroup, setUser } = initialSlice.actions
 export const initialReduser = initialSlice.reducer;

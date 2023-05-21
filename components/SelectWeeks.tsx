@@ -4,7 +4,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { AntDesign } from "@expo/vector-icons";
 import { useAppSelector } from "../hooks/redux";
 import { IDataWeeks, IWeeks } from "../models/IWeeks";
-import { themeContext } from "../config/themeContext";
+import { ThemeContext } from "../context/ThemeContext";
 
 type Props = {
   selectLastWeek: (weeks: IDataWeeks, selectedWeek: IWeeks[]) => void;
@@ -12,13 +12,16 @@ type Props = {
   selectedWeek: IWeeks[];
 };
 
-const SelectWeeks: React.FC<Props> = ({selectLastWeek, selectNextWeek, selectedWeek}) => {
- 
-  const { allGroups, weeks, currentDay, selectedGroup } = useAppSelector(
-    (state) => state.initialReduser
+const SelectWeeks: React.FC<Props> = ({
+  selectLastWeek,
+  selectNextWeek,
+  selectedWeek,
+}) => {
+  const weeks = useAppSelector(
+    (state) => state.initial.weeks
   );
-  const theme = useContext(themeContext);
- 
+  const theme = useContext(ThemeContext);
+
   return (
     <View
       style={[
@@ -36,7 +39,7 @@ const SelectWeeks: React.FC<Props> = ({selectLastWeek, selectNextWeek, selectedW
       >
         <AntDesign name="left" size={12} color="black" />
       </TouchableOpacity>
-      <Text style={[styles.period, {color: theme.textColor}]}>
+      <Text style={[styles.period, { color: theme.textColor }]}>
         {selectedWeek.length > 0 &&
           `${selectedWeek[0].start} - ${selectedWeek[0].end}`}
       </Text>
@@ -56,8 +59,8 @@ const SelectWeeks: React.FC<Props> = ({selectLastWeek, selectNextWeek, selectedW
 
 const styles = StyleSheet.create({
   selectWeeksContainer: {
-        height: 41,
-      marginTop:23,
+    height: 41,
+    marginTop: 23,
     marginHorizontal: 20,
     borderRadius: 14,
     backgroundColor: "#E2E5F6",

@@ -1,9 +1,9 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { themeContext } from "../config/themeContext";
+import { ThemeContext } from "../context/ThemeContext";
 
 export const UnselectGroup: React.FunctionComponent = () => {
-  const theme = useContext(themeContext);
+  const theme = useContext(ThemeContext);
 
   return (
     <View
@@ -12,7 +12,9 @@ export const UnselectGroup: React.FunctionComponent = () => {
         { backgroundColor: theme.middleContainerBackground },
       ]}
     >
-      <Text style={[styles.text, {color: theme.textColor}]}>Вибиріть групу зі списку</Text>
+      <Text style={[styles.text, { color: theme.textColor }]}>
+        Вибиріть групу зі списку
+      </Text>
     </View>
   );
 };

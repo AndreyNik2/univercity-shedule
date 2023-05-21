@@ -5,13 +5,12 @@ import { Feather } from "@expo/vector-icons";
 import SheduleScreen from "../screens/SheduleScreen";
 import SessionsScreen from "../screens/SessionsScreen";
 import ConfigScreen from "../screens/ConfigScreen";
-import { themeContext } from "../config/themeContext";
+import { ThemeContext } from "../context/ThemeContext";
 
 const Tab = createBottomTabNavigator();
 
 const StudentsNavigator = () => {
-
-  const theme = useContext(themeContext);
+  const theme = useContext(ThemeContext);
 
   return (
     <Tab.Navigator

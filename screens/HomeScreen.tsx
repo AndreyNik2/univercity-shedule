@@ -1,16 +1,27 @@
-import React, {useContext} from "react";
+import React, { useContext, useEffect } from "react";
 import { LinearGradient } from "expo-linear-gradient";
-import { View, StyleSheet, Image, TouchableOpacity, Text, StatusBar } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  Text,
+  StatusBar,
+} from "react-native";
 import { IStackScreenProp } from "../models/StackScreenProps";
-import { themeContext } from "../config/themeContext";
+import { ThemeContext } from "../context/ThemeContext";
+import { useAppDispatch, useAppSelector } from "../hooks/redux";
+import { setUser } from "../redux/initial/initialSlice";
 
 export const HomeScreen: React.FC<IStackScreenProp> = ({
   navigation,
   route,
   nameProp,
 }) => {
+  const dispatch = useAppDispatch();
+  // const { userType } = useAppSelector((state) => state.initial.userType);
 
-  const theme = useContext(themeContext);
+  const theme = useContext(ThemeContext);
 
   return (
     <LinearGradient
@@ -25,7 +36,12 @@ export const HomeScreen: React.FC<IStackScreenProp> = ({
         barStyle={theme.statusBarColor}
       />
       <View style={styles.logoContainer}>
-        <View style={[styles.logoContainerBG,{ backgroundColor: theme.logoContainerBG }]}>
+        <View
+          style={[
+            styles.logoContainerBG,
+            { backgroundColor: theme.logoContainerBG },
+          ]}
+        >
           <Image style={styles.logo} source={require("../assets/logo.png")} />
         </View>
       </View>
@@ -38,14 +54,20 @@ export const HomeScreen: React.FC<IStackScreenProp> = ({
         <TouchableOpacity
           activeOpacity={0.8}
           style={styles.button}
-          onPress={() => navigation.navigate("StudentsScreen")}
+          onPress={() => {
+            dispatch(setUser("student"));
+            // navigation.navigate("StudentsScreen");
+          }}
         >
           <Text style={styles.buttonTitle}>Студент</Text>
         </TouchableOpacity>
         <TouchableOpacity
           activeOpacity={0.8}
           style={styles.button}
-          onPress={() => navigation.navigate("TeachersScreen")}
+          onPress={() => {
+            dispatch(setUser("teacher"));
+            // navigation.navigate("TeachersScreen");
+          }}
         >
           <Text style={styles.buttonTitle}>Вчитель</Text>
         </TouchableOpacity>
@@ -71,10 +93,9 @@ const styles = StyleSheet.create({
   logoContainerBG: {
     width: 164,
     height: 164,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius:82,
-
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 82,
   },
   logo: {
     width: 157,

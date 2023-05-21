@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { View, Text, StyleSheet, Platform } from "react-native";
 import { IShedule } from "../models/IShedule";
 import { LessonContainerComponent } from "./LessonContainer";
-import { themeContext } from "../config/themeContext";
+import { ThemeContext } from "../context/ThemeContext";
 
 type Props = {
   shedule: IShedule[] | [];
@@ -13,7 +13,7 @@ export const SheduleList: React.FunctionComponent<Props> = ({
   shedule,
   selectedDay,
 }) => {
-  const theme = useContext(themeContext);
+  const theme = useContext(ThemeContext);
   const selectLessonsOfTheDay = shedule.filter(
     (lesson) => lesson.dayOfWeek === selectedDay + 1
   );
