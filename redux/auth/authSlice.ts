@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { logIn, logOut } from "./operations";
 import { IUser } from "../../models/IUser";
 
-interface IInitialState {
+export interface IInitialState {
   user: IUser;
   isLoadingUser: boolean;
   error: string;
