@@ -23,6 +23,7 @@ const initialPersistConfig = {
 const authPersistConfig = {
   key: "auth",
   storage: AsyncStorage,
+  whitelist: ['user']
 };
 
 const persistedReducer = combineReducers({

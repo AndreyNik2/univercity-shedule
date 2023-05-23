@@ -6,9 +6,10 @@ import {
   Linking,
   StatusBar,
   Platform,
+  TouchableOpacity,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { Switch, TouchableOpacity } from "react-native-gesture-handler";
+import { Switch, } from "react-native-gesture-handler";
 import { EventRegister } from "react-native-event-listeners";
 import { FontAwesome } from "@expo/vector-icons";
 import { ThemeContext } from "../context/ThemeContext";

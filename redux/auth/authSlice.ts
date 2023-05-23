@@ -36,14 +36,15 @@ export const authSlice = createSlice({
     builder
       .addCase(
         logIn.fulfilled.type,
-        (state, action: PayloadAction<IInitialState>) => {
+        (state, action: PayloadAction<IUser>) => {
           state.isLoadingUser = false;
           state.error = "";
-          state.user.access_token = action.payload.user.access_token;
-          state.user.adm = action.payload.user.adm;
-          state.user.id = action.payload.user.id;
-          state.user.expired_in = action.payload.user.expired_in;
-          state.user.status = action.payload.user.status;
+          state.user.access_token = action.payload.access_token;
+          state.user.adm = action.payload.adm;
+          state.user.id = action.payload.id;
+          state.user.expired_in = action.payload.expired_in;
+          state.user.status = action.payload.status;
+          state.user.name = action.payload.name
         }
       )
       .addCase(logIn.pending.type, (state) => {

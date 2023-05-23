@@ -15,16 +15,15 @@ export const AppRouter: React.FunctionComponent = () => {
   const userType = useAppSelector((state) => state.initial.userType);
   const access_token = useAppSelector((state) => state.auth.user.access_token);
   const dispatch = useAppDispatch();
+  
 
-  useEffect(() => {}, [dispatch, userType]);
+  useEffect(() => {
+    console.log(userType);
+    console.log(access_token)
+  }, [dispatch, userType, access_token]);
 
   return (
     <NavigationContainer>
-      {/* <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-        }}
-      > */}
       {userType === "" && (
         <Stack.Navigator
           screenOptions={{
@@ -80,7 +79,6 @@ export const AppRouter: React.FunctionComponent = () => {
           </Stack.Screen>
         </Stack.Navigator>
       )}
-      {/* </Stack.Navigator> */}
     </NavigationContainer>
   );
 };

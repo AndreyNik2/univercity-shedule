@@ -9,7 +9,8 @@ import { EventRegister } from "react-native-event-listeners";
 import { ThemeContext } from "./context/ThemeContext";
 import { theme } from "./config/theme";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { AppRouter } from "./components/AppRouter";
+import { AppRouter } from "./navigations/AppRouter";
+import Toast from "react-native-toast-message";
 
 const App: React.FC = () => {
   //  const  userType  = useAppSelector((state) => state.initial.userType);
@@ -51,6 +52,7 @@ const App: React.FC = () => {
       <PersistGate persistor={persistor}>
         <ThemeContext.Provider value={mode === true ? theme.dark : theme.light}>
           <AppRouter />
+          <Toast />
           {/* <NavigationContainer>
               <Stack.Navigator
                 screenOptions={{

@@ -16,28 +16,15 @@ import Checkbox from "expo-checkbox";
 import Toast from "react-native-toast-message";
 import { ThemeContext } from "../context/ThemeContext";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
-import { logIn } from "../redux/auth/operations";
 
-export const AuthTeacherScreen: React.FC = () => {
+
+export const TeacherSheduleScreen: React.FC = () => {
   const theme = useContext(ThemeContext);
   const [accessCode, setAccessCode] = useState<string>("");
   const [isChecked, setChecked] = useState<boolean>(false);
   const authError = useAppSelector((state) => state.auth.error);
   const dispatch = useAppDispatch();
 
-  const submit = () => {
-    console.log(accessCode)
-    dispatch(logIn({ code: accessCode, rememberMe: isChecked }));
-  };
-
-  useEffect(() => {
-    if (authError.length > 0) {
-      Toast.show({
-        type: 'error',
-        text1: `${authError}`
-      })
-    }
-  },[authError])
 
 
   return (
@@ -46,7 +33,6 @@ export const AuthTeacherScreen: React.FC = () => {
       start={[0, 1]}
       style={styles.linearGradient}
     >
-      
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.container}
@@ -56,40 +42,7 @@ export const AuthTeacherScreen: React.FC = () => {
           backgroundColor={theme.statusBarBG}
           barStyle={theme.statusBarColor}
         />
-        <View
-          style={[
-            styles.authenticateContainer,
-            { backgroundColor: theme.middleContainerBackground },
-          ]}
-        >
-          <TextInput
-            style={[
-              styles.inputCode,
-              { backgroundColor: theme.innerContainerBackground },
-            ]}
-            placeholder="Код доступу викладача"
-            onChangeText={setAccessCode}
-            autoFocus={true}
-            secureTextEntry={true}
-          ></TextInput>
-          <View style={styles.checkboxContainer}>
-            <Checkbox
-              style={styles.checkbox}
-              value={isChecked}
-              onValueChange={() => setChecked((state) => !state)}
-            />
-            <Text>Запам'ятай мене</Text>
-          </View>
-          <TouchableOpacity
-            onPress={submit}
-            style={styles.buttonContainer}
-            activeOpacity={0.7}
-          >
-            <View style={styles.button}>
-              <Text style={styles.buttonTitle}>Увійти</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
+        
       </KeyboardAvoidingView>
     </LinearGradient>
   );
@@ -136,11 +89,10 @@ const styles = StyleSheet.create({
   button: {
     justifyContent: "center",
     alignItems: "center",
-    marginHorizontal:1
+    marginHorizontal: 1,
   },
   buttonTitle: {
     fontFamily: "Exo2-Medium",
     fontSize: 18,
-
   },
 });
