@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Platform } from "react-native";
 import { Feather } from "@expo/vector-icons";
-import SheduleScreen from "../screens/StusentsSheduleScreen";
+import SheduleScreen from "../screens/StudentsSheduleScreen";
 import SessionsScreen from "../screens/SessionsScreen";
 import ConfigScreen from "../screens/ConfigScreen";
 import { ThemeContext } from "../context/ThemeContext";

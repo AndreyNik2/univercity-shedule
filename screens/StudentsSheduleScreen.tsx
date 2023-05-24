@@ -11,7 +11,7 @@ import {
 import SelectWeeks from "../components/SelectWeeks";
 import { LinearGradient } from "expo-linear-gradient";
 import { IDataWeeks, IWeeks } from "../models/IWeeks";
-import { SheduleList } from "../components/ShaduleList";
+import { SheduleList } from "../components/StudentShaduleList";
 import { format } from "date-fns";
 import { weekDays } from "../components/SelectDayOfTheWeek";
 import { UnselectGroup } from "../components/unselectGroup";
@@ -20,8 +20,9 @@ import { IGroups } from "../models/IGroups";
 import { IShedule } from "../models/IShedule";
 import { ScrollView } from "react-native-gesture-handler";
 import { ThemeContext } from "../context/ThemeContext";
+import Toast from "react-native-toast-message";
 
-const SheduleScreen = () => {
+const SheduleScreen:React.FC = () => {
   const dispatch = useAppDispatch();
   const  allGroups  = useAppSelector(
     (state) => state.initial.allGroups
@@ -124,6 +125,7 @@ const SheduleScreen = () => {
     if (weeks && currentDay.currentWeek.length > 0) {
       selectCurrentWeek(weeks, currentDay);
     }
+    
   }, [dispatch, weeks, currentDay]);
 
   useEffect(() => {
@@ -137,7 +139,11 @@ const SheduleScreen = () => {
           setShedule(result.data);
         }
       } catch (error) {
-        console.log("somthing went wrong");
+        Toast.show({
+          type: "error",
+          text1: "Failed to upload shedule",
+        });
+        console.log(`Failed to upload shedule with error(${error})`);
       }
     };
     if (selectedWeek.length > 0 && selectedGroup.code.length > 0) {

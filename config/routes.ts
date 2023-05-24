@@ -19,7 +19,7 @@ export const studentRout: IRouteProp = {
 
 export const teacherRout: IRouteProp = {
   name: "TeachersScreen",
-  component: TeachersScreen,
+  component: TeachersNavigator,
 };
 
 export const authTeacherRout: IRouteProp = {

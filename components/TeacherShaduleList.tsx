@@ -1,15 +1,17 @@
 import React, { useContext } from "react";
 import { View, Text, StyleSheet, Platform } from "react-native";
 import { IShedule } from "../models/IShedule";
-import { LessonContainerComponent } from "./LessonContainer";
+import { LessonContainerComponent } from "./StudentsLessonContainer";
 import { ThemeContext } from "../context/ThemeContext";
+import { ITeachersShedule } from "../models/ITeachersShedule";
+import { TeachersLessonContainer } from "./TeachersLessonContainer";
 
 type Props = {
-  shedule: IShedule[] | [];
+  shedule: ITeachersShedule[] | [];
   selectedDay: number;
 };
 
-export const SheduleList: React.FunctionComponent<Props> = ({
+export const TeacherSheduleList: React.FunctionComponent<Props> = ({
   shedule,
   selectedDay,
 }) => {
@@ -33,7 +35,12 @@ export const SheduleList: React.FunctionComponent<Props> = ({
   const fourthLesson = selectLessonsOfTheDay.filter(
     (lesson) => lesson.number === 4
   );
-
+  const fifthLesson = selectLessonsOfTheDay.filter(
+    (lesson) => lesson.number === 5
+  );
+  const sixthLesson = selectLessonsOfTheDay.filter(
+    (lesson) => lesson.number === 6
+  );
   return (
     <View style={styles.container}>
       <View style={styles.firstLessonContainer}>
@@ -43,7 +50,7 @@ export const SheduleList: React.FunctionComponent<Props> = ({
         ></View>
       </View>
       {firstLesson.length > 0 && (
-        <LessonContainerComponent lesson={firstLesson} />
+        <TeachersLessonContainer lesson={firstLesson} />
       )}
       <View style={styles.secondLessonContainer}>
         <Text style={[styles.text, { color: theme.textColor }]}>2 Пара</Text>
@@ -52,7 +59,7 @@ export const SheduleList: React.FunctionComponent<Props> = ({
         ></View>
       </View>
       {secondLesson.length > 0 && (
-        <LessonContainerComponent lesson={secondLesson} />
+        <TeachersLessonContainer lesson={secondLesson} />
       )}
       <View style={styles.thirdLessonContainer}>
         <Text style={[styles.text, , { color: theme.textColor }]}>3 Пара</Text>
@@ -61,7 +68,7 @@ export const SheduleList: React.FunctionComponent<Props> = ({
         ></View>
       </View>
       {thirdLesson.length > 0 && (
-        <LessonContainerComponent lesson={thirdLesson} />
+        <TeachersLessonContainer lesson={thirdLesson} />
       )}
       <View style={styles.fourthLessonContainer}>
         <Text style={[styles.text, , { color: theme.textColor }]}>4 Пара</Text>
@@ -70,7 +77,7 @@ export const SheduleList: React.FunctionComponent<Props> = ({
         ></View>
       </View>
       {fourthLesson.length > 0 && (
-        <LessonContainerComponent lesson={fourthLesson} />
+        <TeachersLessonContainer lesson={fourthLesson} />
       )}
     </View>
   );

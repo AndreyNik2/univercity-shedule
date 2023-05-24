@@ -44,13 +44,7 @@ export const fetchWeeks = createAsyncThunk(
 
 export const getCurrentDay = createAsyncThunk(
   "initial/getCurrentDay",
-  async (_, { rejectWithValue, getState }) => {
-    const state:any = getState();
-    const persistedAccessToken = state.auth.user.access_token;
-    if (!persistedAccessToken) {
-      return rejectWithValue('Помилка авторизації');
-    }
-    setAuthHeader(persistedAccessToken);
+  async (_, { rejectWithValue }) => {
     try {
       const { data } = await axios.get<ICurrent>("/schedule/time/current");
       return data;
@@ -73,4 +67,25 @@ export const getShedule = async (group: string, week: string) => {
     return;
   }
 };
+
+export const fetchTeachers = createAsyncThunk(
+  "initial/fetchTeachers",
+  async (_, {rejectWithValue, getState}) => {
+    const state: any = getState();
+    const persistedAccessToken = state.auth.user.access_token;
+    if (!persistedAccessToken) {
+      return rejectWithValue("Помилка авторизації");
+    }
+    setAuthHeader(persistedAccessToken);
+    axios.defaults.headers.common["no-time-limit"] = true; // for all requests
+    try {
+      const { data } = await axios.get("/teacher/list");
+      return data;
+    } catch (e) {
+      return rejectWithValue(
+        "Sorry something went wrong. Failed to load teachers list"
+      );
+    }
+  }
+);
 
