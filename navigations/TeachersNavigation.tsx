@@ -7,6 +7,7 @@ import SessionsScreen from "../screens/SessionsScreen";
 import ConfigScreen from "../screens/ConfigScreen";
 import { ThemeContext } from "../context/ThemeContext";
 import { TeacherSheduleScreen } from "../screens/TeacherSheduleScreen";
+import { TeachersNotes } from "../screens/TeachersNotes";
 
 const Tab = createBottomTabNavigator();
 
@@ -57,12 +58,12 @@ const TeachersNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="Сесії"
-        component={SessionsScreen}
+        name="Записи"
+        component={TeachersNotes}
         options={{
           headerShown: false,
           tabBarIcon: ({ color }) => (
-            <Feather name="book" size={24} color={color} />
+            <Feather name="edit" size={24} color={color} />
           ),
         }}
       />

@@ -78,6 +78,7 @@ export const TeacherSheduleList: React.FunctionComponent<Props> = ({
       </View>
       {fourthLesson.length > 0 && (
         <TeachersLessonContainer lesson={fourthLesson} />
+        
       )}
     </View>
   );
@@ -86,6 +87,7 @@ export const TeacherSheduleList: React.FunctionComponent<Props> = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingBottom:100
   },
   firstLessonContainer: {
     flexDirection: "row",

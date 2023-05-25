@@ -87,7 +87,7 @@ export const SelectTeacher: React.FC = () => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 93,
+    marginTop: 40,
     marginHorizontal: 21,
     borderRadius: 20,
   },
