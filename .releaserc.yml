@@ -1,0 +1,25 @@
+---
+branch: develop
+repositoryUrl: git@bitbucket.org:immersetech/students-app.git
+verifyConditions:
+  - '@semantic-release/npm'
+  - semantic-release-expo
+  - semantic-release-git-branches
+prepare:
+  - path: '@semantic-release/npm'
+    npmPublish: false
+  - semantic-release-expo
+  - path: semantic-release-git-branches
+    assets:
+      - app.json
+      - package.json
+      - package-lock.json
+    branchMerges:
+      - develop
+      - master
+    message: |
+      chore: create new release ${nextRelease.version}
+      ${nextRelease.notes}
+publish: false
+fail: false
+success: false

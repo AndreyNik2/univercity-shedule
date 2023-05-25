@@ -1,0 +1,75 @@
+---
+image: node:alpine
+definitions:
+  caches:
+    npm: ~/.npm
+pipelines:
+  default:
+    - step:
+        name: Validate code
+        caches:
+          - npm
+        script:
+          - npm install  --frozen-lockfile
+          - npm ci
+  branches:
+    develop:
+      - step:
+          name: Validate code
+          caches:
+            - npm
+          script:
+            - npm install  --frozen-lockfile
+            - npm ci
+      - step:
+          name: Create new release
+          trigger: manual
+          caches:
+            - npm
+          script:
+            - npm install  --frozen-lockfile
+            - apk add --no-cache git openssh-client
+            - npm ci
+            - npx semantic-release
+    master:
+      - step:
+          name: Validate code
+          caches:
+            - npm
+          script:
+            - npm install  --frozen-lockfile
+            - npm ci
+      - step:
+          name: Deploy to Expo
+          trigger: manual
+          deployment: production
+          caches:
+            - npm
+          script:
+            - npm install  --frozen-lockfile
+            - cp app.production.json app.json
+            - apk add --no-cache bash
+            - npm ci
+            - npx expo login --username $EXPO_USERNAME --password $EXPO_PASSWORD
+            - npx expo publish
+    staging:
+      - step:
+          name: Validate code
+          caches:
+            - npm
+          script:
+            - npm install  --frozen-lockfile
+            - npm ci
+      - step:
+          name: Deploy to Expo
+          trigger: manual
+          deployment: staging
+          caches:
+            - npm
+          script:
+            - npm install  --frozen-lockfile
+            - cp app.staging.json app.json
+            - apk add --no-cache bash
+            - npm ci
+            - npx expo login --username $EXPO_USERNAME --password $EXPO_PASSWORD
+            - npx expo publish
