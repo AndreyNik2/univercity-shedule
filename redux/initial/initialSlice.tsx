@@ -2,18 +2,31 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IDataGroups, IGroups } from "../../models/IGroups";
 import { IDataWeeks } from "../../models/IWeeks";
 import { ICurrent } from "../../models/ICurrent";
-import { fetchGroups, fetchWeeks, getCurrentDay } from "./operations";
+import {
+  fetchGroups,
+  fetchTeachers,
+  fetchWeeks,
+  getCurrentDay,
+} from "./operations";
+import { IDataTeachers, ITeachers } from "../../models/ITeachers";
 
 interface IInitialState {
+  selectedTeacher: ITeachers;
+  teachrsList: IDataTeachers;
   selectedGroup: IGroups;
   allGroups: IDataGroups;
   weeks: null | IDataWeeks;
   currentDay: ICurrent;
   isLoading: boolean;
   error: string;
+  userType: string;
 }
 
 export const initialState: IInitialState = {
+  selectedTeacher: { name: "", id: "" },
+  teachrsList: {
+    data: [{ name: "", id: "" }],
+  },
   selectedGroup: { name: "", code: "" },
   allGroups: {
     data: [{ name: "", code: "" }],
@@ -22,6 +35,7 @@ export const initialState: IInitialState = {
   currentDay: { currentWeek: "", currentDay: 0 },
   isLoading: false,
   error: "",
+  userType: "",
 };
 
 export const initialSlice = createSlice({
@@ -30,6 +44,12 @@ export const initialSlice = createSlice({
   reducers: {
     selectGroup: (state, action) => {
       state.selectedGroup = action.payload;
+    },
+    selectTeacher: (state, action) => {
+      state.selectedTeacher = action.payload;
+    },
+    setUser: (state, action) => {
+      state.userType = action.payload;
     },
   },
   extraReducers: (builder) =>
@@ -87,9 +107,26 @@ export const initialSlice = createSlice({
           state.isLoading = false;
           state.error = action.payload;
         }
+      )
+      .addCase(
+        fetchTeachers.fulfilled.type,
+        (state, action: PayloadAction<IDataTeachers>) => {
+          state.isLoading = false;
+          state.error = "";
+          state.teachrsList = action.payload;
+        }
+      )
+      .addCase(fetchTeachers.pending.type, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(
+        fetchTeachers.rejected.type,
+        (state, action: PayloadAction<string>) => {
+          state.isLoading = false;
+          state.error = action.payload;
+        }
       ),
 });
 
-
-export const { selectGroup } = initialSlice.actions
+export const { selectGroup, selectTeacher, setUser } = initialSlice.actions;
 export const initialReduser = initialSlice.reducer;

@@ -1,41 +1,73 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { LinearGradient } from "expo-linear-gradient";
-import { View, StyleSheet, Image, TouchableOpacity, Text } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  Text,
+  StatusBar,
+} from "react-native";
 import { IStackScreenProp } from "../models/StackScreenProps";
+import { ThemeContext } from "../context/ThemeContext";
+import { useAppDispatch, useAppSelector } from "../hooks/redux";
+import { setUser } from "../redux/initial/initialSlice";
 
 export const HomeScreen: React.FC<IStackScreenProp> = ({
   navigation,
   route,
   nameProp,
 }) => {
+  const dispatch = useAppDispatch();
+  // const { userType } = useAppSelector((state) => state.initial.userType);
+
+  const theme = useContext(ThemeContext);
+
   return (
     <LinearGradient
-      colors={["#FEEFF2", "#DDE9FD"]}
+      colors={theme.gradient}
       // colors={["#FEEFF2", "#000"]}
       start={[0, 1]}
       style={styles.linearGradient}
     >
-      <View style={styles.buttonsContainer}>
-        <Image
+      <StatusBar
+        animated={false}
+        backgroundColor={theme.statusBarBG}
+        barStyle={theme.statusBarColor}
+      />
+      <View style={styles.logoContainer}>
+        <View
           style={[
-            styles.logo,
-            {
-              transform: [{ translateY: 0 }, { translateX: 60 }],
-            },
+            styles.logoContainerBG,
+            { backgroundColor: theme.logoContainerBG },
           ]}
-          source={require("../assets/logo.png")}
-        />
+        >
+          <Image style={styles.logo} source={require("../assets/logo.png")} />
+        </View>
+      </View>
+      <View
+        style={[
+          styles.buttonsContainer,
+          { backgroundColor: theme.innerContainerBackground },
+        ]}
+      >
         <TouchableOpacity
           activeOpacity={0.8}
           style={styles.button}
-          onPress={() => navigation.navigate("StudentsScreen")}
+          onPress={() => {
+            dispatch(setUser("student"));
+            // navigation.navigate("StudentsScreen");
+          }}
         >
           <Text style={styles.buttonTitle}>Студент</Text>
         </TouchableOpacity>
         <TouchableOpacity
           activeOpacity={0.8}
           style={styles.button}
-          onPress={() => navigation.navigate("TeachersScreen")}
+          onPress={() => {
+            dispatch(setUser("teacher"));
+            // navigation.navigate("TeachersScreen");
+          }}
         >
           <Text style={styles.buttonTitle}>Вчитель</Text>
         </TouchableOpacity>
@@ -52,17 +84,25 @@ const styles = StyleSheet.create({
   },
   linearGradient: {
     flex: 1,
+  },
+  logoContainer: {
+    marginTop: 88,
+    marginHorizontal: 21,
+    alignItems: "center",
+  },
+  logoContainerBG: {
+    width: 164,
+    height: 164,
     justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 82,
   },
   logo: {
     width: 157,
     height: 157,
-    position: "absolute",
-    right: "50%",
-    top: -203,
   },
   buttonsContainer: {
-    position: "relative",
+    marginTop: 44,
     padding: 20,
     gap: 20,
     marginHorizontal: 21,
@@ -79,8 +119,8 @@ const styles = StyleSheet.create({
     fontSize: 18,
     lineHeight: 16,
     color: "#FFFFFF",
-    textAlign: 'center',
-    textAlignVertical: 'center',
-    marginTop: 15
+    textAlign: "center",
+    textAlignVertical: "center",
+    marginTop: 15,
   },
 });

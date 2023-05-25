@@ -1,17 +1,49 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
-import { initialSlice } from "./initial/initialSlice";
 import { initialReduser } from "./initial/initialSlice";
+import { authReduser } from "./auth/authSlice";
+import {
+  FLUSH,
+  PAUSE,
+  PERSIST,
+  persistReducer,
+  persistStore,
+  PURGE,
+  REGISTER,
+  REHYDRATE,
+} from "redux-persist";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const rootReduser = combineReducers({
-  initialReduser,
-});
 
-export const setupStore = () => {
-  return configureStore({
-    reducer: rootReduser,
-  });
+const initialPersistConfig = {
+  key: "initial",
+  storage: AsyncStorage,
+  whitelist: ["selectedGroup", "userType"],
 };
 
-export type RootState = ReturnType<typeof rootReduser>;
-export type AppStore = ReturnType<typeof setupStore>;
-export type AppDispatch = AppStore["dispatch"];
+const authPersistConfig = {
+  key: "auth",
+  storage: AsyncStorage,
+  whitelist: ['user']
+};
+
+const persistedReducer = combineReducers({
+  initial: persistReducer(initialPersistConfig, initialReduser),
+  auth: persistReducer(authPersistConfig, authReduser),
+});
+
+export const store = configureStore({
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
+});
+
+
+
+export const persistor = persistStore(store);
+export type AppDispatch = typeof store.dispatch;
+export type RootState = ReturnType<typeof persistedReducer>;
+

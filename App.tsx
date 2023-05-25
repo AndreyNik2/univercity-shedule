@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
 import "react-native-gesture-handler";
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import { setupStore } from "./redux/store";
-import { routes } from "./config/routes";
+import { persistor, store } from "./redux/store";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { EventRegister } from "react-native-event-listeners";
-import { themeContext } from "./config/themeContext";
+import { ThemeContext } from "./context/ThemeContext";
 import { theme } from "./config/theme";
-
-const store = setupStore();
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { AppRouter } from "./navigations/AppRouter";
+import Toast from "react-native-toast-message";
 
 const App: React.FC = () => {
+  //  const  userType  = useAppSelector((state) => state.initial.userType);
   const [mode, setMode] = useState<Boolean>(false);
   const [fontsLoaded] = useFonts({
     "Exo2-Medium": require("./fonts/Exo2-Medium.ttf"),
@@ -26,45 +26,75 @@ const App: React.FC = () => {
       await SplashScreen.preventAutoHideAsync();
     }
     prepare();
-    
-  }, [])
+  }, []);
 
   useEffect(() => {
-    const eventListner = EventRegister.addEventListener('changeTheme', (data) => {
-      setMode(data);
-      console.log(data)
-    });
+    const eventListner = EventRegister.addEventListener(
+      "changeTheme",
+      (data) => {
+        setMode(data);
+      }
+    );
     return () => {
-      EventRegister.removeAllListeners()
-      
-    }
-  })
+      EventRegister.removeAllListeners();
+    };
+  });
 
-   if (!fontsLoaded) {
-     return null;
-   } else {
-     SplashScreen.hideAsync();
-   }
+  if (!fontsLoaded) {
+    return null;
+  } else {
+    SplashScreen.hideAsync();
+  }
 
-  const Stack = createStackNavigator();
+  const Stack = createNativeStackNavigator();
   return (
     <Provider store={store}>
-      <themeContext.Provider value={mode === true? theme.dark : theme.light}>
-        <NavigationContainer>
-          <Stack.Navigator
-            initialRouteName={"Home"}
-            screenOptions={{
-              headerShown: false,
-            }}
-          >
-            {routes.map((r, i) => (
+      <PersistGate persistor={persistor}>
+        <ThemeContext.Provider value={mode === true ? theme.dark : theme.light}>
+          <AppRouter />
+          <Toast />
+          {/* <NavigationContainer>
+              <Stack.Navigator
+                screenOptions={{
+                  headerShown: false,
+                }}
+              >
+                {userType === "" && (
+                <Stack.Screen name={homeRout.name}>
+                  {(props) => (
+                    <homeRout.component nameProp={homeRout.name} {...props} />
+                  )}
+                </Stack.Screen>
+                )}
+                {userType === "student" && (
+                <Stack.Screen name={studentRout.name}>
+                  {(props) => (
+                    <studentRout.component
+                      nameProp={studentRout.name}
+                      {...props}
+                    />
+                  )}
+                </Stack.Screen>
+                )}
+                {userType === "teacher" && (
+                <Stack.Screen name={teacherRout.name}>
+                  {(props) => (
+                    <teacherRout.component
+                      nameProp={teacherRout.name}
+                      {...props}
+                    />
+                  )}
+                </Stack.Screen>
+                )}
+                {routes.map((r, i) => (
               <Stack.Screen key={i} name={r.name}>
                 {(props) => <r.component nameProp={r.name} {...props} />}
               </Stack.Screen>
             ))}
-          </Stack.Navigator>
-        </NavigationContainer>
-      </themeContext.Provider>
+              </Stack.Navigator>
+            </NavigationContainer> */}
+        </ThemeContext.Provider>
+      </PersistGate>
     </Provider>
   );
 };

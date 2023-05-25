@@ -1,14 +1,26 @@
 import React, { useCallback, useState, useContext } from "react";
-import { View, Text, StyleSheet, Linking } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Linking,
+  StatusBar,
+  Platform,
+  TouchableOpacity,
+} from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { Switch, TouchableOpacity } from "react-native-gesture-handler";
+import { Switch, } from "react-native-gesture-handler";
 import { EventRegister } from "react-native-event-listeners";
 import { FontAwesome } from "@expo/vector-icons";
-import { themeContext } from "../config/themeContext";
+import { ThemeContext } from "../context/ThemeContext";
+import { useAppDispatch, useAppSelector } from "../hooks/redux";
+import { setUser } from "../redux/initial/initialSlice";
 
 const ConfigScreen = () => {
   const [mode, setMode] = useState(false);
-  const theme = useContext(themeContext);
+  const theme = useContext(ThemeContext);
+  const dispatch = useAppDispatch();
+  const userType = useAppSelector((state) => state.initial.userType);
 
   const telegramBotURL = "https://t.me/schedule_polytech_bot";
 
@@ -32,6 +44,11 @@ const ConfigScreen = () => {
       start={[0, 1]}
       style={styles.linearGradient}
     >
+      <StatusBar
+        animated={false}
+        backgroundColor={theme.statusBarBG}
+        barStyle={theme.statusBarColor}
+      />
       <View
         style={[
           styles.container,
@@ -52,6 +69,25 @@ const ConfigScreen = () => {
             onPress={() => onPress()}
           >
             <FontAwesome name="telegram" size={28} color="#229ED9" />
+          </TouchableOpacity>
+        </View>
+        <View
+          style={[
+            styles.socialContainer,
+            { borderColor: theme.dashedBorderColor },
+          ]}
+        >
+          <Text style={[styles.socialsText, { color: theme.textColor }]}>
+            Перейти до сторінки викладачів
+          </Text>
+          <TouchableOpacity
+            style={styles.telegramContainer}
+            onPress={() => {
+              console.log(userType)
+              dispatch(setUser("teacher"))
+            }}
+          >
+            <FontAwesome name="telegram" size={28} color="#37a500" />
           </TouchableOpacity>
         </View>
         <View style={styles.themeContainer}>
@@ -119,11 +155,16 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     marginHorizontal: 20,
-    paddingTop: 12,
-    paddingBottom: 10,
     borderBottomWidth: 1,
-    borderStyle: "dashed",
-    borderColor: "#000000",
+    ...Platform.select({
+      android: {
+        borderStyle: "dashed",
+        paddingTop: 10,
+        paddingBottom: 10,
+      },
+      ios: { borderStyle: "solid", paddingTop: 12, paddingBottom: 12 },
+      default: { borderStyle: "solid" },
+    }),
   },
   socialsText: {
     fontFamily: "Exo2-Regular",
@@ -139,7 +180,11 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     marginHorizontal: 20,
-    paddingBottom: 8,
+    ...Platform.select({
+      android: {},
+      ios: { paddingTop: 12, paddingBottom: 12 },
+      default: {},
+    }),
   },
   themeText: {
     fontFamily: "Exo2-Regular",
@@ -157,7 +202,13 @@ const styles = StyleSheet.create({
     paddingTop: 14,
     paddingBottom: 14,
     borderBottomWidth: 1,
-    borderStyle: "dashed",
+    ...Platform.select({
+      android: {
+        borderStyle: "dashed",
+      },
+      ios: { borderStyle: "solid" },
+      default: { borderStyle: "solid" },
+    }),
   },
   itemContainerLast: {
     flexDirection: "row",

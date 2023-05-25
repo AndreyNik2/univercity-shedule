@@ -6,10 +6,11 @@ import SheduleScreen from "../screens/StudentsSheduleScreen";
 import SessionsScreen from "../screens/SessionsScreen";
 import ConfigScreen from "../screens/ConfigScreen";
 import { ThemeContext } from "../context/ThemeContext";
+import { TeacherSheduleScreen } from "../screens/TeacherSheduleScreen";
 
 const Tab = createBottomTabNavigator();
 
-const StudentsNavigator = () => {
+const TeachersNavigator = () => {
   const theme = useContext(ThemeContext);
 
   return (
@@ -47,7 +48,7 @@ const StudentsNavigator = () => {
     >
       <Tab.Screen
         name="Розклад"
-        component={SheduleScreen}
+        component={TeacherSheduleScreen}
         options={{
           headerShown: false,
           tabBarIcon: ({ color }) => (
@@ -79,4 +80,4 @@ const StudentsNavigator = () => {
   );
 };
 
-export default StudentsNavigator;
+export default TeachersNavigator;

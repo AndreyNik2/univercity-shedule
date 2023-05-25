@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, StatusBar } from "react-native";
 import SelectGroups from "../components/SelectGroup";
 import SelectDayOfTheWeek from "../components/SelectDayOfTheWeek";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
@@ -11,7 +11,7 @@ import {
 import SelectWeeks from "../components/SelectWeeks";
 import { LinearGradient } from "expo-linear-gradient";
 import { IDataWeeks, IWeeks } from "../models/IWeeks";
-import { SheduleList } from "../components/ShaduleList";
+import { SheduleList } from "../components/StudentShaduleList";
 import { format } from "date-fns";
 import { weekDays } from "../components/SelectDayOfTheWeek";
 import { UnselectGroup } from "../components/unselectGroup";
@@ -19,17 +19,27 @@ import { getShedule } from "../servises/api/apiShadule";
 import { IGroups } from "../models/IGroups";
 import { IShedule } from "../models/IShedule";
 import { ScrollView } from "react-native-gesture-handler";
-import { themeContext } from "../config/themeContext"; 
+import { ThemeContext } from "../context/ThemeContext";
+import Toast from "react-native-toast-message";
 
-const SheduleScreen = () => {
+const SheduleScreen:React.FC = () => {
   const dispatch = useAppDispatch();
-  const { allGroups, weeks, currentDay, selectedGroup } = useAppSelector(
-    (state) => state.initialReduser
+  const  allGroups  = useAppSelector(
+    (state) => state.initial.allGroups
+  );
+  const weeks = useAppSelector(
+    (state) => state.initial.weeks
+  );
+  const currentDay = useAppSelector(
+    (state) => state.initial.currentDay
+  );
+  const selectedGroup = useAppSelector(
+    (state) => state.initial.selectedGroup
   );
   const [shedule, setShedule] = useState<IShedule[] | []>([]);
   const [selectedWeek, setSelectedWeek] = useState<IWeeks[] | []>([]);
   const [selectedDay, setSelectedDay] = useState(0);
-  const theme = useContext(themeContext);
+  const theme = useContext(ThemeContext);
 
   const selectLastWeek = (weeks: IDataWeeks, selectedWeek: IWeeks[]) => {
     if (weeks) {
@@ -77,16 +87,18 @@ const SheduleScreen = () => {
   };
 
   const getSelectedDate = (selectedWeek: IWeeks[], selectedDay: number) => {
-    const calendarFormat = "dd.MM.yyyy";
-    const formatedStartDate = `${selectedWeek[0].start.slice(
-      6
-    )}-${selectedWeek[0].start.slice(3, 5)}-${selectedWeek[0].start.slice(
-      0,
-      2
-    )}`;
-    const startDate: Date = new Date(formatedStartDate);
-    const currentDate = startDate.setDate(startDate.getDate() + selectedDay);
-    return format(currentDate, calendarFormat);
+    if (selectedWeek.length > 0) {
+      const calendarFormat = "dd.MM.yyyy";
+      const formatedStartDate = `${selectedWeek[0].start.slice(
+        6
+      )}-${selectedWeek[0].start.slice(3, 5)}-${selectedWeek[0].start.slice(
+        0,
+        2
+      )}`;
+      const startDate: Date = new Date(formatedStartDate);
+      const currentDate = startDate.setDate(startDate.getDate() + selectedDay);
+      return format(currentDate, calendarFormat);
+    }
   };
 
   useEffect(() => {
@@ -113,6 +125,7 @@ const SheduleScreen = () => {
     if (weeks && currentDay.currentWeek.length > 0) {
       selectCurrentWeek(weeks, currentDay);
     }
+    
   }, [dispatch, weeks, currentDay]);
 
   useEffect(() => {
@@ -126,7 +139,11 @@ const SheduleScreen = () => {
           setShedule(result.data);
         }
       } catch (error) {
-        console.log("somthing went wrong");
+        Toast.show({
+          type: "error",
+          text1: "Failed to upload shedule",
+        });
+        console.log(`Failed to upload shedule with error(${error})`);
       }
     };
     if (selectedWeek.length > 0 && selectedGroup.code.length > 0) {
@@ -140,11 +157,21 @@ const SheduleScreen = () => {
       start={[0, 1]}
       style={styles.linearGradient}
     >
+      <StatusBar
+        animated={false}
+        backgroundColor={theme.statusBarBG}
+        barStyle={theme.statusBarColor}
+      />
       <ScrollView style={styles.scroll}>
         {allGroups.data.length > 0 && <SelectGroups />}
         {selectedGroup.name.length === 0 && <UnselectGroup />}
         {selectedGroup.name.length > 0 && (
-          <View style={styles.sheduleContainer}>
+          <View
+            style={[
+              styles.sheduleContainer,
+              { backgroundColor: theme.middleContainerBackground },
+            ]}
+          >
             {selectedWeek && (
               <SelectWeeks
                 selectLastWeek={selectLastWeek}
@@ -188,7 +215,6 @@ const styles = StyleSheet.create({
     marginTop: 33,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    backgroundColor: "#F2F5FD",
   },
   selectedDayContainer: {
     marginTop: 48,
