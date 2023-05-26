@@ -7,12 +7,17 @@ import SessionsScreen from "../screens/SessionsScreen";
 import ConfigScreen from "../screens/ConfigScreen";
 import { ThemeContext } from "../context/ThemeContext";
 import { TeacherSheduleScreen } from "../screens/TeacherSheduleScreen";
-import { TeachersNotes } from "../screens/TeachersNotes";
+import { TeachersUnselectNotes } from "../screens/TeachersUnselectNotes";
+import { useAppSelector } from "../hooks/redux";
+import { TeachersNotesNavigation } from "./TeachersNotesNavigation";
 
 const Tab = createBottomTabNavigator();
 
 const TeachersNavigator = () => {
   const theme = useContext(ThemeContext);
+  const selecctedTeacher = useAppSelector(
+    (state) => state.initial.selectedTeacher
+  );
 
   return (
     <Tab.Navigator
@@ -57,16 +62,30 @@ const TeachersNavigator = () => {
           ),
         }}
       />
-      <Tab.Screen
-        name="Записи"
-        component={TeachersNotes}
-        options={{
-          headerShown: false,
-          tabBarIcon: ({ color }) => (
-            <Feather name="edit" size={24} color={color} />
-          ),
-        }}
-      />
+      {selecctedTeacher.name.length === 0 && (
+        <Tab.Screen
+          name="Записи"
+          component={TeachersUnselectNotes}
+          options={{
+            headerShown: false,
+            tabBarIcon: ({ color }) => (
+              <Feather name="edit" size={24} color={color} />
+            ),
+          }}
+        />
+      )}
+      {selecctedTeacher.name.length > 0 && (
+        <Tab.Screen
+          name="Записи"
+          component={TeachersNotesNavigation}
+          options={{
+            headerShown: false,
+            tabBarIcon: ({ color }) => (
+              <Feather name="edit" size={24} color={color} />
+            ),
+          }}
+        />
+      )}
       <Tab.Screen
         name="Налаштування"
         component={ConfigScreen}

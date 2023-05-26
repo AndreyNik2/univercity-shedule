@@ -15,7 +15,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useAppSelector } from "../hooks/redux";
 import { SelectTeacher } from "../components/SelectTeacher";
 
-export const TeachersNotes: React.FC = () => {
+export const TeachersJournal: React.FC = () => {
   const theme = useContext(ThemeContext);
   const teachersList = useAppSelector((state) => state.initial.teachrsList);
 
