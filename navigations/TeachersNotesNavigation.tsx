@@ -15,9 +15,9 @@ import { TeachersNotesList } from "../components/TeachersNotesList";
 import Toast from "react-native-toast-message";
 import { useAppSelector } from "../hooks/redux";
 import { getTeachersJournal } from "../servises/api/apiShadule";
-import { IJournal } from "../models/IJournal";
+import { IJournals } from "../models/IJournal";
 import { IRouteProp } from "../models/RouteProp";
-import { TeachersJournal } from "../screens/TeachersJournal";
+import { TeachersJournal } from "../screens/TeachersJournalScreen";
 // import { teachersJournalRout, teachersNotesListRout } from "../config/routes";
 
 const teachersJournalRout: IRouteProp = {
@@ -31,9 +31,10 @@ const teachersNotesListRout: IRouteProp = {
 };
 
 
+
 export const TeachersNotesNavigation: React.FC = () => {
   const Stack = createNativeStackNavigator();
-  const [journalList, setJournalList] = useState<null | IJournal[]>(null);
+  const [journalList, setJournalList] = useState<null | IJournals[]>(null);
   const selectedTeacher = useAppSelector(
     (state) => state.initial.selectedTeacher
   );
@@ -58,7 +59,8 @@ export const TeachersNotesNavigation: React.FC = () => {
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
-      }}>
+      }}
+    >
       <Stack.Screen name={teachersNotesListRout.name}>
         {(props) => (
           <teachersNotesListRout.component

@@ -16,7 +16,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useAppSelector } from "../hooks/redux";
 import { SelectTeacher } from "./SelectTeacher";
 import { getTeachersJournal } from "../servises/api/apiShadule";
-import { IJournal } from "../models/IJournal";
+import { IJournals } from "../models/IJournal";
 import { useNavigation } from "@react-navigation/native";
 import { IStackScreenProp } from "../models/StackScreenProps";
 
@@ -29,7 +29,7 @@ export const TeachersNotesList: React.FC<IStackScreenProp> = ({
 }) => {
   const theme = useContext(ThemeContext);
   const teachersList = useAppSelector((state) => state.initial.teachrsList);
-  const [journalList, setJournalList] = useState<null | IJournal[]>(null);
+  const [journalList, setJournalList] = useState<null | IJournals[]>(null);
   const selectedTeacher = useAppSelector(
     (state) => state.initial.selectedTeacher
   );
@@ -69,19 +69,26 @@ export const TeachersNotesList: React.FC<IStackScreenProp> = ({
           style={styles.container}
         >
           {teachersList.data.length > 0 && <SelectTeacher />}
-          <View>
+          <View
+            style={[
+              styles.journalsContainer,
+              { backgroundColor: theme.middleContainerBackground },
+            ]}
+          >
             {journalList &&
               journalList.map((item) => (
                 <TouchableOpacity
+                  style={styles.itemContainer}
                   onPress={() => {
                     navigation.navigate("TeachersJournal", {
-                      itemId: `${item.id}`,
-                      otherParam: {item},
+                      journalParam: { item },
                     });
                   }}
                   key={item.id}
                 >
-                  <Text>{item.subject}</Text>
+                  <Text style={[styles.itemTitle, { color: theme.textColor }]}>
+                    {item.subject}
+                  </Text>
                 </TouchableOpacity>
               ))}
           </View>
@@ -94,5 +101,22 @@ export const TeachersNotesList: React.FC<IStackScreenProp> = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  journalsContainer: {
+    paddingVertical:10,
+    minHeight: 82,
+    marginHorizontal: 20,
+    marginTop: 50,
+    borderRadius: 20,
+    backgroundColor: "#F2F5FD",
+  },
+  itemContainer: {
+    marginHorizontal: 20,
+    marginVertical:2,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+  },
+  itemTitle: {
+    textAlign: 'center'
   },
 });

@@ -1,12 +1,10 @@
-import { TeachersNotesList } from './../components/TeachersNotesList';
+import { TeachersNotesList } from "./../components/TeachersNotesList";
 import { IRouteProp } from "../models/RouteProp";
 import StudentsNavigator from "../navigations/StudentsNavigations";
 import TeachersNavigator from "../navigations/TeachersNavigation";
 import { AuthTeacherScreen } from "../screens/AuthTeacherScreen";
 import { HomeScreen } from "../screens/HomeScreen";
-import { TeachersJournal } from '../screens/TeachersJournal';
-
-
+import { TeachersJournal } from "../screens/TeachersJournalScreen";
 
 export const homeRout: IRouteProp = {
   name: "Home",
@@ -29,11 +27,12 @@ export const authTeacherRout: IRouteProp = {
 };
 
 export const teachersJournalRout: IRouteProp = {
-  name: 'TeachersJournal',
+  name: "TeachersJournal",
   component: TeachersJournal,
-}
+  
+};
 
 export const teachersNotesListRout: IRouteProp = {
-  name: 'TeachersNotesList',
+  name: "TeachersNotesList",
   component: TeachersNotesList,
-}
+};

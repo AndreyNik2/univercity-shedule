@@ -1,8 +1,8 @@
-export interface IJournal {
+export interface IJournals {
   subject: string;
   id: string;
 }
 
-export interface IDataShedule {
-  data: IJournal[];
+export interface IDataJournals {
+  data: IJournals[];
 }

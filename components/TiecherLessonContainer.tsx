@@ -14,6 +14,7 @@ export const LessonContainerComponent: React.FunctionComponent<Props> = ({
   lesson,
 }) => {
   const theme = useContext(ThemeContext);
+  
 
   return (
     <View
@@ -22,21 +23,21 @@ export const LessonContainerComponent: React.FunctionComponent<Props> = ({
         { backgroundColor: theme.innerContainerBackground },
       ]}
     >
-      {lesson[0].tag === "Прак" && (
+      { lesson[0].tag === "Прак" && (
         <View style={styles.tagContainer}>
           <Text style={[styles.tagText, { backgroundColor: "#B189ED" }]}>
             {lesson[0].tag}
           </Text>
         </View>
       )}
-      {lesson[0].tag === "Контр" && (
+      { lesson[0].tag === "Контр" && (
         <View style={styles.tagContainer}>
           <Text style={[styles.tagText, { backgroundColor: "#FF7F96" }]}>
             {lesson[0].tag}
           </Text>
         </View>
       )}
-      {lesson[0].tag === "Лек" && (
+      { lesson[0].tag === "Лек" && (
         <View style={styles.tagContainer}>
           <Text style={[styles.tagText, { backgroundColor: "#949DFF" }]}>
             {lesson[0].tag}

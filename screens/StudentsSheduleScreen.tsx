@@ -187,10 +187,10 @@ const SheduleScreen:React.FC = () => {
               <Text style={styles.dateTextHiden}>
                 {getSelectedDate(selectedWeek, selectedDay)}
               </Text>
-              <Text style={styles.dateText}>
+              <Text style={[styles.dateText, { color: theme.textColor }]}>
                 {getFullName(selectedDay, weekDays)}
               </Text>
-              <Text style={styles.dateText}>
+              <Text style={[styles.dateText, { color: theme.textColor }]}>
                 {getSelectedDate(selectedWeek, selectedDay)}
               </Text>
             </View>

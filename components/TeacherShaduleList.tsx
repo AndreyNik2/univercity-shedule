@@ -78,7 +78,24 @@ export const TeacherSheduleList: React.FunctionComponent<Props> = ({
       </View>
       {fourthLesson.length > 0 && (
         <TeachersLessonContainer lesson={fourthLesson} />
-        
+      )}
+      <View style={styles.fifthLessonContainer}>
+        <Text style={[styles.text, , { color: theme.textColor }]}>5 Пара</Text>
+        <View
+          style={[styles.borderSolid, { borderColor: theme.textColor }]}
+        ></View>
+      </View>
+      {fifthLesson.length > 0 && (
+        <TeachersLessonContainer lesson={fifthLesson} />
+      )}
+      <View style={styles.sixthLessonContainer}>
+        <Text style={[styles.text, , { color: theme.textColor }]}>6 Пара</Text>
+        <View
+          style={[styles.borderSolid, { borderColor: theme.textColor }]}
+        ></View>
+      </View>
+      {sixthLesson.length > 0 && (
+        <TeachersLessonContainer lesson={sixthLesson} />
       )}
     </View>
   );
@@ -87,7 +104,7 @@ export const TeacherSheduleList: React.FunctionComponent<Props> = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingBottom:100
+    paddingBottom: 100,
   },
   firstLessonContainer: {
     flexDirection: "row",
@@ -113,6 +130,20 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   fourthLessonContainer: {
+    flexDirection: "row",
+    alignItems: "flex-end",
+    marginTop: 32,
+    marginHorizontal: 20,
+    marginBottom: 20,
+  },
+  fifthLessonContainer: {
+    flexDirection: "row",
+    alignItems: "flex-end",
+    marginTop: 32,
+    marginHorizontal: 20,
+    marginBottom: 20,
+  },
+  sixthLessonContainer: {
     flexDirection: "row",
     alignItems: "flex-end",
     marginTop: 32,

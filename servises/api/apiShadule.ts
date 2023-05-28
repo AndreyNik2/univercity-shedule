@@ -35,3 +35,14 @@ export const getTeachersJournal = async (id: string) => {
     return errorCatch(error);
   }
 };
+
+export const getTeachersJournalHistory = async (id: string) => {
+  try {
+    const { data } = await axios.get("/teacher/journalHistory", {
+      params: { key: id },
+    });
+    return data;
+  } catch (error) {
+    return errorCatch(error);
+  }
+};
