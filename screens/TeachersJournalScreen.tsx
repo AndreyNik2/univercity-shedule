@@ -21,9 +21,11 @@ import {
   IJournalHistoryItem,
 } from "../models/IJournalHistoty";
 import { Toast } from "react-native-toast-message/lib/src/Toast";
+import {  CommonActions } from "@react-navigation/native";
 import { getTeachersJournalHistory } from "../servises/api/apiShadule";
+import { Feather } from "@expo/vector-icons"; 
 
-export const TeachersJournal: React.FC<IStackScreenProp> = ({ route }) => {
+export const TeachersJournal: React.FC<IStackScreenProp> = ({ route, navigation }) => {
   const { journalParam } = route.params;
   const theme = useContext(ThemeContext);
   const [journalHistory, setJournalHistoty] = useState<null | IJournalHistory>(
@@ -70,6 +72,22 @@ export const TeachersJournal: React.FC<IStackScreenProp> = ({ route }) => {
             behavior={Platform.OS === "ios" ? "padding" : "height"}
             style={styles.container}
           >
+            <View style={styles.titleContainer}>
+              <TouchableOpacity
+                style={styles.goBackContainer}
+                onPress={() => navigation.dispatch(CommonActions.goBack())}
+              >
+                <Feather name="chevron-left" size={24} color="#0A84FF" />
+                <Text style={styles.titleBtnText}>
+                  Назад
+                </Text>
+              </TouchableOpacity>
+              <View>
+                <Text style={[styles.titleText, { color: theme.textColor }]}>
+                  {journalParam.item.subject}
+                </Text>
+              </View>
+            </View>
             <View style={styles.tableContainer}>
               {journalHistory && (
                 <View style={styles.tableHeaderContainer}>
@@ -79,7 +97,11 @@ export const TeachersJournal: React.FC<IStackScreenProp> = ({ route }) => {
                       { backgroundColor: theme.tableHeaderBGColor },
                     ]}
                   >
-                    <Text>№ з/п</Text>
+                    <Text
+                      style={[styles.textHeader, { color: theme.textColor }]}
+                    >
+                      № з/п
+                    </Text>
                   </View>
                   <View
                     style={[
@@ -345,9 +367,33 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  tableContainer: {
-    marginVertical: 50,
+  titleContainer: {
+    marginTop: 50,
+    marginLeft: 20,
+    flexDirection: "row",
+    alignItems: "center",
   },
+  goBackContainer: {
+    flexDirection: "row",
+    padding: 10,
+    marginRight:20,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  titleBtnText: {
+    fontFamily: "Exo2-SemiBold",
+    fontSize: 18,
+    color: '#0A84FF'
+  },
+  titleText: {
+    fontFamily: "Exo2-SemiBold",
+    fontSize: 18,
+  },
+  tableContainer: {
+    marginTop: 20,
+    marginBottom: 50,
+  },
+
   tableHeaderContainer: {
     marginHorizontal: 20,
     flexDirection: "row",
@@ -552,10 +598,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  textHeader: {
-
-  },
-  textRow: {
-
-  },
+  textHeader: {},
+  textRow: {},
 });

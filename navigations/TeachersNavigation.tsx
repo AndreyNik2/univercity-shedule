@@ -7,7 +7,7 @@ import SessionsScreen from "../screens/SessionsScreen";
 import ConfigScreen from "../screens/ConfigScreen";
 import { ThemeContext } from "../context/ThemeContext";
 import { TeacherSheduleScreen } from "../screens/TeacherSheduleScreen";
-import { TeachersUnselectNotes } from "../screens/TeachersUnselectNotes";
+import { TeachersUnselectNotes } from "../screens/TeachersUnselectJournal";
 import { useAppSelector } from "../hooks/redux";
 import { TeachersNotesNavigation } from "./TeachersNotesNavigation";
 

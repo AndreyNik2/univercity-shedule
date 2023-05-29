@@ -1,4 +1,4 @@
-import { TeachersNotesList } from "./../components/TeachersNotesList";
+import { TeachersNotesList } from "../screens/TeachersJournalListScreen";
 import { IRouteProp } from "../models/RouteProp";
 import StudentsNavigator from "../navigations/StudentsNavigations";
 import TeachersNavigator from "../navigations/TeachersNavigation";
@@ -29,7 +29,6 @@ export const authTeacherRout: IRouteProp = {
 export const teachersJournalRout: IRouteProp = {
   name: "TeachersJournal",
   component: TeachersJournal,
-  
 };
 
 export const teachersNotesListRout: IRouteProp = {

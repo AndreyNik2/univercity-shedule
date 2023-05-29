@@ -11,7 +11,7 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
-import { TeachersNotesList } from "../components/TeachersNotesList";
+import { TeachersNotesList } from "../screens/TeachersJournalListScreen";
 import Toast from "react-native-toast-message";
 import { useAppSelector } from "../hooks/redux";
 import { getTeachersJournal } from "../servises/api/apiShadule";
@@ -29,8 +29,6 @@ const teachersNotesListRout: IRouteProp = {
   name: "TeachersNotesList",
   component: TeachersNotesList,
 };
-
-
 
 export const TeachersNotesNavigation: React.FC = () => {
   const Stack = createNativeStackNavigator();

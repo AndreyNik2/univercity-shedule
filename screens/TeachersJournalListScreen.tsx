@@ -14,13 +14,11 @@ import Toast from "react-native-toast-message";
 import { ThemeContext } from "../context/ThemeContext";
 import { LinearGradient } from "expo-linear-gradient";
 import { useAppSelector } from "../hooks/redux";
-import { SelectTeacher } from "./SelectTeacher";
+import { SelectTeacher } from "../components/SelectTeacher";
 import { getTeachersJournal } from "../servises/api/apiShadule";
 import { IJournals } from "../models/IJournal";
 import { useNavigation } from "@react-navigation/native";
 import { IStackScreenProp } from "../models/StackScreenProps";
-
-
 
 export const TeachersNotesList: React.FC<IStackScreenProp> = ({
   navigation,
@@ -103,7 +101,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   journalsContainer: {
-    paddingVertical:10,
+    paddingVertical: 10,
     minHeight: 82,
     marginHorizontal: 20,
     marginTop: 50,
@@ -112,11 +110,11 @@ const styles = StyleSheet.create({
   },
   itemContainer: {
     marginHorizontal: 20,
-    marginVertical:2,
+    marginVertical: 2,
     paddingHorizontal: 20,
     paddingVertical: 10,
   },
   itemTitle: {
-    textAlign: 'center'
+    textAlign: "center",
   },
 });
