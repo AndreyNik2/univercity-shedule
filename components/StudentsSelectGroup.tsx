@@ -1,28 +1,25 @@
 import React, { useEffect, useState, useContext } from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
-import { selectTeacher } from "../redux/initial/initialSlice";
+import { selectGroup } from "../redux/initial/initialSlice";
 import { ThemeContext } from "../context/ThemeContext";
-import { ITeachers } from "../models/ITeachers";
-import { logOut } from "../redux/auth/operations";
+import { IGroups } from "../models/IGroups";
 
-export const SelectTeacher: React.FC = () => {
+const StudentsSelectGroup: React.FC = () => {
   const dispatch = useAppDispatch();
-  const teacherList = useAppSelector((state) => state.initial.teachrsList);
-  const selectedTeacher = useAppSelector(
-    (state) => state.initial.selectedTeacher
-  );
+  const allGroups = useAppSelector((state) => state.initial.allGroups);
+  const selectedGroup = useAppSelector((state) => state.initial.selectedGroup);
 
-  //   const formatedAllGroup = teacherList.data.map((group: ITeachers) => ({
-  //     name: `${group.name} групи`,
-  //     code: group.code,
-  //   }));
+  const formatedAllGroup = allGroups.data.map((group: IGroups) => ({
+    name: `${group.name} групи`,
+    code: group.code,
+  }));
   const theme = useContext(ThemeContext);
   const [isFocus, setIsFocus] = useState(false);
 
-  const onChangeDropdown = (event: { name: string; id: string }) => {
-    dispatch(selectTeacher(event));
+  const onChangeDropdown = (event: { name: string; code: string }) => {
+    dispatch(selectGroup(event));
   };
 
   return (
@@ -53,14 +50,14 @@ export const SelectTeacher: React.FC = () => {
             ]}
             inputSearchStyle={styles.inputSearchStyle}
             iconStyle={styles.iconStyle}
-            data={teacherList.data}
+            data={formatedAllGroup}
             search
             maxHeight={300}
             labelField="name"
-            valueField="id"
-            placeholder={!isFocus ? "Оберіть викладача" : "..."}
+            valueField="code"
+            placeholder={!isFocus ? "Оберіть групу" : "..."}
             searchPlaceholder="пошук..."
-            value={selectedTeacher}
+            value={selectedGroup}
             onFocus={() => setIsFocus(true)}
             onBlur={() => setIsFocus(false)}
             onChange={(item) => {
@@ -70,26 +67,16 @@ export const SelectTeacher: React.FC = () => {
           />
         </View>
       </View>
-      {selectedTeacher.id.length === 0 && (
-        <TouchableOpacity
-          onPress={() => dispatch(logOut())}
-          style={styles.buttonContainer}
-          activeOpacity={0.7}
-        >
-          <View style={styles.button}>
-            <Text style={styles.buttonTitle}>Увійти</Text>
-          </View>
-        </TouchableOpacity>
-      )}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 40,
+    marginTop: 93,
     marginHorizontal: 21,
     borderRadius: 20,
+    alignItems: "center",
   },
   elementsContainer: {
     paddingVertical: 20,
@@ -97,7 +84,6 @@ const styles = StyleSheet.create({
   dropdownTitle: {
     fontSize: 16,
     fontFamily: "Exo2-Medium",
-    textAlign: "center",
   },
   // selectTitle: {
   //   fontFamily: "Exo2-Medium",
@@ -106,10 +92,10 @@ const styles = StyleSheet.create({
   // },
   containerDrop: {
     paddingTop: 16,
-    marginHorizontal: 20,
   },
   dropdown: {
     height: 50,
+    width: 200,
     borderRadius: 8,
     paddingHorizontal: 8,
   },
@@ -139,23 +125,6 @@ const styles = StyleSheet.create({
     height: 50,
     fontSize: 16,
   },
-  buttonContainer: {
-    height: 46,
-    marginHorizontal: 20,
-    marginBottom: 20,
-    alignItems: "center",
-    justifyContent: "center",
-    borderWidth: 1,
-    borderColor: "#1976D2",
-    borderRadius: 14,
-  },
-  button: {
-    justifyContent: "center",
-    alignItems: "center",
-    marginHorizontal: 1,
-  },
-  buttonTitle: {
-    fontFamily: "Exo2-Medium",
-    fontSize: 18,
-  },
 });
+
+export default StudentsSelectGroup;

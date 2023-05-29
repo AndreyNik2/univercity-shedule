@@ -13,9 +13,9 @@ import {
 import { ThemeContext } from "../context/ThemeContext";
 import { LinearGradient } from "expo-linear-gradient";
 import { useAppSelector } from "../hooks/redux";
-import { SelectTeacher } from "../components/SelectTeacher";
+import { TeachersSelect } from "../components/TeachersSelect";
 
-export const TeachersUnselectNotes: React.FC = () => {
+export const TeachersUnselectedScreen: React.FC = () => {
   const theme = useContext(ThemeContext);
   const teachersList = useAppSelector((state) => state.initial.teachrsList);
 
@@ -36,7 +36,7 @@ export const TeachersUnselectNotes: React.FC = () => {
           behavior={Platform.OS === "ios" ? "padding" : "height"}
           style={styles.container}
         >
-          {teachersList.data.length > 0 && <SelectTeacher />}
+          {teachersList.data.length > 0 && <TeachersSelect />}
         </KeyboardAvoidingView>
       </ScrollView>
     </LinearGradient>

@@ -11,7 +11,7 @@ type Props = {
   selectedDay: number;
 };
 
-export const TeacherSheduleList: React.FunctionComponent<Props> = ({
+export const TeachersSheduleList: React.FunctionComponent<Props> = ({
   shedule,
   selectedDay,
 }) => {

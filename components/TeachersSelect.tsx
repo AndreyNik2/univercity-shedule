@@ -1,29 +1,24 @@
 import React, { useEffect, useState, useContext } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
-import { selectGroup } from "../redux/initial/initialSlice";
+import { selectTeacher } from "../redux/initial/initialSlice";
 import { ThemeContext } from "../context/ThemeContext";
-import { IGroups } from "../models/IGroups";
+import { ITeachers } from "../models/ITeachers";
+import { logOut } from "../redux/auth/operations";
 
-const SelectGroups: React.FC = () => {
+export const TeachersSelect: React.FC = () => {
   const dispatch = useAppDispatch();
-  const allGroups = useAppSelector(
-    (state) => state.initial.allGroups
-  );
-  const selectedGroup = useAppSelector(
-    (state) => state.initial.selectedGroup
+  const teacherList = useAppSelector((state) => state.initial.teachrsList);
+  const selectedTeacher = useAppSelector(
+    (state) => state.initial.selectedTeacher
   );
 
-  const formatedAllGroup = allGroups.data.map((group:IGroups) => ({
-    name: `${group.name} групи`,
-    code: group.code,
-  }));
   const theme = useContext(ThemeContext);
   const [isFocus, setIsFocus] = useState(false);
 
-  const onChangeDropdown = (event: { name: string; code: string }) => {
-    dispatch(selectGroup(event));
+  const onChangeDropdown = (event: { name: string; id: string }) => {
+    dispatch(selectTeacher(event));
   };
 
   return (
@@ -35,7 +30,7 @@ const SelectGroups: React.FC = () => {
     >
       <View style={styles.elementsContainer}>
         <Text style={[styles.dropdownTitle, { color: theme.textColor }]}>
-          Розклад занять для
+          Викладач:
         </Text>
         <View style={styles.containerDrop}>
           <Dropdown
@@ -54,14 +49,14 @@ const SelectGroups: React.FC = () => {
             ]}
             inputSearchStyle={styles.inputSearchStyle}
             iconStyle={styles.iconStyle}
-            data={formatedAllGroup}
+            data={teacherList.data}
             search
             maxHeight={300}
             labelField="name"
-            valueField="code"
-            placeholder={!isFocus ? "Оберіть групу" : "..."}
+            valueField="id"
+            placeholder={!isFocus ? "Оберіть викладача" : "..."}
             searchPlaceholder="пошук..."
-            value={selectedGroup}
+            value={selectedTeacher}
             onFocus={() => setIsFocus(true)}
             onBlur={() => setIsFocus(false)}
             onChange={(item) => {
@@ -71,16 +66,26 @@ const SelectGroups: React.FC = () => {
           />
         </View>
       </View>
+      {selectedTeacher.id.length === 0 && (
+        <TouchableOpacity
+          onPress={() => dispatch(logOut())}
+          style={styles.buttonContainer}
+          activeOpacity={0.7}
+        >
+          <View style={styles.button}>
+            <Text style={[styles.buttonTitle, {color: theme.textColor}]}>Увійти</Text>
+          </View>
+        </TouchableOpacity>
+      )}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 93,
+    marginTop: 40,
     marginHorizontal: 21,
     borderRadius: 20,
-    alignItems: "center",
   },
   elementsContainer: {
     paddingVertical: 20,
@@ -88,6 +93,7 @@ const styles = StyleSheet.create({
   dropdownTitle: {
     fontSize: 16,
     fontFamily: "Exo2-Medium",
+    textAlign: "center",
   },
   // selectTitle: {
   //   fontFamily: "Exo2-Medium",
@@ -96,10 +102,10 @@ const styles = StyleSheet.create({
   // },
   containerDrop: {
     paddingTop: 16,
+    marginHorizontal: 20,
   },
   dropdown: {
     height: 50,
-    width: 200,
     borderRadius: 8,
     paddingHorizontal: 8,
   },
@@ -129,6 +135,23 @@ const styles = StyleSheet.create({
     height: 50,
     fontSize: 16,
   },
+  buttonContainer: {
+    height: 46,
+    marginHorizontal: 20,
+    marginBottom: 20,
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 1,
+    borderColor: "#1976D2",
+    borderRadius: 14,
+  },
+  button: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginHorizontal: 1,
+  },
+  buttonTitle: {
+    fontFamily: "Exo2-Medium",
+    fontSize: 18,
+  },
 });
-
-export default SelectGroups;

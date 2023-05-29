@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { ThemeContext } from "../context/ThemeContext";
 
-export const UnselectGroup: React.FunctionComponent = () => {
+export const StudentsUnselectedGroup: React.FunctionComponent = () => {
   const theme = useContext(ThemeContext);
 
   return (

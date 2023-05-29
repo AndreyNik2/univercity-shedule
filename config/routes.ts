@@ -1,10 +1,10 @@
-import { TeachersNotesList } from "../screens/TeachersJournalListScreen";
+import { TeachersJournalListScreen } from "../screens/TeachersJournalListScreen";
 import { IRouteProp } from "../models/RouteProp";
 import StudentsNavigator from "../navigations/StudentsNavigations";
 import TeachersNavigator from "../navigations/TeachersNavigation";
-import { AuthTeacherScreen } from "../screens/AuthTeacherScreen";
+import { TeachersAuthScreen } from "../screens/TeachersAuthScreen";
 import { HomeScreen } from "../screens/HomeScreen";
-import { TeachersJournal } from "../screens/TeachersJournalScreen";
+import { TeachersJournalScreen } from "../screens/TeachersJournalScreen";
 
 export const homeRout: IRouteProp = {
   name: "Home",
@@ -23,15 +23,15 @@ export const teacherRout: IRouteProp = {
 
 export const authTeacherRout: IRouteProp = {
   name: "AuthTeachersScreen",
-  component: AuthTeacherScreen,
+  component: TeachersAuthScreen,
 };
 
 export const teachersJournalRout: IRouteProp = {
   name: "TeachersJournal",
-  component: TeachersJournal,
+  component: TeachersJournalScreen,
 };
 
 export const teachersNotesListRout: IRouteProp = {
   name: "TeachersNotesList",
-  component: TeachersNotesList,
+  component: TeachersJournalListScreen,
 };

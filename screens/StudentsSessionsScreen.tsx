@@ -2,16 +2,14 @@ import React, { useState, useContext } from "react";
 import { View, Text, StyleSheet, StatusBar } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useAppSelector } from "../hooks/redux";
-import SelectGroups from "../components/SelectGroup";
-import { UnselectGroup } from "../components/unselectGroup";
-import { SessionListIsEmpty } from "../components/SessionListIsEmpty";
+import StudentsSelectGroup from "../components/StudentsSelectGroup";
+import { StudentsUnselectedGroup } from "../components/StudentsUnselectedGroup";
+import { StudentsSessionListIsEmpty } from "../components/StudentsSessionListEmpty";
 import { ThemeContext } from "../context/ThemeContext";
 
-const SessionsScreen = () => {
+const StudentsSessionsScreen = () => {
   const allGroups = useAppSelector((state) => state.initial.allGroups);
-  const selectedGroup = useAppSelector(
-    (state) => state.initial.selectedGroup
-  );
+  const selectedGroup = useAppSelector((state) => state.initial.selectedGroup);
   const theme = useContext(ThemeContext);
   const [sessionList, setSessionList] = useState<[]>([]);
 
@@ -26,10 +24,10 @@ const SessionsScreen = () => {
         backgroundColor={theme.statusBarBG}
         barStyle={theme.statusBarColor}
       />
-      {allGroups.data.length > 0 && <SelectGroups />}
-      {selectedGroup.name.length === 0 && <UnselectGroup />}
+      {allGroups.data.length > 0 && <StudentsSelectGroup />}
+      {selectedGroup.name.length === 0 && <StudentsUnselectedGroup />}
       {selectedGroup.name.length > 0 && sessionList.length === 0 && (
-        <SessionListIsEmpty />
+        <StudentsSessionListIsEmpty />
       )}
     </LinearGradient>
   );
@@ -68,4 +66,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SessionsScreen;
+export default StudentsSessionsScreen;

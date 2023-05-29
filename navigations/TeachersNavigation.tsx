@@ -2,14 +2,17 @@ import React, { useContext } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Platform } from "react-native";
 import { Feather } from "@expo/vector-icons";
-import SheduleScreen from "../screens/StudentsSheduleScreen";
-import SessionsScreen from "../screens/SessionsScreen";
+import StudentsSheduleScreen from "../screens/StudentsSheduleScreen";
+import StudentsSessionsScreen from "../screens/StudentsSessionsScreen";
 import ConfigScreen from "../screens/ConfigScreen";
 import { ThemeContext } from "../context/ThemeContext";
-import { TeacherSheduleScreen } from "../screens/TeacherSheduleScreen";
-import { TeachersUnselectNotes } from "../screens/TeachersUnselectJournal";
+import { TeachersSheduleScreen } from "../screens/TeachersSheduleScreen";
+import { TeachersUnselectedScreen } from "../screens/TeachersUnselectedScreen";
 import { useAppSelector } from "../hooks/redux";
 import { TeachersNotesNavigation } from "./TeachersNotesNavigation";
+import { TeachersLoadScreen } from "../screens/TeachersLoadScreen";
+import { selectTeacher } from "../redux/initial/initialSlice";
+import { TeachersHourAccountingScreen } from "../screens/TeachersHourAccountingScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -54,7 +57,7 @@ const TeachersNavigator = () => {
     >
       <Tab.Screen
         name="Розклад"
-        component={TeacherSheduleScreen}
+        component={TeachersSheduleScreen}
         options={{
           headerShown: false,
           tabBarIcon: ({ color }) => (
@@ -65,7 +68,7 @@ const TeachersNavigator = () => {
       {selecctedTeacher.name.length === 0 && (
         <Tab.Screen
           name="Записи"
-          component={TeachersUnselectNotes}
+          component={TeachersUnselectedScreen}
           options={{
             headerShown: false,
             tabBarIcon: ({ color }) => (
@@ -82,6 +85,54 @@ const TeachersNavigator = () => {
             headerShown: false,
             tabBarIcon: ({ color }) => (
               <Feather name="edit" size={24} color={color} />
+            ),
+          }}
+        />
+      )}
+      {selecctedTeacher.name.length === 0 && (
+        <Tab.Screen
+          name="Навантаження"
+          component={TeachersUnselectedScreen}
+          options={{
+            headerShown: false,
+            tabBarIcon: ({ color }) => (
+              <Feather name="layers" size={24} color={color} />
+            ),
+          }}
+        />
+      )}
+      {selecctedTeacher.name.length > 0 && (
+        <Tab.Screen
+          name="Навантаження"
+          component={TeachersLoadScreen}
+          options={{
+            headerShown: false,
+            tabBarIcon: ({ color }) => (
+              <Feather name="layers" size={24} color={color} />
+            ),
+          }}
+        />
+      )}
+      {selecctedTeacher.name.length === 0 && (
+        <Tab.Screen
+          name="Облік годин"
+          component={TeachersUnselectedScreen}
+          options={{
+            headerShown: false,
+            tabBarIcon: ({ color }) => (
+              <Feather name="clock" size={24} color={color} />
+            ),
+          }}
+        />
+      )}
+      {selecctedTeacher.name.length > 0 && (
+        <Tab.Screen
+          name="Облік годин"
+          component={TeachersHourAccountingScreen}
+          options={{
+            headerShown: false,
+            tabBarIcon: ({ color }) => (
+              <Feather name="clock" size={24} color={color} />
             ),
           }}
         />

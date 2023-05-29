@@ -21,11 +21,14 @@ import {
   IJournalHistoryItem,
 } from "../models/IJournalHistoty";
 import { Toast } from "react-native-toast-message/lib/src/Toast";
-import {  CommonActions } from "@react-navigation/native";
+import { CommonActions } from "@react-navigation/native";
 import { getTeachersJournalHistory } from "../servises/api/apiShadule";
-import { Feather } from "@expo/vector-icons"; 
+import { Feather } from "@expo/vector-icons";
 
-export const TeachersJournal: React.FC<IStackScreenProp> = ({ route, navigation }) => {
+export const TeachersJournalScreen: React.FC<IStackScreenProp> = ({
+  route,
+  navigation,
+}) => {
   const { journalParam } = route.params;
   const theme = useContext(ThemeContext);
   const [journalHistory, setJournalHistoty] = useState<null | IJournalHistory>(
@@ -78,9 +81,7 @@ export const TeachersJournal: React.FC<IStackScreenProp> = ({ route, navigation 
                 onPress={() => navigation.dispatch(CommonActions.goBack())}
               >
                 <Feather name="chevron-left" size={24} color="#0A84FF" />
-                <Text style={styles.titleBtnText}>
-                  Назад
-                </Text>
+                <Text style={styles.titleBtnText}>Назад</Text>
               </TouchableOpacity>
               <View>
                 <Text style={[styles.titleText, { color: theme.textColor }]}>
@@ -376,14 +377,14 @@ const styles = StyleSheet.create({
   goBackContainer: {
     flexDirection: "row",
     padding: 10,
-    marginRight:20,
+    marginRight: 20,
     justifyContent: "center",
     alignItems: "center",
   },
   titleBtnText: {
     fontFamily: "Exo2-SemiBold",
     fontSize: 18,
-    color: '#0A84FF'
+    color: "#0A84FF",
   },
   titleText: {
     fontFamily: "Exo2-SemiBold",

@@ -46,3 +46,25 @@ export const getTeachersJournalHistory = async (id: string) => {
     return errorCatch(error);
   }
 };
+
+export const getTeachersLoad = async (id: string) => {
+  try {
+    const { data } = await axios.get("/teacher/load", {
+      params: { teacher: id },
+    });
+    return data;
+  } catch (error) {
+    return errorCatch(error);
+  }
+};
+
+export const getHourAccounting = async (id: string) => {
+  try {
+    const { data } = await axios.get("/teacher/hours", {
+      params: { teacher: id },
+    });
+    return data;
+  } catch (error) {
+    return errorCatch(error);
+  }
+};

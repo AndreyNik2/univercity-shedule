@@ -26,12 +26,12 @@ import {
   getCurrentDay,
 } from "../redux/initial/operations";
 import { getTeachersShedule } from "../servises/api/apiShadule";
-import { SelectTeacher } from "../components/SelectTeacher";
+import { TeachersSelect } from "../components/TeachersSelect";
 import SelectDayOfTheWeek, { weekDays } from "../components/SelectDayOfTheWeek";
 import SelectWeeks from "../components/SelectWeeks";
-import { TeacherSheduleList } from "../components/TeacherShaduleList";
+import { TeachersSheduleList } from "../components/TeachersShaduleList";
 
-export const TeacherSheduleScreen: React.FC = () => {
+export const TeachersSheduleScreen: React.FC = () => {
   const theme = useContext(ThemeContext);
   const dispatch = useAppDispatch();
   const authError = useAppSelector((state) => state.auth.error);
@@ -170,7 +170,7 @@ export const TeacherSheduleScreen: React.FC = () => {
           behavior={Platform.OS === "ios" ? "padding" : "height"}
           style={styles.containerFlex}
         >
-          {teachersList.data.length > 0 && <SelectTeacher />}
+          {teachersList.data.length > 0 && <TeachersSelect />}
           {selectedTeacher.name.length > 0 && (
             <View
               style={[
@@ -200,7 +200,10 @@ export const TeacherSheduleScreen: React.FC = () => {
                   {getSelectedDate(selectedWeek, selectedDay)}
                 </Text>
               </View>
-              <TeacherSheduleList shedule={shedule} selectedDay={selectedDay} />
+              <TeachersSheduleList
+                shedule={shedule}
+                selectedDay={selectedDay}
+              />
             </View>
           )}
         </KeyboardAvoidingView>

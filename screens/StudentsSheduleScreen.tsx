@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { View, Text, StyleSheet, StatusBar } from "react-native";
-import SelectGroups from "../components/SelectGroup";
+import StudentsSelectGroup from "../components/StudentsSelectGroup";
 import SelectDayOfTheWeek from "../components/SelectDayOfTheWeek";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
 import {
@@ -14,7 +14,7 @@ import { IDataWeeks, IWeeks } from "../models/IWeeks";
 import { SheduleList } from "../components/StudentShaduleList";
 import { format } from "date-fns";
 import { weekDays } from "../components/SelectDayOfTheWeek";
-import { UnselectGroup } from "../components/unselectGroup";
+import { StudentsUnselectedGroup } from "../components/StudentsUnselectedGroup";
 import { getShedule } from "../servises/api/apiShadule";
 import { IGroups } from "../models/IGroups";
 import { IShedule } from "../models/IShedule";
@@ -22,20 +22,12 @@ import { ScrollView } from "react-native-gesture-handler";
 import { ThemeContext } from "../context/ThemeContext";
 import Toast from "react-native-toast-message";
 
-const SheduleScreen:React.FC = () => {
+const StudentsSheduleScreen: React.FC = () => {
   const dispatch = useAppDispatch();
-  const  allGroups  = useAppSelector(
-    (state) => state.initial.allGroups
-  );
-  const weeks = useAppSelector(
-    (state) => state.initial.weeks
-  );
-  const currentDay = useAppSelector(
-    (state) => state.initial.currentDay
-  );
-  const selectedGroup = useAppSelector(
-    (state) => state.initial.selectedGroup
-  );
+  const allGroups = useAppSelector((state) => state.initial.allGroups);
+  const weeks = useAppSelector((state) => state.initial.weeks);
+  const currentDay = useAppSelector((state) => state.initial.currentDay);
+  const selectedGroup = useAppSelector((state) => state.initial.selectedGroup);
   const [shedule, setShedule] = useState<IShedule[] | []>([]);
   const [selectedWeek, setSelectedWeek] = useState<IWeeks[] | []>([]);
   const [selectedDay, setSelectedDay] = useState(0);
@@ -125,7 +117,6 @@ const SheduleScreen:React.FC = () => {
     if (weeks && currentDay.currentWeek.length > 0) {
       selectCurrentWeek(weeks, currentDay);
     }
-    
   }, [dispatch, weeks, currentDay]);
 
   useEffect(() => {
@@ -163,8 +154,8 @@ const SheduleScreen:React.FC = () => {
         barStyle={theme.statusBarColor}
       />
       <ScrollView style={styles.scroll}>
-        {allGroups.data.length > 0 && <SelectGroups />}
-        {selectedGroup.name.length === 0 && <UnselectGroup />}
+        {allGroups.data.length > 0 && <StudentsSelectGroup />}
+        {selectedGroup.name.length === 0 && <StudentsUnselectedGroup />}
         {selectedGroup.name.length > 0 && (
           <View
             style={[
@@ -234,4 +225,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SheduleScreen;
+export default StudentsSheduleScreen;

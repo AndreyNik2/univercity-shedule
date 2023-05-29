@@ -14,13 +14,13 @@ import Toast from "react-native-toast-message";
 import { ThemeContext } from "../context/ThemeContext";
 import { LinearGradient } from "expo-linear-gradient";
 import { useAppSelector } from "../hooks/redux";
-import { SelectTeacher } from "../components/SelectTeacher";
+import { TeachersSelect } from "../components/TeachersSelect";
 import { getTeachersJournal } from "../servises/api/apiShadule";
-import { IJournals } from "../models/IJournal";
+import { IJournals } from "../models/IJournals";
 import { useNavigation } from "@react-navigation/native";
 import { IStackScreenProp } from "../models/StackScreenProps";
 
-export const TeachersNotesList: React.FC<IStackScreenProp> = ({
+export const TeachersJournalListScreen: React.FC<IStackScreenProp> = ({
   navigation,
   route,
   nameProp,
@@ -66,7 +66,7 @@ export const TeachersNotesList: React.FC<IStackScreenProp> = ({
           behavior={Platform.OS === "ios" ? "padding" : "height"}
           style={styles.container}
         >
-          {teachersList.data.length > 0 && <SelectTeacher />}
+          {teachersList.data.length > 0 && <TeachersSelect />}
           <View
             style={[
               styles.journalsContainer,

@@ -11,23 +11,23 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
-import { TeachersNotesList } from "../screens/TeachersJournalListScreen";
+import { TeachersJournalListScreen } from "../screens/TeachersJournalListScreen";
 import Toast from "react-native-toast-message";
 import { useAppSelector } from "../hooks/redux";
 import { getTeachersJournal } from "../servises/api/apiShadule";
-import { IJournals } from "../models/IJournal";
+import { IJournals } from "../models/IJournals";
 import { IRouteProp } from "../models/RouteProp";
-import { TeachersJournal } from "../screens/TeachersJournalScreen";
+import { TeachersJournalScreen } from "../screens/TeachersJournalScreen";
 // import { teachersJournalRout, teachersNotesListRout } from "../config/routes";
 
 const teachersJournalRout: IRouteProp = {
   name: "TeachersJournal",
-  component: TeachersJournal,
+  component: TeachersJournalScreen,
 };
 
 const teachersNotesListRout: IRouteProp = {
   name: "TeachersNotesList",
-  component: TeachersNotesList,
+  component: TeachersJournalListScreen,
 };
 
 export const TeachersNotesNavigation: React.FC = () => {
