@@ -3,10 +3,21 @@ import { errorCatch } from "./error.api";
 
 axios.defaults.baseURL = "https://schedule.polytech.cv.ua/api";
 
-export const getShedule = async (group: string, week: string) => {
+export const getStudentsShedule = async (group: string, week: string) => {
   try {
     const { data } = await axios.get("/schedule/lessons", {
       params: { group: group, week: week },
+    });
+    return data;
+  } catch (error) {
+    return errorCatch(error);
+  }
+};
+
+export const getStudentsSessions = async (group: string) => {
+  try {
+    const { data } = await axios.get("/exam/list", {
+      params: { group: group },
     });
     return data;
   } catch (error) {

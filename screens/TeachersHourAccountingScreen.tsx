@@ -219,112 +219,112 @@ export const TeachersHourAccountingScreen: React.FC = () => {
                   >
                     <View style={styles.groupRow}>
                       <Text
-                        style={[styles.headerText, { color: theme.textColor }]}
+                        style={[styles.rowText, { color: theme.textColor }]}
                       >
                         {item.group}
                       </Text>
                     </View>
                     <View style={styles.subjectRow}>
                       <Text
-                        style={[styles.headerText, { color: theme.textColor }]}
+                        style={[styles.rowText, { color: theme.textColor }]}
                       >
                         {item.subject}
                       </Text>
                     </View>
                     <View style={styles.septemberRow}>
                       <Text
-                        style={[styles.headerText, { color: theme.textColor }]}
+                        style={[styles.rowText, { color: theme.textColor }]}
                       >
                         {item.m_9}
                       </Text>
                     </View>
                     <View style={styles.octoberRow}>
                       <Text
-                        style={[styles.headerText, { color: theme.textColor }]}
+                        style={[styles.rowText, { color: theme.textColor }]}
                       >
                         {item.m_10}
                       </Text>
                     </View>
                     <View style={styles.novemberRow}>
                       <Text
-                        style={[styles.headerText, { color: theme.textColor }]}
+                        style={[styles.rowText, { color: theme.textColor }]}
                       >
                         {item.m_11}
                       </Text>
                     </View>
                     <View style={styles.decemberRow}>
                       <Text
-                        style={[styles.headerText, { color: theme.textColor }]}
+                        style={[styles.rowText, { color: theme.textColor }]}
                       >
                         {item.m_12}
                       </Text>
                     </View>
                     <View style={styles.januaryRow}>
                       <Text
-                        style={[styles.headerText, { color: theme.textColor }]}
+                        style={[styles.rowText, { color: theme.textColor }]}
                       >
                         {item.m_1}
                       </Text>
                     </View>
                     <View style={styles.februaryRow}>
                       <Text
-                        style={[styles.headerText, { color: theme.textColor }]}
+                        style={[styles.rowText, { color: theme.textColor }]}
                       >
                         {item.m_2}
                       </Text>
                     </View>
                     <View style={styles.marchRow}>
                       <Text
-                        style={[styles.headerText, { color: theme.textColor }]}
+                        style={[styles.rowText, { color: theme.textColor }]}
                       >
                         {item.m_3}
                       </Text>
                     </View>
                     <View style={styles.aprilRow}>
                       <Text
-                        style={[styles.headerText, { color: theme.textColor }]}
+                        style={[styles.rowText, { color: theme.textColor }]}
                       >
                         {item.m_4}
                       </Text>
                     </View>
                     <View style={styles.mayRow}>
                       <Text
-                        style={[styles.headerText, { color: theme.textColor }]}
+                        style={[styles.rowText, { color: theme.textColor }]}
                       >
                         {item.m_5}
                       </Text>
                     </View>
                     <View style={styles.juneRow}>
                       <Text
-                        style={[styles.headerText, { color: theme.textColor }]}
+                        style={[styles.rowText, { color: theme.textColor }]}
                       >
                         {item.m_6}
                       </Text>
                     </View>
                     <View style={styles.julyRow}>
                       <Text
-                        style={[styles.headerText, { color: theme.textColor }]}
+                        style={[styles.rowText, { color: theme.textColor }]}
                       >
                         {item.m_7}
                       </Text>
                     </View>
                     <View style={styles.totalRow}>
                       <Text
-                        style={[styles.headerText, { color: theme.textColor }]}
+                        style={[styles.rowText, { color: theme.textColor }]}
                       >
                         {item.fact}
                       </Text>
                     </View>
                     <View style={styles.planRow}>
                       <Text
-                        style={[styles.headerText, { color: theme.textColor }]}
+                        style={[styles.rowText, { color: theme.textColor }]}
                       >
                         {item.plan}
                       </Text>
                     </View>
                     <View style={styles.defferenceRow}>
                       <Text
-                        style={[styles.headerText, { color: theme.textColor }]}
+                        style={[styles.rowText, { color: theme.textColor }]}
                       >
                         {getDefferense(item)}
                       </Text>
@@ -345,99 +345,73 @@ export const TeachersHourAccountingScreen: React.FC = () => {
                     </Text>
                   </View>
                   <View style={styles.septemberBottom}>
-                    <Text
-                      style={[styles.headerText, { color: theme.textColor }]}
-                    >
+                    <Text style={[styles.rowText, { color: theme.textColor }]}>
                       {hours.totals.m_9}
                     </Text>
                   </View>
                   <View style={styles.octoberBottom}>
-                    <Text
-                      style={[styles.headerText, { color: theme.textColor }]}
-                    >
+                    <Text style={[styles.rowText, { color: theme.textColor }]}>
                       {hours.totals.m_10}
                     </Text>
                   </View>
                   <View style={styles.novemberBottom}>
-                    <Text
-                      style={[styles.headerText, { color: theme.textColor }]}
-                    >
+                    <Text style={[styles.rowText, { color: theme.textColor }]}>
                       {hours.totals.m_11}
                     </Text>
                   </View>
                   <View style={styles.decemberBottom}>
-                    <Text
-                      style={[styles.headerText, { color: theme.textColor }]}
-                    >
+                    <Text style={[styles.rowText, { color: theme.textColor }]}>
                       {hours.totals.m_12}
                     </Text>
                   </View>
                   <View style={styles.januaryBottom}>
-                    <Text
-                      style={[styles.headerText, { color: theme.textColor }]}
-                    >
+                    <Text style={[styles.rowText, { color: theme.textColor }]}>
                       {hours.totals.m_1}
                     </Text>
                   </View>
                   <View style={styles.februaryBottom}>
-                    <Text
-                      style={[styles.headerText, { color: theme.textColor }]}
-                    >
+                    <Text style={[styles.rowText, { color: theme.textColor }]}>
                       {hours.totals.m_2}
                     </Text>
                   </View>
                   <View style={styles.marchBottom}>
-                    <Text
-                      style={[styles.headerText, { color: theme.textColor }]}
-                    >
+                    <Text style={[styles.rowText, { color: theme.textColor }]}>
                       {hours.totals.m_3}
                     </Text>
                   </View>
                   <View style={styles.aprilBottom}>
-                    <Text
-                      style={[styles.headerText, { color: theme.textColor }]}
-                    >
+                    <Text style={[styles.rowText, { color: theme.textColor }]}>
                       {hours.totals.m_4}
                     </Text>
                   </View>
                   <View style={styles.mayBottom}>
-                    <Text
-                      style={[styles.headerText, { color: theme.textColor }]}
-                    >
+                    <Text style={[styles.rowText, { color: theme.textColor }]}>
                       {hours.totals.m_5}
                     </Text>
                   </View>
                   <View style={styles.juneBottom}>
-                    <Text
-                      style={[styles.headerText, { color: theme.textColor }]}
-                    >
+                    <Text style={[styles.rowText, { color: theme.textColor }]}>
                       {hours.totals.m_6}
                     </Text>
                   </View>
                   <View style={styles.julyBottom}>
-                    <Text
-                      style={[styles.headerText, { color: theme.textColor }]}
-                    >
+                    <Text style={[styles.rowText, { color: theme.textColor }]}>
                       {hours.totals.m_7}
                     </Text>
                   </View>
                   <View style={styles.totalBottom}>
-                    <Text
-                      style={[styles.headerText, { color: theme.textColor }]}
-                    >
+                    <Text style={[styles.rowText, { color: theme.textColor }]}>
                       {hours.totals.fact}
                     </Text>
                   </View>
                   <View style={styles.planBottom}>
-                    <Text
-                      style={[styles.headerText, { color: theme.textColor }]}
-                    >
+                    <Text style={[styles.rowText, { color: theme.textColor }]}>
                       {hours.totals.plan}
                     </Text>
                   </View>
                   <View style={styles.defferenceBottom}>
                     <Text
-                      style={[styles.headerText, { color: theme.textColor }]}
+                      style={[styles.rowText, { color: theme.textColor }]}
                     ></Text>
                   </View>
                 </View>

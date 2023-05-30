@@ -16,7 +16,7 @@ const setAuthHeader = (token: string) => {
 export const fetchGroups = createAsyncThunk(
   "initial/fetchGroups",
   async (_, thunkAPI) => {
-    axios.defaults.headers.common["no-time-limit"] = true; // for all requests
+    // axios.defaults.headers.common["no-time-limit"] = true; 
     try {
       const { data } = await axios.get<IDataGroups>("/schedule/groups");
       return data;
@@ -77,7 +77,7 @@ export const fetchTeachers = createAsyncThunk(
       return rejectWithValue("Помилка авторизації");
     }
     setAuthHeader(persistedAccessToken);
-    axios.defaults.headers.common["no-time-limit"] = true; // for all requests
+    // axios.defaults.headers.common["no-time-limit"] = true; 
     try {
       const { data } = await axios.get("/teacher/list");
       return data;

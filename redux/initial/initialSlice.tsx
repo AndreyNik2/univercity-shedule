@@ -51,6 +51,9 @@ export const initialSlice = createSlice({
     setUser: (state, action) => {
       state.userType = action.payload;
     },
+    setIninialState: (state, _) => {
+      state = initialState;
+    },
   },
   extraReducers: (builder) =>
     builder

@@ -34,7 +34,7 @@ export const TeachersAuthScreen: React.FC = () => {
     if (authError.length > 0) {
       Toast.show({
         type: "error",
-        text1: `${authError}`,
+        text1: `Помилка аутентифікації ${authError}`,
       });
     }
   }, [authError]);
