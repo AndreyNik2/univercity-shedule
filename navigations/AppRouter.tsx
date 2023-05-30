@@ -18,8 +18,6 @@ export const AppRouter: React.FunctionComponent = () => {
   
 
   useEffect(() => {
-    console.log(userType);
-    console.log(access_token)
   }, [dispatch, userType, access_token]);
 
   return (

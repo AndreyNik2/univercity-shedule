@@ -11,6 +11,7 @@ import { theme } from "./config/theme";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { AppRouter } from "./navigations/AppRouter";
 import Toast from "react-native-toast-message";
+import {SafeAreaView, StyleSheet} from 'react-native'
 
 const App: React.FC = () => {
   //  const  userType  = useAppSelector((state) => state.initial.userType);
@@ -51,52 +52,21 @@ const App: React.FC = () => {
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <ThemeContext.Provider value={mode === true ? theme.dark : theme.light}>
-          <AppRouter />
-          <Toast />
-          {/* <NavigationContainer>
-              <Stack.Navigator
-                screenOptions={{
-                  headerShown: false,
-                }}
-              >
-                {userType === "" && (
-                <Stack.Screen name={homeRout.name}>
-                  {(props) => (
-                    <homeRout.component nameProp={homeRout.name} {...props} />
-                  )}
-                </Stack.Screen>
-                )}
-                {userType === "student" && (
-                <Stack.Screen name={studentRout.name}>
-                  {(props) => (
-                    <studentRout.component
-                      nameProp={studentRout.name}
-                      {...props}
-                    />
-                  )}
-                </Stack.Screen>
-                )}
-                {userType === "teacher" && (
-                <Stack.Screen name={teacherRout.name}>
-                  {(props) => (
-                    <teacherRout.component
-                      nameProp={teacherRout.name}
-                      {...props}
-                    />
-                  )}
-                </Stack.Screen>
-                )}
-                {routes.map((r, i) => (
-              <Stack.Screen key={i} name={r.name}>
-                {(props) => <r.component nameProp={r.name} {...props} />}
-              </Stack.Screen>
-            ))}
-              </Stack.Navigator>
-            </NavigationContainer> */}
+          <SafeAreaView style={styles.container}>
+            <AppRouter />
+            <Toast />
+          </SafeAreaView>
         </ThemeContext.Provider>
       </PersistGate>
     </Provider>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+
+});
 
 export default App;

@@ -7,17 +7,13 @@ import { ThemeContext } from "../context/ThemeContext";
 import { ITeachers } from "../models/ITeachers";
 import { logOut } from "../redux/auth/operations";
 
-export const SelectTeacher: React.FC = () => {
+export const TeachersSelect: React.FC = () => {
   const dispatch = useAppDispatch();
   const teacherList = useAppSelector((state) => state.initial.teachrsList);
   const selectedTeacher = useAppSelector(
     (state) => state.initial.selectedTeacher
   );
 
-  //   const formatedAllGroup = teacherList.data.map((group: ITeachers) => ({
-  //     name: `${group.name} групи`,
-  //     code: group.code,
-  //   }));
   const theme = useContext(ThemeContext);
   const [isFocus, setIsFocus] = useState(false);
 
@@ -34,7 +30,7 @@ export const SelectTeacher: React.FC = () => {
     >
       <View style={styles.elementsContainer}>
         <Text style={[styles.dropdownTitle, { color: theme.textColor }]}>
-          Розклад занять для
+          Викладач:
         </Text>
         <View style={styles.containerDrop}>
           <Dropdown
@@ -77,7 +73,7 @@ export const SelectTeacher: React.FC = () => {
           activeOpacity={0.7}
         >
           <View style={styles.button}>
-            <Text style={styles.buttonTitle}>Увійти</Text>
+            <Text style={[styles.buttonTitle, {color: theme.textColor}]}>Увійти</Text>
           </View>
         </TouchableOpacity>
       )}
@@ -87,7 +83,7 @@ export const SelectTeacher: React.FC = () => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 93,
+    marginTop: 40,
     marginHorizontal: 21,
     borderRadius: 20,
   },

@@ -2,8 +2,8 @@ import React, { useContext } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Platform } from "react-native";
 import { Feather } from "@expo/vector-icons";
-import SheduleScreen from "../screens/StudentsSheduleScreen";
-import SessionsScreen from "../screens/SessionsScreen";
+import StudentsSheduleScreen from "../screens/StudentsSheduleScreen";
+import StudentsSessionsScreen from "../screens/StudentsSessionsScreen";
 import ConfigScreen from "../screens/ConfigScreen";
 import { ThemeContext } from "../context/ThemeContext";
 
@@ -47,7 +47,7 @@ const StudentsNavigator = () => {
     >
       <Tab.Screen
         name="Розклад"
-        component={SheduleScreen}
+        component={StudentsSheduleScreen}
         options={{
           headerShown: false,
           tabBarIcon: ({ color }) => (
@@ -57,7 +57,7 @@ const StudentsNavigator = () => {
       />
       <Tab.Screen
         name="Сесії"
-        component={SessionsScreen}
+        component={StudentsSessionsScreen}
         options={{
           headerShown: false,
           tabBarIcon: ({ color }) => (

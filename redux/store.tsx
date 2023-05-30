@@ -17,7 +17,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const initialPersistConfig = {
   key: "initial",
   storage: AsyncStorage,
-  whitelist: ["selectedGroup", "userType"],
+  whitelist: ["selectedGroup", "userType", "selectedTeacher"],
 };
 
 const authPersistConfig = {

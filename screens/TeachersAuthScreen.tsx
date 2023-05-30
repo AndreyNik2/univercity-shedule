@@ -18,7 +18,7 @@ import { ThemeContext } from "../context/ThemeContext";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
 import { logIn } from "../redux/auth/operations";
 
-export const AuthTeacherScreen: React.FC = () => {
+export const TeachersAuthScreen: React.FC = () => {
   const theme = useContext(ThemeContext);
   const [accessCode, setAccessCode] = useState<string>("");
   const [isChecked, setChecked] = useState<boolean>(false);
@@ -26,19 +26,18 @@ export const AuthTeacherScreen: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const submit = () => {
-    console.log(accessCode)
+    console.log(accessCode);
     dispatch(logIn({ code: accessCode, rememberMe: isChecked }));
   };
 
   useEffect(() => {
     if (authError.length > 0) {
       Toast.show({
-        type: 'error',
-        text1: `${authError}`
-      })
+        type: "error",
+        text1: `${authError}`,
+      });
     }
-  },[authError])
-
+  }, [authError]);
 
   return (
     <LinearGradient
@@ -46,7 +45,6 @@ export const AuthTeacherScreen: React.FC = () => {
       start={[0, 1]}
       style={styles.linearGradient}
     >
-      
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.container}
@@ -136,11 +134,10 @@ const styles = StyleSheet.create({
   button: {
     justifyContent: "center",
     alignItems: "center",
-    marginHorizontal:1
+    marginHorizontal: 1,
   },
   buttonTitle: {
     fontFamily: "Exo2-Medium",
     fontSize: 18,
-
   },
 });

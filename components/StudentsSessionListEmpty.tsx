@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from "react-native";
 import { useAppSelector } from "../hooks/redux";
 import { ThemeContext } from "../context/ThemeContext";
 
-export const SessionListIsEmpty: React.FunctionComponent = () => {
+export const StudentsSessionListIsEmpty: React.FunctionComponent = () => {
   const selectedGroup = useAppSelector((state) => state.initial.selectedGroup);
   const theme = useContext(ThemeContext);
 

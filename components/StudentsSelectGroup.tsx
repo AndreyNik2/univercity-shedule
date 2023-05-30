@@ -6,16 +6,12 @@ import { selectGroup } from "../redux/initial/initialSlice";
 import { ThemeContext } from "../context/ThemeContext";
 import { IGroups } from "../models/IGroups";
 
-const SelectGroups: React.FC = () => {
+const StudentsSelectGroup: React.FC = () => {
   const dispatch = useAppDispatch();
-  const allGroups = useAppSelector(
-    (state) => state.initial.allGroups
-  );
-  const selectedGroup = useAppSelector(
-    (state) => state.initial.selectedGroup
-  );
+  const allGroups = useAppSelector((state) => state.initial.allGroups);
+  const selectedGroup = useAppSelector((state) => state.initial.selectedGroup);
 
-  const formatedAllGroup = allGroups.data.map((group:IGroups) => ({
+  const formatedAllGroup = allGroups.data.map((group: IGroups) => ({
     name: `${group.name} групи`,
     code: group.code,
   }));
@@ -131,4 +127,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SelectGroups;
+export default StudentsSelectGroup;
