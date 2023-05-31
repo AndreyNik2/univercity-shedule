@@ -26,11 +26,13 @@ export const TeachersUnselectedScreen: React.FC = () => {
       start={[0, 1]}
       style={styles.container}
     >
-      <StatusBar
-        animated={false}
-        backgroundColor={theme.statusBarBG}
-        barStyle={theme.statusBarColor}
-      />
+      {Platform.OS === "android" && (
+        <StatusBar
+          animated={false}
+          backgroundColor={theme.statusBarBG}
+          barStyle={theme.statusBarColor}
+        />
+      )}
       <ScrollView style={styles.container}>
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}

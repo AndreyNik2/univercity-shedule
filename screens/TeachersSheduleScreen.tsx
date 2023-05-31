@@ -160,11 +160,13 @@ export const TeachersSheduleScreen: React.FC = () => {
       start={[0, 1]}
       style={styles.linearGradient}
     >
-      <StatusBar
-        animated={false}
-        backgroundColor={theme.statusBarBG}
-        barStyle={theme.statusBarColor}
-      />
+      {Platform.OS === "android" && (
+        <StatusBar
+          animated={false}
+          backgroundColor={theme.statusBarBG}
+          barStyle={theme.statusBarColor}
+        />
+      )}
       <ScrollView style={styles.containerFlex}>
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}

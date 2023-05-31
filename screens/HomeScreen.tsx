@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Text,
   StatusBar,
+  Platform,
 } from "react-native";
 import { IStackScreenProp } from "../models/StackScreenProps";
 import { ThemeContext } from "../context/ThemeContext";
@@ -30,11 +31,13 @@ export const HomeScreen: React.FC<IStackScreenProp> = ({
       start={[0, 1]}
       style={styles.linearGradient}
     >
-      <StatusBar
-        animated={false}
-        backgroundColor={theme.statusBarBG}
-        barStyle={theme.statusBarColor}
-      />
+      {Platform.OS === "android" && (
+        <StatusBar
+          animated={false}
+          backgroundColor={theme.statusBarBG}
+          barStyle={theme.statusBarColor}
+        />
+      )}
       <View style={styles.logoContainer}>
         <View
           style={[

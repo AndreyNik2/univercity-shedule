@@ -48,8 +48,12 @@ const TeachersNavigator = () => {
             android: {
               marginBottom: 15,
             },
-            ios: {},
-            default: {},
+            ios: {
+              marginBottom: 15,
+            },
+            default: {
+              marginBottom: 15,
+            },
           }),
         },
         tabBarIconStyle: { marginBottom: 8 },

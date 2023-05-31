@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { View, Text, StyleSheet, StatusBar } from "react-native";
+import { View, Text, StyleSheet, StatusBar, Platform } from "react-native";
 import StudentsSelectGroup from "../components/StudentsSelectGroup";
 import SelectDayOfTheWeek from "../components/SelectDayOfTheWeek";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
@@ -148,11 +148,13 @@ const StudentsSheduleScreen: React.FC = () => {
       start={[0, 1]}
       style={styles.linearGradient}
     >
-      <StatusBar
-        animated={false}
-        backgroundColor={theme.statusBarBG}
-        barStyle={theme.statusBarColor}
-      />
+      {Platform.OS === "android" && (
+        <StatusBar
+          animated={false}
+          backgroundColor={theme.statusBarBG}
+          barStyle={theme.statusBarColor}
+        />
+      )}
       <ScrollView style={styles.scroll}>
         {allGroups.data.length > 0 && <StudentsSelectGroup />}
         {selectedGroup.name.length === 0 && <StudentsUnselectedGroup />}

@@ -42,7 +42,6 @@ export const TeachersLoadScreen: React.FC = () => {
         if (selectedTeacher.id.length > 0) {
           const result = await getTeachersLoad(selectedTeacher.id);
           setLoad(result.data);
-          console.log(result.data);
         }
       } catch (error) {
         Toast.show({
@@ -61,11 +60,13 @@ export const TeachersLoadScreen: React.FC = () => {
       start={[0, 1]}
       style={styles.container}
     >
-      <StatusBar
-        animated={false}
-        backgroundColor={theme.statusBarBG}
-        barStyle={theme.statusBarColor}
-      />
+      {Platform.OS === "android" && (
+        <StatusBar
+          animated={false}
+          backgroundColor={theme.statusBarBG}
+          barStyle={theme.statusBarColor}
+        />
+      )}
       <ScrollView
         horizontal={true}
         alwaysBounceVertical={true}
@@ -131,7 +132,8 @@ export const TeachersLoadScreen: React.FC = () => {
                   </View>
                 </View>
                 {load.payment_type_2.items.map((item) => (
-                  <View key={Date.now()}
+                  <View
+                    key={Date.now()}
                     style={[
                       styles.rowContainer,
                       { backgroundColor: theme.tableRowBGColor },

@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { View, Text, StyleSheet, StatusBar, ScrollView } from "react-native";
+import { View, Text, StyleSheet, StatusBar, ScrollView, Platform } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useAppSelector } from "../hooks/redux";
 import StudentsSelectGroup from "../components/StudentsSelectGroup";
@@ -24,7 +24,6 @@ const StudentsSessionsScreen = () => {
         if (selectedGroup.name.length > 0) {
           const result = await getStudentsSessions(selectedGroup.code);
           setSessionList(result.data);
-          console.log(result.data);
         }
       } catch (error) {
         Toast.show({
@@ -42,20 +41,22 @@ const StudentsSessionsScreen = () => {
       start={[0, 1]}
       style={styles.linearGradient}
     >
-      <StatusBar
-        animated={false}
-        backgroundColor={theme.statusBarBG}
-        barStyle={theme.statusBarColor}
-      />
-      <ScrollView
-        style={styles.container}
-      >
+      {Platform.OS === "android" && (
+        <StatusBar
+          animated={false}
+          backgroundColor={theme.statusBarBG}
+          barStyle={theme.statusBarColor}
+        />
+      )}
+      <ScrollView style={styles.container}>
         {allGroups.data.length > 0 && <StudentsSelectGroup />}
         {selectedGroup.name.length === 0 && <StudentsUnselectedGroup />}
         {selectedGroup.name.length > 0 && sessionList.length === 0 && (
           <StudentsSessionListIsEmpty />
         )}
-        {sessionList.length > 0 && <StudentsSessionList sessionList={sessionList} />}
+        {sessionList.length > 0 && (
+          <StudentsSessionList sessionList={sessionList} />
+        )}
       </ScrollView>
     </LinearGradient>
   );

@@ -38,7 +38,7 @@ const StudentsNavigator = () => {
             android: {
               marginBottom: 15,
             },
-            ios: {},
+            ios: { marginBottom: 15 },
             default: {},
           }),
         },

@@ -49,7 +49,6 @@ export const TeachersHourAccountingScreen: React.FC = () => {
         if (selectedTeacher.id.length > 0) {
           const result = await getHourAccounting(selectedTeacher.id);
           setHours(result.data);
-          console.log(result.data);
         }
       } catch (error) {
         Toast.show({
@@ -68,11 +67,13 @@ export const TeachersHourAccountingScreen: React.FC = () => {
       start={[0, 1]}
       style={styles.container}
     >
-      <StatusBar
-        animated={false}
-        backgroundColor={theme.statusBarBG}
-        barStyle={theme.statusBarColor}
-      />
+      {Platform.OS === "android" && (
+        <StatusBar
+          animated={false}
+          backgroundColor={theme.statusBarBG}
+          barStyle={theme.statusBarColor}
+        />
+      )}
       <ScrollView
         horizontal={true}
         alwaysBounceVertical={true}

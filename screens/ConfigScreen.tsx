@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useContext } from "react";
+import React, { useCallback, useState, useContext, useEffect } from "react";
 import {
   View,
   Text,
@@ -17,6 +17,7 @@ import { ThemeContext } from "../context/ThemeContext";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
 import { setUser } from "../redux/initial/initialSlice";
 import { logOut } from "../redux/auth/operations";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const ConfigScreen = () => {
   const [mode, setMode] = useState(false);
@@ -37,6 +38,14 @@ const ConfigScreen = () => {
     dispatch(logOut())
   }
 
+  useEffect(() => {
+    AsyncStorage.getItem("THEME_VALUE").then((value) => {
+      if (value) {
+        setMode(JSON.parse(value));
+      }
+    });
+  }, []);
+
   const onPress = useCallback(async () => {
     const supported = await Linking.canOpenURL(telegramBotURL);
     if (supported) {
@@ -52,11 +61,13 @@ const ConfigScreen = () => {
       start={[0, 1]}
       style={styles.linearGradient}
     >
-      <StatusBar
-        animated={false}
-        backgroundColor={theme.statusBarBG}
-        barStyle={theme.statusBarColor}
-      />
+      {Platform.OS === "android" && (
+        <StatusBar
+          animated={false}
+          backgroundColor={theme.statusBarBG}
+          barStyle={theme.statusBarColor}
+        />
+      )}
       <View
         style={[
           styles.container,
@@ -79,25 +90,6 @@ const ConfigScreen = () => {
             <FontAwesome name="telegram" size={40} color="#229ED9" />
           </TouchableOpacity>
         </View>
-        {/* <View
-          style={[
-            styles.socialContainer,
-            { borderColor: theme.dashedBorderColor },
-          ]}
-        >
-          <Text style={[styles.socialsText, { color: theme.textColor }]}>
-            Перейти до сторінки викладачів
-          </Text>
-          <TouchableOpacity
-            style={styles.telegramContainer}
-            onPress={() => {
-              console.log(userType)
-              dispatch(setUser("teacher"))
-            }}
-          >
-            <FontAwesome name="telegram" size={28} color="#37a500" />
-          </TouchableOpacity>
-        </View> */}
         <View style={styles.themeContainer}>
           <Text style={[styles.themeText, { color: theme.textColor }]}>
             Тема Black
@@ -196,7 +188,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   telegramContainer: {
-    marginRight: 10,
     borderRadius: 20,
     backgroundColor: "#ffffff",
   },
@@ -217,6 +208,13 @@ const styles = StyleSheet.create({
   },
   switch: {
     width: 40,
+    ...Platform.select({
+      android: {},
+      ios: {
+        marginRight: 10,
+      },
+      default: {},
+    }),
   },
   configText: {
     fontFamily: "Exo2-Regular",

@@ -37,7 +37,6 @@ export const TeachersJournalScreen: React.FC<IStackScreenProp> = ({
 
   useEffect(() => {
     const getData = async () => {
-      console.log(journalParam);
       try {
         if (journalParam) {
           const result = await getTeachersJournalHistory(journalParam.item.id);
@@ -60,11 +59,13 @@ export const TeachersJournalScreen: React.FC<IStackScreenProp> = ({
       start={[0, 1]}
       style={styles.container}
     >
-      <StatusBar
-        animated={false}
-        backgroundColor={theme.statusBarBG}
-        barStyle={theme.statusBarColor}
-      />
+      {Platform.OS === "android" && (
+        <StatusBar
+          animated={false}
+          backgroundColor={theme.statusBarBG}
+          barStyle={theme.statusBarColor}
+        />
+      )}
       <ScrollView
         horizontal={true}
         alwaysBounceVertical={true}

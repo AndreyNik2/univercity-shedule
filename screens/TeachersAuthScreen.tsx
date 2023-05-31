@@ -8,9 +8,9 @@ import {
   TextInput,
   KeyboardAvoidingView,
   Platform,
-  Button,
   TouchableOpacity,
-  Alert,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
 import Checkbox from "expo-checkbox";
 import Toast from "react-native-toast-message";
@@ -26,7 +26,6 @@ export const TeachersAuthScreen: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const submit = () => {
-    console.log(accessCode);
     dispatch(logIn({ code: accessCode, rememberMe: isChecked }));
   };
 
@@ -40,56 +39,60 @@ export const TeachersAuthScreen: React.FC = () => {
   }, [authError]);
 
   return (
-    <LinearGradient
-      colors={theme.gradient}
-      start={[0, 1]}
-      style={styles.linearGradient}
-    >
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={styles.container}
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <LinearGradient
+        colors={theme.gradient}
+        start={[0, 1]}
+        style={styles.linearGradient}
       >
-        <StatusBar
-          animated={false}
-          backgroundColor={theme.statusBarBG}
-          barStyle={theme.statusBarColor}
-        />
-        <View
-          style={[
-            styles.authenticateContainer,
-            { backgroundColor: theme.middleContainerBackground },
-          ]}
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          style={styles.container}
         >
-          <TextInput
-            style={[
-              styles.inputCode,
-              { backgroundColor: theme.innerContainerBackground },
-            ]}
-            placeholder="Код доступу викладача"
-            onChangeText={setAccessCode}
-            autoFocus={true}
-            secureTextEntry={true}
-          ></TextInput>
-          <View style={styles.checkboxContainer}>
-            <Checkbox
-              style={styles.checkbox}
-              value={isChecked}
-              onValueChange={() => setChecked((state) => !state)}
+          {Platform.OS === "android" && (
+            <StatusBar
+              animated={false}
+              backgroundColor={theme.statusBarBG}
+              barStyle={theme.statusBarColor}
             />
-            <Text>Запам'ятай мене</Text>
-          </View>
-          <TouchableOpacity
-            onPress={submit}
-            style={styles.buttonContainer}
-            activeOpacity={0.7}
+          )}
+          <View
+            style={[
+              styles.authenticateContainer,
+              { backgroundColor: theme.middleContainerBackground },
+            ]}
           >
-            <View style={styles.button}>
-              <Text style={styles.buttonTitle}>Увійти</Text>
+            <TextInput
+              style={[
+                styles.inputCode,
+                { backgroundColor: theme.innerContainerBackground },
+              ]}
+              placeholder="Код доступу викладача"
+              onChangeText={setAccessCode}
+              autoFocus={true}
+              secureTextEntry={true}
+            ></TextInput>
+            <View style={styles.checkboxContainer}>
+              <Checkbox
+                style={styles.checkbox}
+                value={isChecked}
+                onValueChange={() => setChecked((state) => !state)}
+              />
+              <Text>Запам'ятай мене</Text>
             </View>
-          </TouchableOpacity>
-        </View>
-      </KeyboardAvoidingView>
-    </LinearGradient>
+            <TouchableOpacity
+              onPress={submit}
+              style={styles.buttonContainer}
+              activeOpacity={0.7}
+            >
+              <View style={styles.button}>
+                <Text style={styles.buttonTitle}>Увійти</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+        </KeyboardAvoidingView>
+      </LinearGradient>
+    </TouchableWithoutFeedback>
   );
 };
 

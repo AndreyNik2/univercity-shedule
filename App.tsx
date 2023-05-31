@@ -11,11 +11,12 @@ import { theme } from "./config/theme";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { AppRouter } from "./navigations/AppRouter";
 import Toast from "react-native-toast-message";
-import {SafeAreaView, StyleSheet} from 'react-native'
+import { SafeAreaView, StyleSheet } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const App: React.FC = () => {
   //  const  userType  = useAppSelector((state) => state.initial.userType);
-  const [mode, setMode] = useState<Boolean>(false);
+  const [mode, setMode] = useState<boolean>(false);
   const [fontsLoaded] = useFonts({
     "Exo2-Medium": require("./fonts/Exo2-Medium.ttf"),
     "Exo2-Regular": require("./fonts/Exo2-Regular.ttf"),
@@ -27,7 +28,17 @@ const App: React.FC = () => {
       await SplashScreen.preventAutoHideAsync();
     }
     prepare();
+    AsyncStorage.getItem("THEME_VALUE").then((value) => {
+      if (value) {
+        setMode(JSON.parse(value));
+      }
+    });
   }, []);
+
+  useEffect(() => {
+      AsyncStorage.setItem("THEME_VALUE", JSON.stringify(mode));
+    
+  }, [mode]);
 
   useEffect(() => {
     const eventListner = EventRegister.addEventListener(
@@ -66,7 +77,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-
 });
 
 export default App;
