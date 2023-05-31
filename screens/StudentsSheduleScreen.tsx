@@ -15,7 +15,7 @@ import { SheduleList } from "../components/StudentShaduleList";
 import { format } from "date-fns";
 import { weekDays } from "../components/SelectDayOfTheWeek";
 import { StudentsUnselectedGroup } from "../components/StudentsUnselectedGroup";
-import { getShedule } from "../servises/api/apiShadule";
+import { getStudentsShedule } from "../servises/api/apiShadule";
 import { IGroups } from "../models/IGroups";
 import { IShedule } from "../models/IShedule";
 import { ScrollView } from "react-native-gesture-handler";
@@ -123,7 +123,7 @@ const StudentsSheduleScreen: React.FC = () => {
     const getData = async () => {
       try {
         if (selectedGroup.code.length > 0) {
-          const result = await getShedule(
+          const result = await getStudentsShedule(
             selectedGroup.code,
             selectedWeek[0].id
           );

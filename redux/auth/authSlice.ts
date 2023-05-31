@@ -38,7 +38,6 @@ export const authSlice = createSlice({
         logIn.fulfilled.type,
         (state, action: PayloadAction<IUser>) => {
           state.isLoadingUser = false;
-          state.error = "";
           state.user.access_token = action.payload.access_token;
           state.user.adm = action.payload.adm;
           state.user.id = action.payload.id;
@@ -49,6 +48,8 @@ export const authSlice = createSlice({
       )
       .addCase(logIn.pending.type, (state) => {
         state.isLoadingUser = true;
+        state.error = "";
+
       })
       .addCase(logIn.rejected.type, (state, action: PayloadAction<string>) => {
         state.isLoadingUser = false;

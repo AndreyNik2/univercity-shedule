@@ -9,12 +9,14 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { Switch, } from "react-native-gesture-handler";
+import { Switch } from "react-native-gesture-handler";
 import { EventRegister } from "react-native-event-listeners";
 import { FontAwesome } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { ThemeContext } from "../context/ThemeContext";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
 import { setUser } from "../redux/initial/initialSlice";
+import { logOut } from "../redux/auth/operations";
 
 const ConfigScreen = () => {
   const [mode, setMode] = useState(false);
@@ -24,10 +26,16 @@ const ConfigScreen = () => {
 
   const telegramBotURL = "https://t.me/schedule_polytech_bot";
 
+
   type OpenURLButtonProps = {
     url: string;
     children: string;
   };
+
+  const logout = () => {
+    dispatch(setUser(""));
+    dispatch(logOut())
+  }
 
   const onPress = useCallback(async () => {
     const supported = await Linking.canOpenURL(telegramBotURL);
@@ -68,10 +76,10 @@ const ConfigScreen = () => {
             style={styles.telegramContainer}
             onPress={() => onPress()}
           >
-            <FontAwesome name="telegram" size={28} color="#229ED9" />
+            <FontAwesome name="telegram" size={40} color="#229ED9" />
           </TouchableOpacity>
         </View>
-        <View
+        {/* <View
           style={[
             styles.socialContainer,
             { borderColor: theme.dashedBorderColor },
@@ -89,13 +97,14 @@ const ConfigScreen = () => {
           >
             <FontAwesome name="telegram" size={28} color="#37a500" />
           </TouchableOpacity>
-        </View>
+        </View> */}
         <View style={styles.themeContainer}>
           <Text style={[styles.themeText, { color: theme.textColor }]}>
             Тема Black
           </Text>
           <Switch
             value={mode}
+            style={styles.switch}
             onValueChange={(value) => {
               setMode(value);
               EventRegister.emit("changeTheme", value);
@@ -129,10 +138,23 @@ const ConfigScreen = () => {
             Зв'язатися з нами
           </Text>
         </View>
-        <View style={styles.itemContainerLast}>
+        <View
+          style={[
+            styles.itemContainer,
+            { borderColor: theme.dashedBorderColor },
+          ]}
+        >
           <Text style={[styles.configText, { color: theme.textColor }]}>
             Політитка конфіденційності
           </Text>
+        </View>
+        <View style={styles.itemContainerLast}>
+          <Text style={[styles.configText, { color: theme.textColor }]}>
+            Вийти
+          </Text>
+          <TouchableOpacity onPress={logout}>
+            <Ionicons name="exit-outline" size={40} color="#229ED9" />
+          </TouchableOpacity>
         </View>
       </View>
     </LinearGradient>
@@ -150,6 +172,9 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     backgroundColor: "#F2F5FD",
   },
+  rowContainer: {
+    flexDirection: "row",
+  },
   socialContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -159,10 +184,10 @@ const styles = StyleSheet.create({
     ...Platform.select({
       android: {
         borderStyle: "dashed",
-        paddingTop: 10,
-        paddingBottom: 10,
+        paddingTop: 5,
+        paddingBottom: 5,
       },
-      ios: { borderStyle: "solid", paddingTop: 12, paddingBottom: 12 },
+      ios: { borderStyle: "solid", paddingTop: 7, paddingBottom: 7 },
       default: { borderStyle: "solid" },
     }),
   },
@@ -172,7 +197,7 @@ const styles = StyleSheet.create({
   },
   telegramContainer: {
     marginRight: 10,
-    borderRadius: 14,
+    borderRadius: 20,
     backgroundColor: "#ffffff",
   },
   themeContainer: {
@@ -189,6 +214,9 @@ const styles = StyleSheet.create({
   themeText: {
     fontFamily: "Exo2-Regular",
     fontSize: 14,
+  },
+  switch: {
+    width: 40,
   },
   configText: {
     fontFamily: "Exo2-Regular",
@@ -215,8 +243,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     marginHorizontal: 20,
-    paddingTop: 14,
-    paddingBottom: 14,
   },
 });
 
